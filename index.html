@@ -3,69 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Book PDF Reader</title>
-    <meta name="description" content="Experience realistic page-turning effects with this interactive E-Book Web Reader.">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- PDF.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <!-- PageFlip -->
-    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+    <title>(주)비에이텍 - 정량펌프 및 수처리 전문 제조 기업</title>
+    
+    <!-- SEO 및 메타 태그 정의 -->
+    <meta name="description" content="다이어프램형 무맥동 정량 펌프(PAC, PKD 시리즈) 전문 제조 및 설치, 유지보수 전문 기업 (주)비에이텍입니다. 정밀한 기술로 깨끗한 수처리를 실현합니다.">
+    <meta name="keywords" content="비에이텍, 정량펌프, 무맥동 펌프, 다이어프램 펌프, 수처리, PAC 시리즈, PKD 시리즈, 펌프 수리, 펌프 설치, 춘천 펌프">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="(주)비에이텍 - 정량펌프 및 수처리 전문 제조 기업">
+    <meta property="og:description" content="정밀한 기술로 깨끗한 미래를 흐르게 합니다. 무맥동 정량펌프 제작 및 수처리 솔루션 전문.">
+    <meta property="og:image" content="./water_hero_bg.png">
+    
+    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 외부 스타일시트 연동 -->
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="bg-elements">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
 
-    <div class="container">
-        <header class="glass-panel text-center">
-            <h1 class="gradient-text">Interactive E-Book Reader</h1>
-            <p class="subtitle">Upload any PDF file to transform it into a beautiful, page-turning book.</p>
+    <!-- GNB (Global Navigation Bar) 헤더 영역 -->
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <!-- 로고 및 상호명 -->
+            <a href="./index.html" class="logo" id="header-logo">
+                <span class="brand-en">BAETECK</span>
+                <span class="brand-ko">(주)비에이텍</span>
+            </a>
             
-            <div class="upload-section">
-                <input type="file" id="pdf-upload" accept="application/pdf" class="hidden-input">
-                <label for="pdf-upload" class="upload-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                    <span>Choose PDF File</span>
-                </label>
-                <div id="file-name" class="file-name"></div>
-            </div>
+            <!-- 데스크톱 네비게이션 메뉴 -->
+            <nav class="desktop-nav" aria-label="메인 네비게이션">
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="./product.html">주요제품</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
+                </ul>
+            </nav>
             
-            <div id="loading" class="loading-container" style="display: none;">
-                <div class="spinner"></div>
-                <p id="loading-text">Processing your PDF...</p>
-                <div class="progress-bar">
-                    <div id="progress" class="progress"></div>
+            <!-- 모바일 햄버거 메뉴 버튼 -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+        
+        <!-- 모바일 드롭다운 메뉴 -->
+        <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
+            <ul>
+                <li><a href="./intro.html">기업소개</a></li>
+                <li><a href="./product.html">주요제품</a></li>
+                <li><a href="./equipment.html">보유장비</a></li>
+                <li><a href="./sales_history.html">주요업력</a></li>
+                <li><a href="./map.html">찾아오시는 길</a></li>
+                <li><a href="./inquiry.html">고객문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section (메인 비주얼 영역) -->
+        <section class="hero-section" style="background-image: linear-gradient(135deg, rgba(10, 25, 44, 0.85) 0%, rgba(11, 40, 80, 0.7) 100%), url('./water_hero_bg.png');" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <div class="hero-tag">WATER TREATMENT & METERING PUMPS</div>
+                <h1 id="hero-title" class="fade-in">
+                    정밀한 기술로<br>
+                    <span class="blue-grad-text">깨끗한 미래</span>를 흐르게 합니다.
+                </h1>
+                <p class="hero-subtitle fade-in">
+                    (주)비에이텍은 다이어프램형 무맥동 정량 펌프 제작 및 수처리 설비의 무결점 설치·수리를 제공하는 엔지니어링 파트너입니다.
+                </p>
+                <div class="hero-actions fade-in">
+                    <a href="./product.html" class="btn btn-primary" id="cta-product">
+                        <span>주요 제품 보기</span>
+                        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    <a href="./inquiry.html" class="btn btn-outline" id="cta-inquiry">견적 및 기술 문의</a>
                 </div>
             </div>
-        </header>
-
-        <main id="book-area" style="display: none;">
-            <div class="book-controls glass-panel">
-                <button id="prev-btn" class="control-btn" aria-label="Previous Page">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                <span id="page-info" class="page-info">Page 1 of ?</span>
-                <button id="next-btn" class="control-btn" aria-label="Next Page">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
+            <!-- 마우스 휠 다운 유도 아이콘 -->
+            <div class="scroll-indicator">
+                <span class="mouse">
+                    <span class="wheel"></span>
+                </span>
+                <span class="scroll-text">SCROLL DOWN</span>
             </div>
-            
-            <div class="book-wrapper">
-                <div id="book">
-                    <!-- Pages go here -->
+        </section>
+
+        <!-- Features Section (핵심 경쟁력 요약) -->
+        <section class="features-section" id="features" aria-labelledby="features-title">
+            <div class="section-container">
+                <div class="section-header text-center">
+                    <span class="section-tag">CORE COMPETENCE</span>
+                    <h2 id="features-title">비에이텍만의 핵심 기술력</h2>
+                    <p class="section-desc">완벽한 수처리 솔루션과 혁신적인 펌프 제어 기술로 산업 현장을 리드합니다.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <!-- 카드 1: 무맥동 펌프 기술 -->
+                    <article class="feature-card fade-up" id="card-tech">
+                        <div class="card-icon-box">
+                            <!-- 물방울과 톱니가 융합된 형태의 벡터 아이콘 -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        </div>
+                        <h3>무맥동 다이어프램 정량펌프 기술</h3>
+                        <p class="card-text">
+                            PAC 및 PKD 시리즈 등 최고 정밀도의 무맥동 다이어프램 정량 펌프를 직접 설계·제작합니다. 맥동 현상을 원천 차단하여 정밀하고 균일한 약품 투입을 보장합니다.
+                        </p>
+                        <a href="./product.html" class="card-link">제품 라인업 보기 &rarr;</a>
+                    </article>
+
+                    <!-- 카드 2: 체계적인 사후관리 (유지관리지침서 연동 강조) -->
+                    <article class="feature-card fade-up" id="card-maintenance">
+                        <div class="card-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <h3>철저한 사후관리 및 정밀 오버홀</h3>
+                        <p class="card-text">
+                            정량펌프 유지관리지침서에 따른 철저한 예방 점검과 신속 수리 서비스를 시행합니다. 축적된 수리 노하우로 유체의 누출을 방지하고 설비 수명을 극대화합니다.
+                        </p>
+                        <!-- 매뉴얼이 있는 경우 링크 제공하여 신뢰도 상승 -->
+                        <a href="./정량펌프 유지관리지침서.pdf" target="_blank" class="card-link link-pdf">유지관리지침서 다운로드 (PDF) &rarr;</a>
+                    </article>
+
+                    <!-- 카드 3: 맞춤형 솔루션 -->
+                    <article class="feature-card fade-up" id="card-solution">
+                        <div class="card-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                        </div>
+                        <h3>맞춤형 친환경 수처리 솔루션</h3>
+                        <p class="card-text">
+                            하폐수 처리, 정수장, 산업 폐수 설비 등 현장의 유체 성상과 운전 압력을 반영하여 최적화된 맞춤형 펌프 패키지 제작 및 완벽한 현장 배관 시공을 약속드립니다.
+                        </p>
+                        <a href="./equipment.html" class="card-link">장비 및 인프라 확인 &rarr;</a>
+                    </article>
                 </div>
             </div>
-            
-            <div class="book-instructions">
-                Drag the corners or click the edges to flip pages.
-            </div>
-        </main>
-    </div>
+        </section>
 
+        <!-- Stats Section (수치로 보는 신뢰성 - 미니 인포그래픽) -->
+        <section class="stats-section" aria-label="기업 지표 요약">
+            <div class="section-container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">자체 설계 및 국내 제작</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">신속 수리 및 기술 대응</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0.01%</div>
+                        <div class="stat-label">미세 유량 정밀 오차 보증</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">국내 수처리 설비 시공 레퍼런스</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section (기술 문의 유도) -->
+        <section class="cta-banner-section" aria-labelledby="cta-banner-title">
+            <div class="section-container text-center">
+                <h2 id="cta-banner-title">유체 제어, 최고의 신뢰성을 보장합니다</h2>
+                <p>무맥동 정량펌프의 선정부터 도면 설계, 시공 및 철저한 유지관리까지 한 번에 상담받으세요.</p>
+                <div class="cta-btns">
+                    <a href="tel:033-248-1111" class="btn btn-primary-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        033-248-1111
+                    </a>
+                    <a href="./inquiry.html" class="btn btn-outline-white">온라인 상담신청</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">BAETECK</div>
+                <div class="footer-company-name">(주)비에이텍</div>
+                <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
+            </div>
+            
+            <div class="footer-info">
+                <h4>CONTACT INFO</h4>
+                <address>
+                    <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                    <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                    <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                </address>
+            </div>
+            
+            <div class="footer-links">
+                <h4>QUICK LINK</h4>
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="./product.html">주요제품</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html">고객문의</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">Copyright &copy; 2026 BAETECK CO., LTD. All Rights Reserved.</p>
+                <div class="footer-meta">
+                    <span>정량펌프 제작 · 설치 · 오버홀 수리 전문기업</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 인터랙션 제어용 자바스크립트 -->
     <script src="./script.js"></script>
 </body>
 </html>
