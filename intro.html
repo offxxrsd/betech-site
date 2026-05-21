@@ -185,10 +185,12 @@
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
             gap: 4.5rem;
-            align-items: center;
+            align-items: stretch; /* 테이블과 이미지 박스의 높이를 균형 있게 일치시킴 */
         }
         .overview-table-box {
             width: 100%;
+            display: flex;
+            align-items: center;
         }
         .corporate-table {
             width: 100%;
@@ -234,94 +236,50 @@
         
         .overview-image-box {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             width: 100%;
         }
 
-        /* 🏢 세련된 회색톤의 사옥 전경 이미지 플레이스홀더 스타일 */
-        .building-image-placeholder {
+        /* 🏢 웅장하고 세련된 사옥 전경 이미지 전용 래퍼 및 프리미엄 효과 */
+        .building-image-wrapper {
             width: 100%;
-            aspect-ratio: 4 / 3;
-            background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
-            border: 2px dashed #CBD5E1;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem 2rem;
-            text-align: center;
+            height: 100%;
+            min-height: 480px; /* 테이블 높이와 정밀 대칭을 유도하는 기저 높이 */
+            border-radius: 12px;
+            overflow: hidden;
             box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-border);
             transition: var(--transition-base);
             position: relative;
-            overflow: hidden;
         }
         
-        /* 반짝이는 메탈릭 스와이프 효과 애니메이션 */
-        .building-image-placeholder::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 50%;
+        .building-image-wrapper img {
+            width: 100%;
             height: 100%;
-            background: linear-gradient(
-                to right,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.4) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: skewX(-25deg);
-            transition: none;
+            object-fit: cover; /* 이미지 비율 유지하며 꽉 채움 */
+            transition: var(--transition-base);
+            display: block;
         }
 
-        .building-image-placeholder:hover::before {
-            left: 150%;
-            transition: left 1s cubic-bezier(0.4, 0, 0.2, 1);
+        /* 호버 시 줌인 및 부드러운 아쿠아 블루 그림자 발산 효과 */
+        .building-image-wrapper:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px -10px rgba(0, 163, 224, 0.25), var(--shadow-lg);
+            border-color: rgba(0, 163, 224, 0.35);
         }
 
-        .building-image-placeholder:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--color-secondary);
-            background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+        .building-image-wrapper:hover img {
+            transform: scale(1.04); /* 부드러운 줌 애니메이션 */
         }
-
-        .placeholder-icon {
-            font-size: 3.8rem;
-            margin-bottom: 1.25rem;
-            filter: drop-shadow(0 4px 10px rgba(10, 28, 58, 0.08));
-            animation: bounceIcon 3s infinite ease-in-out;
-            user-select: none;
-        }
-
-        .placeholder-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--color-primary);
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .placeholder-subtitle {
-            font-size: 0.9rem;
-            font-weight: 600;
+        
+        .building-caption {
+            font-size: 0.875rem;
             color: var(--color-text-muted);
-            background-color: rgba(100, 116, 139, 0.08);
-            padding: 0.35rem 1rem;
-            border-radius: 50px;
-            display: inline-block;
-            letter-spacing: -0.01em;
-            border: 1px solid rgba(100, 116, 139, 0.1);
-        }
-
-        @keyframes bounceIcon {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-            }
-            50% {
-                transform: translateY(-10px) scale(1.05);
-            }
+            text-align: center;
+            margin-top: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
 
         /* ==========================================================================
@@ -431,6 +389,7 @@
             .overview-grid {
                 grid-template-columns: 1fr;
                 gap: 3.5rem;
+                align-items: stretch;
             }
             .values-grid {
                 grid-template-columns: 1fr;
@@ -439,8 +398,11 @@
                 margin: 0 auto;
             }
             .overview-image-box {
-                max-width: 650px;
+                max-width: 100%;
                 margin: 0 auto;
+            }
+            .building-image-wrapper {
+                min-height: 380px; /* 모바일/태블릿 화면에서의 높이 맞춤 */
             }
             .corporate-table th {
                 width: 140px;
@@ -637,12 +599,13 @@
                         </table>
                     </div>
                     
-                    <!-- 우측: 세련된 회색톤의 건물 전경 이미지 플레이스홀더 영역 -->
+                    <!-- 우측: 웅장하고 세련된 사옥 전경 이미지 영역 -->
                     <div class="overview-image-box">
-                        <div class="building-image-placeholder" title="(주)비에이텍 사옥 전경 (이미지 준비중)">
-                            <div class="placeholder-icon">🏢</div>
-                            <div class="placeholder-title">(주)비에이텍 사옥 전경</div>
-                            <div class="placeholder-subtitle">(이미지 준비중)</div>
+                        <div class="building-image-wrapper">
+                            <img src="./company_building.png" alt="(주)비에이텍 사옥 전경">
+                        </div>
+                        <div class="building-caption">
+                            (주)비에이텍 사옥 및 정밀 스마트 팩토리 전경
                         </div>
                     </div>
                 </div>
