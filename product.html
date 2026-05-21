@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)비에이텍 - 주요 제품 소개</title>
+    
+    <!-- SEO 및 메타 태그 정의 -->
+    <meta name="description" content="(주)비에이텍의 주요 제품군인 PAC 모터 직결형 다이어프램 정량펌프와 특허 기술 등속도캠을 탑재한 PKD 무맥동 정량펌프 시리즈를 상세히 소개합니다.">
+    <meta name="keywords" content="비에이텍, 정량펌프, 무맥동 펌프, 다이어프램 펌프, 수처리, PAC 시리즈, PKD 시리즈, 등속도캠, 특허 기술, 정밀 수처리">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="(주)비에이텍 - 주요 제품 소개">
+    <meta property="og:description" content="정밀한 유체 제어와 특허받은 무맥동 기술. 비에이텍의 고성능 펌프 솔루션을 만나보세요.">
+    <meta property="og:image" content="./water_hero_bg.png">
+    
+    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 외부 공통 스타일시트 연동 -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- 주요제품 페이지 전용 특화 프리미엄 스타일 -->
+    <style>
+        /* GNB 활성화 상태 표시 스타일 */
+        .desktop-nav ul li a[href*="product.html"] {
+            color: var(--color-accent) !important;
+        }
+        .desktop-nav ul li a[href*="product.html"]::after {
+            transform: scaleX(1) !important;
+            transform-origin: left !important;
+        }
+        .main-header.scrolled .desktop-nav ul li a[href*="product.html"] {
+            color: var(--color-secondary) !important;
+        }
+        .mobile-nav ul li a[href*="product.html"] {
+            color: var(--color-accent) !important;
+            border-bottom-color: rgba(0, 229, 255, 0.3);
+        }
+
+        /* 서브페이지 전용 히어로 배너 */
+        .subpage-hero {
+            position: relative;
+            width: 100%;
+            height: 45vh;
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+        .subpage-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 44, 0.9) 0%, rgba(11, 40, 80, 0.75) 100%);
+            z-index: 1;
+        }
+        .subpage-hero-content {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .subpage-hero-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            color: var(--color-accent);
+            margin-bottom: 0.75rem;
+            opacity: 0.9;
+        }
+        .subpage-hero h1 {
+            font-size: 2.75rem;
+            font-weight: 850;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .subpage-hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* 제품 영역 전체 디자인 */
+        .products-section {
+            background-color: var(--color-bg-light);
+            padding: 7rem 0;
+            position: relative;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3.5rem;
+        }
+
+        /* 제품 프리미엄 카드 디자인 */
+        .product-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-base);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 163, 224, 0.3);
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            transition: var(--transition-base);
+            z-index: 10;
+        }
+        .product-card:hover::before {
+            background: var(--color-secondary);
+        }
+        .product-card.high-end:hover::before {
+            background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+        }
+
+        /* 비주얼 이미지 영역 (일러스트레이션용 SVG 배치) */
+        .product-image-box {
+            background: linear-gradient(135deg, #09152a 0%, #11284f 100%);
+            height: 280px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .product-image-box::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 163, 224, 0.15) 0%, transparent 75%);
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .product-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: var(--color-secondary);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .product-badge.high-end {
+            background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+            color: #0A1C3A;
+            font-weight: 800;
+        }
+
+        /* 내화학성 및 유체 흐름을 형상화하는 정밀 기계 모티프 SVG */
+        .pump-svg {
+            width: 100%;
+            height: 200px;
+            max-width: 320px;
+            z-index: 2;
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
+        }
+
+        /* 제품 텍스트 및 상세 요약 영역 */
+        .product-info {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .product-info h3 {
+            font-size: 1.85rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .product-subtitle {
+            color: var(--color-secondary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .product-desc {
+            color: var(--color-text-muted);
+            font-size: 0.98rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+        .product-specs-summary {
+            border-top: 1px solid var(--color-border);
+            padding-top: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .spec-summary-item {
+            display: flex;
+            font-size: 0.925rem;
+            line-height: 1.4;
+        }
+        .spec-summary-item strong {
+            color: var(--color-primary);
+            width: 130px;
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+        .spec-summary-item span {
+            color: var(--color-text-main);
+            font-weight: 500;
+        }
+
+        /* 모달 팝업 레이아웃 스타일 정의 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            background-color: rgba(5, 14, 28, 0.75);
+            backdrop-filter: blur(15px) saturate(180%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            padding: 1.5rem;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 950px;
+            max-height: 90vh;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            scroll-behavior: smooth;
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        /* 모달 닫기 버튼 */
+        .modal-close {
+            position: absolute;
+            top: 1.75rem;
+            right: 1.75rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ffffff;
+            transition: var(--transition-base);
+            z-index: 100;
+        }
+        .modal-close:hover {
+            background: #ffffff;
+            color: var(--color-primary);
+            transform: rotate(90deg);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 모달 디자인 디테일 */
+        .modal-header-section {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            padding: 3.5rem 3rem;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+        .modal-header-section::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 300px;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 163, 224, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .modal-header-section h2 {
+            font-size: 2.25rem;
+            font-weight: 850;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .modal-header-section p {
+            color: var(--color-accent);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+        }
+        
+        /* 모달 본문 */
+        .modal-body {
+            padding: 3.5rem 3rem;
+        }
+        .modal-section {
+            margin-bottom: 3.5rem;
+        }
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+        .modal-section-title {
+            font-size: 1.35rem;
+            color: var(--color-primary);
+            font-weight: 800;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-left: 5px solid var(--color-secondary);
+            padding-left: 0.85rem;
+            letter-spacing: -0.01em;
+        }
+        .modal-text {
+            color: var(--color-text-main);
+            font-size: 1rem;
+            line-height: 1.75;
+            text-align: justify;
+        }
+
+        /* 불릿 기호 전문 리스트 */
+        .modal-bullet-list {
+            list-style: none;
+            padding-left: 0.25rem;
+            margin-top: 0.75rem;
+        }
+        .modal-bullet-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.85rem;
+            line-height: 1.7;
+            color: var(--color-text-main);
+            font-size: 0.975rem;
+        }
+        .modal-bullet-list li strong {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+        .modal-bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--color-secondary);
+        }
+
+        /* 고유한 반응형 테크니컬 표 스타일 */
+        .modal-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+        .modal-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.925rem;
+            text-align: center;
+            min-width: 600px;
+        }
+        .modal-table th {
+            background: var(--color-primary);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 1rem 1.25rem;
+            letter-spacing: -0.01em;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .modal-table th:last-child {
+            border-right: none;
+        }
+        .modal-table td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text-main);
+            font-weight: 500;
+            border-right: 1px solid var(--color-border);
+        }
+        .modal-table td:last-child {
+            border-right: none;
+        }
+        .modal-table tr:last-child td {
+            border-bottom: none;
+        }
+        .modal-table tr:nth-child(even) {
+            background: var(--color-bg-light);
+        }
+        .modal-table tr:hover {
+            background: rgba(0, 163, 224, 0.04);
+        }
+
+        /* 탭 키 포커스 접근성 */
+        .modal-close:focus-visible,
+        .btn:focus-visible {
+            outline: 3px solid var(--color-secondary);
+            outline-offset: 2px;
+        }
+
+        /* ==========================================================================
+           주요제품 페이지 반응형 미디어 쿼리
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                max-width: 700px;
+                margin: 0 auto;
+            }
+            .subpage-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .subpage-hero {
+                height: 35vh;
+                min-height: 260px;
+            }
+            .subpage-hero h1 {
+                font-size: 2rem;
+            }
+            .subpage-hero p {
+                font-size: 1rem;
+            }
+            .products-section {
+                padding: 4.5rem 0;
+            }
+            .product-image-box {
+                height: 220px;
+            }
+            .pump-svg {
+                height: 160px;
+            }
+            .product-info {
+                padding: 1.75rem;
+            }
+            .modal-header-section {
+                padding: 2.5rem 1.75rem;
+            }
+            .modal-header-section h2 {
+                font-size: 1.75rem;
+            }
+            .modal-body {
+                padding: 2.5rem 1.75rem;
+            }
+            .modal-close {
+                top: 1.25rem;
+                right: 1.25rem;
+                width: 36px;
+                height: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GNB (Global Navigation Bar) 헤더 영역 -->
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <!-- 로고 및 상호명 -->
+            <a href="./index.html" class="logo" id="header-logo">
+                <span class="brand-en">BAETECK</span>
+                <span class="brand-ko">(주)비에이텍</span>
+            </a>
+            
+            <!-- 데스크톱 네비게이션 메뉴 -->
+            <nav class="desktop-nav" aria-label="메인 네비게이션">
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
+                </ul>
+            </nav>
+            
+            <!-- 모바일 햄버거 메뉴 버튼 -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+        
+        <!-- 모바일 드롭다운 메뉴 -->
+        <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
+            <ul>
+                <li><a href="./intro.html">기업소개</a></li>
+                <li><a href="product.html">제품소개</a></li>
+                <li><a href="./equipment.html">보유장비</a></li>
+                <li><a href="./sales_history.html">주요업력</a></li>
+                <li><a href="./map.html">찾아오시는 길</a></li>
+                <li><a href="./inquiry.html">고객문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 서브페이지 전용 히어로 배너 (물빛 수처리 테마 유지) -->
+        <section class="subpage-hero" style="background-image: url('./water_hero_bg.png');" aria-labelledby="sub-hero-title">
+            <div class="subpage-hero-content">
+                <div class="subpage-hero-tag">HIGH-PRECISION METERING PUMPS</div>
+                <h1 id="sub-hero-title">주요 제품 소개</h1>
+                <p>정밀한 기술력과 지속적인 혁신으로 다이어프램 정량펌프의 표준을 제시하며, 수처리 및 특수 화학공정 시스템의 고신뢰성을 설계합니다.</p>
+            </div>
+        </section>
+
+        <!-- 주요 제품 리스트 섹션 -->
+        <section class="products-section" aria-labelledby="products-title">
+            <div class="section-container">
+                <div class="section-header text-center">
+                    <span class="section-tag">PRODUCT LINEUP</span>
+                    <h2 id="products-title">비에이텍 핵심 제품군</h2>
+                    <p class="section-desc">오랜 노하우와 독자적 특허 메커니즘을 기반으로 최상의 정밀도와 완벽한 밀폐성을 달성한 정량펌프 시리즈입니다.</p>
+                </div>
+
+                <div class="products-grid">
+                    <!-- 1. PAC 시리즈 카드 -->
+                    <article class="product-card fade-up" id="product-card-pac">
+                        <span class="product-badge">Standard Model</span>
+                        <div class="product-image-box">
+                            <!-- 정밀 왕복동 캠 펌프를 도식화한 SVG 비주얼 -->
+                            <svg class="pump-svg" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="30" y="80" width="100" height="70" rx="6" fill="#1e2e4d" stroke="#00A3E0" stroke-width="2"/>
+                                <circle cx="80" cy="115" r="24" fill="none" stroke="#E1F5FE" stroke-width="1.5" stroke-dasharray="4 4"/>
+                                <circle cx="80" cy="115" r="12" fill="#00A3E0"/>
+                                <path d="M92 115 H160" stroke="#00E5FF" stroke-width="3" stroke-linecap="round"/>
+                                <rect x="160" y="70" width="40" height="90" rx="8" fill="#162e5c" stroke="#00A3E0" stroke-width="2"/>
+                                <path d="M180 50 V70" stroke="#00E5FF" stroke-width="3" marker-end="url(#arrow)"/>
+                                <path d="M180 160 V180" stroke="#00E5FF" stroke-width="3"/>
+                                <circle cx="180" cy="50" r="10" fill="#0A1C3A" stroke="#00E5FF" stroke-width="2"/>
+                                <circle cx="180" cy="180" r="10" fill="#0A1C3A" stroke="#00E5FF" stroke-width="2"/>
+                                <path d="M176 50 L184 50" stroke="#E1F5FE" stroke-width="2"/>
+                                <path d="M176 180 L184 180" stroke="#E1F5FE" stroke-width="2"/>
+                                <path d="M200 115 H240" stroke="#E1F5FE" stroke-width="2" stroke-dasharray="4 2"/>
+                                <circle cx="240" cy="115" r="8" fill="#00E5FF"/>
+                            </svg>
+                        </div>
+                        <div class="product-info">
+                            <h3>PAC 시리즈</h3>
+                            <div class="product-subtitle">Standard Reciprocating Diaphragm Pump</div>
+                            <p class="product-desc">
+                                모터 직결형 편심캠 감속 장치와 마이크로 세밀 제어 다이얼을 결합하여, 거친 화학 약품 공정에서도 뛰어난 신뢰성과 긴 수명을 제공하는 정밀 정량 주입 펌프의 표준 모델입니다.
+                            </p>
+                            <div class="product-specs-summary">
+                                <div class="spec-summary-item">
+                                    <strong>핵심 메커니즘</strong>
+                                    <span>편심캠 및 흡/토출 체크밸브 동기화</span>
+                                </div>
+                                <div class="spec-summary-item">
+                                    <strong>최대 토출량</strong>
+                                    <span>최대 720 mL/min</span>
+                                </div>
+                                <div class="spec-summary-item">
+                                    <strong>최고 토출압력</strong>
+                                    <span>10 bar</span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-modal-trigger" data-target="modal-pac">
+                                <span>상세 기술 명세 보기</span>
+                                <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 2. PKD 시리즈 카드 -->
+                    <article class="product-card high-end fade-up" id="product-card-pkd">
+                        <span class="product-badge high-end">Patented High-End</span>
+                        <div class="product-image-box">
+                            <!-- 무맥동 특허 및 크로스 구동을 도식화한 SVG 비주얼 -->
+                            <svg class="pump-svg" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="30" y="80" width="80" height="70" rx="6" fill="#1e2e4d" stroke="#00A3E0" stroke-width="2"/>
+                                <path d="M70 65 L70 95" stroke="#00E5FF" stroke-width="1.5"/>
+                                <circle cx="70" cy="115" r="14" fill="#00E5FF" fill-opacity="0.2"/>
+                                <rect x="210" y="80" width="80" height="70" rx="6" fill="#1e2e4d" stroke="#00A3E0" stroke-width="2"/>
+                                <circle cx="250" cy="115" r="14" fill="#00E5FF" fill-opacity="0.2"/>
+                                <circle cx="160" cy="115" r="28" fill="none" stroke="#E1F5FE" stroke-width="1.5"/>
+                                <circle cx="145" cy="105" r="8" fill="#00E5FF"/>
+                                <circle cx="175" cy="125" r="8" fill="#00A3E0"/>
+                                <path d="M110 115 H210" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M30 40 Q75 10, 160 10 T290 10" stroke="#00A3E0" stroke-width="1.5" stroke-dasharray="4 2"/>
+                                <path d="M30 40 H290" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"/>
+                                <text x="110" y="32" fill="#00E5FF" font-family="Montserrat" font-size="9" font-weight="700" letter-spacing="1">CONSTANT FLOW 0% PULSATION</text>
+                            </svg>
+                        </div>
+                        <div class="product-info">
+                            <h3>PKD 무맥동 시리즈</h3>
+                            <div class="product-subtitle">Patented Constant Velocity Cam No-Pulsation Pump</div>
+                            <p class="product-desc">
+                                자사 특허 기술인 '등속도캠'과 양방향 교차 더블 헤드 메커니즘을 융합하여 맥동현상을 0%로 완전히 억제, 수격 및 배관 손상 없이 부드러운 완벽 수평 직선류를 보장합니다.
+                            </p>
+                            <div class="product-specs-summary">
+                                <div class="spec-summary-item">
+                                    <strong>핵심 메커니즘</strong>
+                                    <span>특허 등속도캠 &amp; 더블 헤드 크로스 교차 이송</span>
+                                </div>
+                                <div class="spec-summary-item">
+                                    <strong>최대 토출량</strong>
+                                    <span>최대 800 mL/min</span>
+                                </div>
+                                <div class="spec-summary-item">
+                                    <strong>맥동율 (Pulsation)</strong>
+                                    <span>0.0% (완벽한 직선 연속류 실현)</span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-modal-trigger" data-target="modal-pkd">
+                                <span>상세 기술 명세 보기</span>
+                                <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section (수리 및 견적 문의) -->
+        <section class="cta-banner-section" aria-labelledby="cta-banner-title">
+            <div class="section-container text-center">
+                <h2 id="cta-banner-title">정밀 펌프 선정에 도움이 필요하십니까?</h2>
+                <p>현장의 유체 조건, 필요 압력, 화학 반응도에 맞추어 최적의 설계 도면과 견적 서비스를 제공합니다.</p>
+                <div class="cta-btns">
+                    <a href="tel:033-248-1111" class="btn btn-primary-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        033-248-1111
+                    </a>
+                    <a href="./inquiry.html" class="btn btn-outline-white">맞춤 견적 및 온라인 상담</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================================================
+       모달 상세 팝업 영역 (숨겨짐, 활성화 시 노출됨)
+       ========================================================================== -->
+
+    <!-- 1. PAC 시리즈 상세설명 모달 -->
+    <div class="modal-overlay" id="modal-pac" aria-hidden="true" role="dialog">
+        <div class="modal-container">
+            <button type="button" class="modal-close" aria-label="창 닫기">&times;</button>
+            <div class="modal-header-section">
+                <h2>PAC 시리즈 상세 기술 안내</h2>
+                <p>Standard Motor-Direct Coupled Reciprocating Diaphragm Pump</p>
+            </div>
+            <div class="modal-body">
+                <!-- 1. 제품 개요 -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">1. 제품 개요</h3>
+                    <p class="modal-text">
+                        <strong>PAC 시리즈</strong>는 탁월한 내구성과 정확한 계량 정밀도를 제공하는 모터 직결형 왕복동 다이어프램 정량펌프의 국내 표준 모델입니다. 높은 신뢰성을 보장하는 기계식 편심캠 감속 시스템을 내장하였으며, 수처리 시설(정수장, 하폐수 처리장)의 응집제 주입 공정, 각종 제조 현장의 공정용 화학 약품 주입 공정 등 장시간 지속적이고 정밀한 액상 투입이 필요한 최전선에서 활약합니다. 누설 우려가 높은 패킹 구조를 배제하고 완벽히 밀폐된 다이어프램 구동 메커니즘을 적용하여, 작업 환경의 청결을 지키고 부식성·독성 약품의 누출로 인한 사고를 방지합니다.
+                    </p>
+                </section>
+
+                <!-- 2. 작동 원리 및 핵심 메커니즘 -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">2. 작동 원리 및 핵심 메커니즘</h3>
+                    <p class="modal-text">
+                        본 제품은 구동 모터의 빠른 고속 회전을 내부 정밀 웜기어 감속기로 감속하여 편심캠의 고토크 저속 회전력으로 변환하며, 이후 흡입 및 토출 동작을 순차적으로 수행합니다.
+                    </p>
+                    <ul class="modal-bullet-list">
+                        <li><strong>감속 및 고토크 기어 전달:</strong> 모터 직접 연결 방식(Direct Coupled)으로 전동력을 손실 없이 수용하며, 하우징 내부 웜 기어가 감속 비율을 유지하여 안정한 구동 토크를 발생시킵니다.</li>
+                        <li><strong>편심캠(Eccentric Cam) 메커니즘:</strong> 회전 운동 부품인 원형 편심캠과 강력한 복원력의 리턴 스프링이 결합하여 플런저 샤프트를 밀고 당기는 직선 왕복 운동으로 완벽히 변화시킵니다.</li>
+                        <li><strong>체크 밸브(Check Valve) 연동 수치 제어:</strong> 실린더 헤드 챔버 내부의 압력 구배에 맞춰 상·하부 체크 밸브의 기밀 시트가 연동됩니다.
+                            <br>- <em>흡입 행정:</em> 편심캠이 플런저를 당길 때 챔버가 팽창하며 내부가 진공 상태가 되고, 하단 흡입 밸브가 열려 약품이 채워집니다.
+                            <br>- <em>토출 행정:</em> 편심캠이 전진하며 챔버가 축소되고 높은 압력을 형성하여, 하단 흡입 밸브를 닫고 상단 토출 밸브를 열어 약품을 고압 토출합니다.
+                        </li>
+                        <li><strong>정밀 스트로크 미세 제어:</strong> 펌프 후면에 장착된 마이크로미터 다이얼 노브를 회전시켜 편심캠의 총 왕복 유효 거리(Stroke Length)를 0%부터 100%까지 세밀하게 변경해 유량을 제량 보정합니다.</li>
+                    </ul>
+                </section>
+
+                <!-- 3. 도입 시 특장점 및 기대효과 -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">3. 도입 시 특장점 및 기대효과</h3>
+                    <ul class="modal-bullet-list">
+                        <li><strong>환경 친화적 완전 밀폐 구조:</strong> 유해성 화학 액체 이송 시, 액체의 누출 부위를 완전히 밀폐하는 다이어프램 방식을 적용하여 안전 사고율을 획기적으로 차단합니다.</li>
+                        <li><strong>유지보수 주기 연장:</strong> 정밀 가공된 기어박스에 오일 배스(Oil Bath) 형태의 침전형 연속 윤활 구조를 구축하여 과열과 마모를 차단하며, 열화 성능 감소를 최소화합니다.</li>
+                        <li><strong>재질 호환성의 다양화:</strong> 현장 유체의 강력한 부식성이나 화학적 특성에 알맞도록 접액부 재질(Liquid End Unit)을 <strong>PTFE, PVDF, SUS316, PVC, Hastelloy</strong> 등 특수 고성능 소재로 주문 제작 가능합니다.</li>
+                        <li><strong>경량화 및 간편한 작동:</strong> 구조적 일체화 및 미니멀 설계를 통해 좁은 약품 공급 가대(Pump Skid Unit) 내부에서도 뛰어난 유지보수 공간을 보증합니다.</li>
+                    </ul>
+                </section>
+
+                <!-- 4. 제품 사양 표 -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">4. 표준 제품 사양 정보</h3>
+                    <div class="modal-table-wrapper">
+                        <table class="modal-table">
+                            <thead>
+                                <tr>
+                                    <th>모델명 (Model)</th>
+                                    <th>최대 토출량 (Max Flow)</th>
+                                    <th>최고 압력 (Max Pressure)</th>
+                                    <th>연결 접속 구경 (Connection)</th>
+                                    <th>소요 동력 (Motor)</th>
+                                    <th>표준 접액부 재질 (Materials)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PAC-45</td>
+                                    <td>45 mL/min</td>
+                                    <td>10 bar</td>
+                                    <td>PT 3/8"</td>
+                                    <td>0.09 kW</td>
+                                    <td>PTFE / PVDF / SUS316</td>
+                                </tr>
+                                <tr>
+                                    <td>PAC-90</td>
+                                    <td>90 mL/min</td>
+                                    <td>10 bar</td>
+                                    <td>PT 3/8"</td>
+                                    <td>0.09 kW</td>
+                                    <td>PTFE / PVDF / SUS316</td>
+                                </tr>
+                                <tr>
+                                    <td>PAC-180</td>
+                                    <td>180 mL/min</td>
+                                    <td>7 bar</td>
+                                    <td>PT 3/8"</td>
+                                    <td>0.20 kW</td>
+                                    <td>PTFE / PVDF / SUS316</td>
+                                </tr>
+                                <tr>
+                                    <td>PAC-360</td>
+                                    <td>360 mL/min</td>
+                                    <td>5 bar</td>
+                                    <td>PT 1/2"</td>
+                                    <td>0.20 kW</td>
+                                    <td>PTFE / PVDF / SUS316</td>
+                                </tr>
+                                <tr>
+                                    <td>PAC-720</td>
+                                    <td>720 mL/min</td>
+                                    <td>3 bar</td>
+                                    <td>PT 1/2"</td>
+                                    <td>0.40 kW</td>
+                                    <td>PTFE / PVDF / SUS316</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. PKD 무맥동 시리즈 상세설명 모달 -->
+    <div class="modal-overlay" id="modal-pkd" aria-hidden="true" role="dialog">
+        <div class="modal-container">
+            <button type="button" class="modal-close" aria-label="창 닫기">&times;</button>
+            <div class="modal-header-section">
+                <h2>PKD 무맥동 시리즈 상세 기술 안내</h2>
+                <p>Patented Constant Velocity Cam Dual-Head No-Pulsation Metering Pump</p>
+            </div>
+            <div class="modal-body">
+                <!-- 1. 제품 개요 -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">1. 제품 개요</h3>
+                    <p class="modal-text">
+                        <strong>PKD 무맥동 시리즈</strong>는 기존의 1회 왕복동식 편심캠 펌프들이 태생적으로 안고 있는 사인파 파형에 따른 단절적 유동 흐름(맥동, Pulsation)을 완벽히 소거한 비에이텍의 특허 기술 집약체입니다. 독자적으로 개발 및 권리를 획득한 **'등속도 캠(Constant Velocity Cam)'** 기하 구조를 정밀 머시닝 센터에서 3차원 특수 가공하여, 좌/우 두 개의 약품 주입 다이어프램 헤드(Double Head)가 180도 위상 교차 구동되도록 제어합니다. 이로써 외부의 거대하고 관리가 어려운 완충 챔버(Air Chamber)의 설치 없이도 완벽한 고정밀 연속 직선 흐름(Continuous Linear Flow)과 맥동율 0.0%를 구현함으로써 화학 공정의 정밀도를 한 차원 끌어올렸습니다.
+                    </p>
+                </section>
+
+                <!-- 2. 작동 원리 및 핵심 메커니즘 -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">2. 작동 원리 및 핵심 메커니즘</h3>
+                    <p class="modal-text">
+                        PKD 시리즈는 단순 가압과 이완이 반복되는 사인파 유동을 극복하고자 기계 역학적 교차 충진 합성 방식을 실현하고 있습니다.
+                    </p>
+                    <ul class="modal-bullet-list">
+                        <li><strong>특허 등속도캠 (Constant Velocity Cam) 설계:</strong> 편심 구간의 구배 각도가 플런저 축을 전진시킬 때 가감속 속도가 아닌 등속도(Constant Velocity) 직선 속도로 플런저를 완벽하게 제어합니다.</li>
+                        <li><strong>더블 헤드(Double Liquid End) 교차 보완 설계:</strong> 동일 펌프 블록 내부에 180도의 대칭 기계 구조를 배치하여 하나의 캠 축 회전 동작 시 한쪽 실린더가 토출을 종결하는 순간 반대쪽 실린더가 완벽히 토출을 연속 개시하도록 매커니즘을 구성하였습니다.</li>
+                        <li><strong>상호 보완적인 유량의 물리적 합성:</strong> A헤드 실린더의 감속 및 복귀 유동 면적이 형성되는 시점에 B헤드의 상승 유량 곡선 속도가 즉각 겹치도록 정밀 오차 보간 기하 곡선을 실현하여, 배관 내에서 물리적으로 합성된 약품 주입 결과는 흐름이 전혀 끊어지지 않는 완벽한 직선 상태를 실현합니다.</li>
+                        <li><strong>체크 밸브 정밀 시트 압착력:</strong> 미세한 압력 과도 응답 특성을 개선하기 위해 고점도에도 부유하지 않는 중량 세라믹 볼 밸브 시트 기술을 내장하여 정밀 역류 방지 효과를 최대화했습니다.</li>
+                    </ul>
+                </section>
+
+                <!-- 3. 도입 시 특장점 및 기대효과 -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">3. 도입 시 특장점 및 기대효과</h3>
+                    <ul class="modal-bullet-list">
+                        <li><strong>관로 수격(Water Hammering) 현상 차단:</strong> 단속적 약품 이송 시 나타나는 고질적 압력 충격이 완전히 사멸하여 약품 공급용 강관 또는 수지(PVC) 배관의 조인트 균열 누수를 원천 예방하고 배관 설비 수명을 300% 이상 연장합니다.</li>
+                        <li><strong>배관 부대설비 비용 및 공간 절약:</strong> 주기적 에어 가스 보충과 다이어프램 고장이 잦은 고가의 공기 방(Air Chamber)을 설치할 의무가 없어져, 전체 펌프 시스템 베이스의 부피가 컴팩트하게 변모하고 유지 관리 비용이 절감됩니다.</li>
+                        <li><strong>인라인 약품 직접 투입:</strong> 유동 파동에 따른 순간 과농도/저농도 편차가 사라짐에 따라, 메인 공정 파이프라인 내부로 직접 고농도 황산, 수산화나트륨 등을 다이렉트 주입하여도 인라인 비례 혼합 농도가 무결하게 성립됩니다.</li>
+                        <li><strong>안정적 미세 정밀 계측:</strong> 후단에 위치한 압력 센서 및 전자 유량계가 진동에 의해 떨리는 오류를 원천 차단하여 시스템 자동 제어 정밀도가 최상으로 고도화됩니다.</li>
+                    </ul>
+                </section>
+
+                <!-- 4. 제품 사양 표 -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">4. 표준 제품 사양 정보</h3>
+                    <div class="modal-table-wrapper">
+                        <table class="modal-table">
+                            <thead>
+                                <tr>
+                                    <th>모델명 (Model)</th>
+                                    <th>최대 토출량 (Max Flow)</th>
+                                    <th>최고 압력 (Max Pressure)</th>
+                                    <th>맥동율 (Pulsation Rate)</th>
+                                    <th>접속 구경 (Connection)</th>
+                                    <th>소요 동력 (Motor)</th>
+                                    <th>표준 접액부 재질 (Materials)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PKD-50</td>
+                                    <td>50 mL/min</td>
+                                    <td>15 bar</td>
+                                    <td>0% (무맥동)</td>
+                                    <td>PT 3/8"</td>
+                                    <td>0.2 kW</td>
+                                    <td>PTFE / PVDF / SUS316 / Hastelloy</td>
+                                </tr>
+                                <tr>
+                                    <td>PKD-100</td>
+                                    <td>100 mL/min</td>
+                                    <td>12 bar</td>
+                                    <td>0% (무맥동)</td>
+                                    <td>PT 3/8"</td>
+                                    <td>0.2 kW</td>
+                                    <td>PTFE / PVDF / SUS316 / Hastelloy</td>
+                                </tr>
+                                <tr>
+                                    <td>PKD-200</td>
+                                    <td>200 mL/min</td>
+                                    <td>10 bar</td>
+                                    <td>0% (무맥동)</td>
+                                    <td>PT 1/2"</td>
+                                    <td>0.4 kW</td>
+                                    <td>PTFE / PVDF / SUS316 / Hastelloy</td>
+                                </tr>
+                                <tr>
+                                    <td>PKD-400</td>
+                                    <td>400 mL/min</td>
+                                    <td>7 bar</td>
+                                    <td>0% (무맥동)</td>
+                                    <td>PT 1/2"</td>
+                                    <td>0.4 kW</td>
+                                    <td>PTFE / PVDF / SUS316 / Hastelloy</td>
+                                </tr>
+                                <tr>
+                                    <td>PKD-800</td>
+                                    <td>800 mL/min</td>
+                                    <td>5 bar</td>
+                                    <td>0% (무맥동)</td>
+                                    <td>PT 1/2"</td>
+                                    <td>0.75 kW</td>
+                                    <td>PTFE / PVDF / SUS316 / Hastelloy</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">BAETECK</div>
+                <div class="footer-company-name">(주)비에이텍</div>
+                <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
+            </div>
+            
+            <div class="footer-info">
+                <h4>CONTACT INFO</h4>
+                <address>
+                    <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                    <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                    <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                </address>
+            </div>
+            
+            <div class="footer-links">
+                <h4>QUICK LINK</h4>
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html">고객문의</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">Copyright &copy; 2026 BAETECK CO., LTD. All Rights Reserved.</p>
+                <div class="footer-meta">
+                    <span>정량펌프 제작 · 설치 · 오버홀 수리 전문기업</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
+    <script src="./script.js"></script>
+
+    <!-- 모달 활성화 및 배경 스크롤 제어를 위한 상세 스크립트 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 모달 트리거 탐색
+            const modalTriggers = document.querySelectorAll('.btn-modal-trigger');
+            const modals = document.querySelectorAll('.modal-overlay');
+            const closeButtons = document.querySelectorAll('.modal-close');
+
+            // 모달 열기 함수
+            const openModal = (modalId) => {
+                const targetModal = document.getElementById(modalId);
+                if (targetModal) {
+                    targetModal.classList.add('active');
+                    targetModal.setAttribute('aria-hidden', 'false');
+                    
+                    // 본문 스크롤 방지 및 스크롤바 영역 보존(레이아웃 밀림 방지)
+                    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+                    document.body.style.overflow = 'hidden';
+                    if (scrollBarWidth > 0) {
+                        document.body.style.paddingRight = `${scrollBarWidth}px`;
+                    }
+                    
+                    // GNB가 고정 레이아웃이므로 GNB 밀림 방지
+                    const header = document.getElementById('header');
+                    if (header) {
+                        header.style.paddingRight = `${scrollBarWidth}px`;
+                    }
+                }
+            };
+
+            // 모달 닫기 함수
+            const closeModal = (activeModal) => {
+                activeModal.classList.remove('active');
+                activeModal.setAttribute('aria-hidden', 'true');
+                
+                // 트랜지션 완료 후 스크롤 복원
+                setTimeout(() => {
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
+                    const header = document.getElementById('header');
+                    if (header) {
+                        header.style.paddingRight = '';
+                    }
+                }, 300);
+            };
+
+            // 트리거 이벤트 연결
+            modalTriggers.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const targetId = button.getAttribute('data-target');
+                    openModal(targetId);
+                });
+            });
+
+            // 닫기 버튼 이벤트 연결
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const activeModal = button.closest('.modal-overlay');
+                    if (activeModal) {
+                        closeModal(activeModal);
+                    }
+                });
+            });
+
+            // 바깥 반투명 배경(Overlay) 클릭 시 닫기
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(modal);
+                    }
+                });
+            });
+
+            // ESC 키 입력 시 활성화된 모달 닫기
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const activeModal = document.querySelector('.modal-overlay.active');
+                    if (activeModal) {
+                        closeModal(activeModal);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
