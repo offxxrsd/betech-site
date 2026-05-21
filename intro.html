@@ -241,7 +241,7 @@
             width: 100%;
         }
 
-        /* 🏢 웅장하고 세련된 사옥 전경 이미지 전용 래퍼 및 프리미엄 효과 */
+        /* 🏢 웅장하고 세련된 사옥 전경 이미지 전용 래퍼 */
         .building-image-wrapper {
             width: 100%;
             height: 100%;
@@ -250,7 +250,6 @@
             overflow: hidden;
             box-shadow: var(--shadow-md);
             border: 1px solid var(--color-border);
-            transition: var(--transition-base);
             position: relative;
         }
         
@@ -258,19 +257,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover; /* 이미지 비율 유지하며 꽉 채움 */
-            transition: var(--transition-base);
             display: block;
-        }
-
-        /* 호버 시 줌인 및 부드러운 아쿠아 블루 그림자 발산 효과 */
-        .building-image-wrapper:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 35px -10px rgba(0, 163, 224, 0.25), var(--shadow-lg);
-            border-color: rgba(0, 163, 224, 0.35);
-        }
-
-        .building-image-wrapper:hover img {
-            transform: scale(1.04); /* 부드러운 줌 애니메이션 */
         }
         
         .building-caption {
@@ -299,12 +286,11 @@
             border: 1px solid var(--color-border);
             border-radius: var(--border-radius);
             padding: 3.75rem 2.5rem;
-            transition: var(--transition-base);
-            box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
         .value-card::before {
             content: '';
@@ -314,15 +300,10 @@
             width: 100%;
             height: 4px;
             background-color: transparent;
-            transition: var(--transition-base);
+            transition: background-color 0.15s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .value-card:hover::before {
             background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-accent) 100%);
-        }
-        .value-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(0, 163, 224, 0.25);
         }
         .value-icon-box {
             width: 64px;
@@ -334,7 +315,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 2.25rem;
-            transition: var(--transition-base);
+            transition: background-color 0.15s cubic-bezier(0.1, 0.9, 0.2, 1), color 0.15s cubic-bezier(0.1, 0.9, 0.2, 1), transform 0.15s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .value-card:hover .value-icon-box {
             background-color: var(--color-secondary);
@@ -367,7 +348,99 @@
         }
 
         /* ==========================================================================
-           5. 반응형 미디어 쿼리 정의
+           5. 기계식 프레임-컷(Mechanical Frame-Cut) 컴포넌트 인터랙션 스타일
+           ========================================================================== */
+        
+        /* 기존 페이드 업을 절도 있고 강력한 타격감의 '카메라 셔터/필름 컷' 효과로 재정의 */
+        .fade-up {
+            opacity: 0;
+            transform: scale(0.95) translateY(50px);
+            filter: brightness(1.8) contrast(1.3) saturate(0.5); /* 과노출 및 기계 작동 전 대기 룩 */
+            transition: 
+                opacity 0.25s steps(4, end),
+                transform 0.5s cubic-bezier(0.3, 1.3, 0.3, 1), /* 기계적으로 통통 튕기는 타격감 탄성 곡선 */
+                filter 0.3s steps(3, end);
+            will-change: transform, opacity, filter;
+        }
+
+        /* 요소가 화면에 감지되는 순간(visible 클래스 획득 시) 정밀하게 탁! 켜지며 박히는 컷 효과 */
+        .fade-up.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: brightness(1) contrast(1) saturate(1);
+        }
+
+        /* 
+           순차적 렌더링(Staggered Snapping)을 위한 각 컴포넌트별 절도 있는 시차 타임라인
+           부드럽게 흘러가지 않고, 프레임이 툭- 툭- 끊기며 연속으로 나타나는 듯한 연출
+        */
+        
+        /* 섹션 1: CEO 인사말 및 미션 카드 */
+        .greeting-content.fade-up {
+            transition-delay: 150ms;
+        }
+        .mission-content.fade-up {
+            transition-delay: 400ms;
+        }
+
+        /* 섹션 2: 회사 개요 테이블 및 사옥 전경 이미지 */
+        .overview-table-box.fade-up {
+            transition-delay: 150ms;
+        }
+        .overview-image-box.fade-up {
+            transition-delay: 450ms;
+        }
+
+        /* 섹션 3: 3대 핵심 가치 카드 */
+        #value-card-precision.fade-up {
+            transition-delay: 150ms;
+        }
+        #value-card-eco.fade-up {
+            transition-delay: 300ms;
+        }
+        #value-card-maintenance.fade-up {
+            transition-delay: 450ms;
+        }
+
+        /* 섹션 타이틀도 0초 딜레이로 가장 먼저 툭 켜짐 */
+        .section-header.text-center.fade-up {
+            transition-delay: 0ms;
+            transform: scale(0.98) translateY(30px);
+        }
+
+        /* 
+           핵심 가치 카드 및 사옥 이미지 호버 효과를 즉각적이고 강렬한 기계적 반응으로 갱신
+           타이밍 곡선을 지극히 가파른 탄성 물리 곡선으로 세팅해 즉각적으로 반응함
+        */
+        .value-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 163, 224, 0.25);
+            border-color: var(--color-secondary);
+            transition: 
+                transform 0.15s cubic-bezier(0.3, 1.3, 0.3, 1),
+                box-shadow 0.15s cubic-bezier(0.3, 1.3, 0.3, 1),
+                border-color 0.15s cubic-bezier(0.3, 1.3, 0.3, 1);
+        }
+        
+        .building-image-wrapper:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 30px rgba(0, 163, 224, 0.25);
+            border-color: var(--color-secondary);
+            transition: 
+                transform 0.15s cubic-bezier(0.3, 1.3, 0.3, 1),
+                box-shadow 0.15s cubic-bezier(0.3, 1.3, 0.3, 1),
+                border-color 0.15s cubic-bezier(0.3, 1.3, 0.3, 1);
+        }
+        
+        .building-image-wrapper img {
+            transition: transform 0.15s cubic-bezier(0.3, 1.3, 0.3, 1);
+        }
+        .building-image-wrapper:hover img {
+            transform: scale(1.03);
+        }
+
+        /* ==========================================================================
+           6. 반응형 미디어 쿼리 정의
            ========================================================================== */
         @media (max-width: 1200px) {
             .intro-hero-grid {
@@ -494,7 +567,7 @@
             <div class="section-container">
                 <div class="intro-hero-grid">
                     <!-- CEO 인사말 -->
-                    <div class="greeting-content">
+                    <div class="greeting-content fade-up">
                         <span class="section-tag">CEO GREETING</span>
                         <h2 id="greeting-title">
                             (주)비에이텍은 독보적인 기술로<br>
@@ -520,7 +593,7 @@
                     </div>
                     
                     <!-- 경영 미션 카드 -->
-                    <div class="mission-content">
+                    <div class="mission-content fade-up">
                         <div class="mission-card">
                             <span class="mission-tag">Corporate Mission</span>
                             <h3>맑고 깨끗한 수생태계 보전과 지속 가능한 친환경 인프라 확충</h3>
@@ -543,10 +616,10 @@
             </div>
         </section>
 
-        <!-- Section 2: 회사 개요 및 건물 전경 -->
+        <!-- Section 2: 회사 개요 및 사옥 전경 -->
         <section class="overview-section" aria-labelledby="overview-title">
             <div class="section-container">
-                <div class="section-header text-center">
+                <div class="section-header text-center fade-up">
                     <span class="section-tag">Corporate Information</span>
                     <h2 id="overview-title">(주)비에이텍 회사 개요</h2>
                     <p class="section-desc">탄탄한 기술력과 공인된 대내외 품질 규격 인증으로 철저한 신뢰를 약속합니다.</p>
@@ -554,7 +627,7 @@
                 
                 <div class="overview-grid">
                     <!-- 좌측: 기업 정보 HTML Table -->
-                    <div class="overview-table-box">
+                    <div class="overview-table-box fade-up">
                         <table class="corporate-table" id="corporate-profile-table">
                             <tbody>
                                 <tr>
@@ -600,9 +673,9 @@
                     </div>
                     
                     <!-- 우측: 웅장하고 세련된 사옥 전경 이미지 영역 -->
-                    <div class="overview-image-box">
+                    <div class="overview-image-box fade-up">
                         <div class="building-image-wrapper">
-                            <img src="./company_building.png" alt="(주)비에이텍 사옥 전경">
+                            <img src="./images/company_building.png" alt="(주)비에이텍 사옥 전경">
                         </div>
                         <div class="building-caption">
                             (주)비에이텍 사옥 및 정밀 스마트 팩토리 전경
@@ -615,7 +688,7 @@
         <!-- Section 3: 핵심 가치 및 기술 지향점 -->
         <section class="values-section" aria-labelledby="values-title">
             <div class="section-container">
-                <div class="section-header text-center">
+                <div class="section-header text-center fade-up">
                     <span class="section-tag">Value Pillars</span>
                     <h2 id="values-title">비에이텍의 3대 가치 이념</h2>
                     <p class="section-desc">우리는 타협하지 않는 정밀 기술과 완벽한 책임감을 바탕으로 움직입니다.</p>
@@ -677,9 +750,9 @@
             <div class="footer-info">
                 <h4>CONTACT INFO</h4>
                 <address>
-                    <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
-                    <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
-                    <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                     <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                     <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                     <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
                 </address>
             </div>
             
