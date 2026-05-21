@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)비에이텍 - 회사 소개</title>
+    
+    <!-- SEO 및 메타 태그 정의 -->
+    <meta name="description" content="다이어프램형 무맥동 정량 펌프 전문 제조 기업 (주)비에이텍의 경영 미션, 인사말, 기업 정보 및 3대 핵심 가치를 상세히 안내합니다. 정밀 가공과 완벽한 품질을 실현합니다.">
+    <meta name="keywords" content="비에이텍, 비에이텍 소개, 정량펌프 제조, 무맥동 다이어프램 펌프, 수처리 펌프 오버홀, 펌프 정밀 설계, 친환경 수처리, 등속도캠 특허">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="(주)비에이텍 - 회사 소개">
+    <meta property="og:description" content="정밀한 유체 제어와 특허받은 무맥동 기술. 비에이텍의 경영 이념과 핵심 경쟁력을 소개합니다.">
+    <meta property="og:image" content="./water_hero_bg.png">
+    
+    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 외부 공통 스타일시트 연동 -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- 회사소개 페이지 전용 특화 프리미엄 스타일 -->
+    <style>
+        /* ==========================================================================
+           1. GNB 및 모바일 메뉴 활성화(Active) 상태 표시 스타일
+           ========================================================================== */
+        .desktop-nav ul li a.active {
+            color: var(--color-accent) !important;
+        }
+        .desktop-nav ul li a.active::after {
+            transform: scaleX(1) !important;
+            transform-origin: left !important;
+        }
+        .main-header.scrolled .desktop-nav ul li a.active {
+            color: var(--color-secondary) !important;
+        }
+        .mobile-nav ul li a.active {
+            color: var(--color-accent) !important;
+            border-bottom-color: rgba(0, 229, 255, 0.3);
+        }
+
+        /* ==========================================================================
+           2. 섹션 1: 히어로 섹션 (인사말 & 미션 - 딥 네이비 배경)
+           ========================================================================== */
+        .intro-hero-section {
+            background: linear-gradient(135deg, #0A1C3A 0%, #162E5C 50%, #050E1A 100%);
+            color: #ffffff;
+            position: relative;
+            padding-top: 140px; /* 헤더 고정 높이 고려 */
+            padding-bottom: 2rem;
+            overflow: hidden;
+        }
+        .intro-hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 80% 20%, rgba(0, 163, 224, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .intro-hero-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 4.5rem;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+        .greeting-content {
+            display: flex;
+            flex-direction: column;
+        }
+        .greeting-content h2 {
+            font-size: 2.65rem;
+            font-weight: 850;
+            line-height: 1.3;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+        }
+        .greeting-text p {
+            font-size: 1.05rem;
+            color: rgba(241, 245, 249, 0.9);
+            line-height: 1.85;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            font-weight: 300;
+        }
+        .greeting-text p strong {
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+        .greeting-signature {
+            font-size: 1.15rem;
+            margin-top: 2.5rem;
+            color: #ffffff;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            font-weight: 500;
+        }
+        .greeting-signature strong {
+            color: var(--color-accent);
+            margin-right: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+
+        .mission-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .mission-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3.5rem 2.75rem;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+            position: relative;
+        }
+        .mission-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            color: var(--color-accent);
+            display: block;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+        }
+        .mission-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1.45;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .mission-card p {
+            font-size: 0.95rem;
+            color: rgba(226, 232, 240, 0.8);
+            line-height: 1.75;
+            margin-bottom: 2.5rem;
+            text-align: justify;
+            font-weight: 300;
+        }
+        .mission-stats-mini {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.75rem;
+        }
+        .mini-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .mini-stat .num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--color-secondary);
+            line-height: 1;
+        }
+        .mini-stat .lbl {
+            font-size: 0.825rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        /* ==========================================================================
+           3. 섹션 2: 회사 개요 및 건물 전경 (2단 레이아웃)
+           ========================================================================== */
+        .overview-section {
+            background-color: var(--color-bg-white);
+            position: relative;
+        }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 4.5rem;
+            align-items: center;
+        }
+        .overview-table-box {
+            width: 100%;
+        }
+        .corporate-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.98rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .corporate-table tr {
+            border-bottom: 1px solid var(--color-border);
+            transition: var(--transition-base);
+        }
+        .corporate-table tr:first-child {
+            border-top: 2.5px solid var(--color-primary);
+        }
+        .corporate-table tr:last-child {
+            border-bottom: 2.5px solid var(--color-primary);
+        }
+        .corporate-table tr:hover {
+            background-color: rgba(0, 163, 224, 0.02);
+        }
+        .corporate-table th {
+            width: 160px;
+            background-color: var(--color-bg-light);
+            color: var(--color-primary);
+            font-weight: 750;
+            padding: 1.3rem 1.75rem;
+            text-align: left;
+            vertical-align: middle;
+            border-right: 1px solid var(--color-border);
+            letter-spacing: -0.01em;
+        }
+        .corporate-table td {
+            color: var(--color-text-main);
+            font-weight: 500;
+            padding: 1.3rem 1.75rem;
+            line-height: 1.75;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .corporate-table td strong {
+            color: var(--color-primary);
+        }
+        
+        .overview-image-box {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* 🏢 세련된 회색톤의 사옥 전경 이미지 플레이스홀더 스타일 */
+        .building-image-placeholder {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+            border: 2px dashed #CBD5E1;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 반짝이는 메탈릭 스와이프 효과 애니메이션 */
+        .building-image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-25deg);
+            transition: none;
+        }
+
+        .building-image-placeholder:hover::before {
+            left: 150%;
+            transition: left 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .building-image-placeholder:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-secondary);
+            background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+        }
+
+        .placeholder-icon {
+            font-size: 3.8rem;
+            margin-bottom: 1.25rem;
+            filter: drop-shadow(0 4px 10px rgba(10, 28, 58, 0.08));
+            animation: bounceIcon 3s infinite ease-in-out;
+            user-select: none;
+        }
+
+        .placeholder-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .placeholder-subtitle {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            background-color: rgba(100, 116, 139, 0.08);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            display: inline-block;
+            letter-spacing: -0.01em;
+            border: 1px solid rgba(100, 116, 139, 0.1);
+        }
+
+        @keyframes bounceIcon {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.05);
+            }
+        }
+
+        /* ==========================================================================
+           4. 섹션 3: 핵심 가치 및 기술 지향점 (3열 카드 레이아웃)
+           ========================================================================== */
+        .values-section {
+            background-color: var(--color-bg-light);
+            position: relative;
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.25rem;
+        }
+        .value-card {
+            background-color: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            padding: 3.75rem 2.5rem;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: transparent;
+            transition: var(--transition-base);
+        }
+        .value-card:hover::before {
+            background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+        }
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 163, 224, 0.25);
+        }
+        .value-icon-box {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background-color: rgba(0, 163, 224, 0.08);
+            color: var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2.25rem;
+            transition: var(--transition-base);
+        }
+        .value-card:hover .value-icon-box {
+            background-color: var(--color-secondary);
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+        .value-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+            margin-bottom: 0.85rem;
+        }
+        .value-card h3 {
+            font-size: 1.45rem;
+            color: var(--color-primary);
+            font-weight: 800;
+            margin-bottom: 1.35rem;
+            line-height: 1.4;
+            letter-spacing: -0.02em;
+        }
+        .value-text {
+            color: var(--color-text-muted);
+            font-size: 0.96rem;
+            line-height: 1.75;
+            text-align: justify;
+            font-weight: 400;
+        }
+
+        /* ==========================================================================
+           5. 반응형 미디어 쿼리 정의
+           ========================================================================== */
+        @media (max-width: 1200px) {
+            .intro-hero-grid {
+                gap: 3rem;
+            }
+            .overview-grid {
+                gap: 3rem;
+            }
+            .corporate-table th, .corporate-table td {
+                padding: 1.1rem 1.25rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .intro-hero-grid {
+                grid-template-columns: 1fr;
+                gap: 3.5rem;
+            }
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 3.5rem;
+            }
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                max-width: 650px;
+                margin: 0 auto;
+            }
+            .overview-image-box {
+                max-width: 650px;
+                margin: 0 auto;
+            }
+            .corporate-table th {
+                width: 140px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .intro-hero-section {
+                padding-top: 100px;
+                padding-bottom: 4rem;
+            }
+            .greeting-content h2 {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+            .greeting-text p {
+                font-size: 0.98rem;
+                line-height: 1.75;
+            }
+            .mission-card {
+                padding: 2.75rem 2rem;
+            }
+            .mission-card h3 {
+                font-size: 1.3rem;
+            }
+            .corporate-table th, .corporate-table td {
+                font-size: 0.925rem;
+                padding: 0.95rem;
+            }
+            .corporate-table th {
+                width: 110px;
+            }
+            .value-card {
+                padding: 2.75rem 2rem;
+            }
+            .value-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GNB (Global Navigation Bar) 헤더 영역 -->
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <!-- 로고 및 상호명 -->
+            <a href="./index.html" class="logo" id="header-logo">
+                <span class="brand-en">BAETECK</span>
+                <span class="brand-ko">(주)비에이텍</span>
+            </a>
+            
+            <!-- 데스크톱 네비게이션 메뉴 -->
+            <nav class="desktop-nav" aria-label="메인 네비게이션">
+                <ul>
+                    <li><a href="./intro.html" class="active">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
+                </ul>
+            </nav>
+            
+            <!-- 모바일 햄버거 메뉴 버튼 -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+        
+        <!-- 모바일 드롭다운 메뉴 -->
+        <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
+            <ul>
+                <li><a href="./intro.html" class="active">기업소개</a></li>
+                <li><a href="product.html">제품소개</a></li>
+                <li><a href="./equipment.html">보유장비</a></li>
+                <li><a href="./sales_history.html">주요업력</a></li>
+                <li><a href="./map.html">찾아오시는 길</a></li>
+                <li><a href="./inquiry.html">고객문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section 1: 히어로 섹션 (인사말 & 미션) -->
+        <section class="intro-hero-section" aria-labelledby="greeting-title">
+            <div class="section-container">
+                <div class="intro-hero-grid">
+                    <!-- CEO 인사말 -->
+                    <div class="greeting-content">
+                        <span class="section-tag">CEO GREETING</span>
+                        <h2 id="greeting-title">
+                            (주)비에이텍은 독보적인 기술로<br>
+                            <span class="blue-grad-text">수처리의 정밀함</span>을 리드합니다.
+                        </h2>
+                        <div class="greeting-text">
+                            <p>
+                                안녕하십니까. 비에이텍주식회사 홈페이지를 방문해주신 고객과 기술 파트너 여러분께 진심으로 깊은 감사의 인사를 드립니다.
+                            </p>
+                            <p>
+                                (주)비에이텍은 정밀 기계 가공 분야의 설계 노하우와 환경 수처리 엔지니어링 지식을 조화롭게 융합하여, 고정밀 화학 공정 및 대규모 수처리 설비 가동에 최적화된 고신뢰성 정량 펌프 솔루션을 제조하는 전문 엔지니어링 기업입니다.
+                            </p>
+                            <p>
+                                특히, 저희가 축적해 온 독보적인 <strong>'등속도캠(Constant Velocity Cam)'</strong> 메커니즘과 두 개의 실린더 접액부를 크로스 형태로 정밀 교차 제어하는 고유 특허 설계는 토출 유체의 맥동율을 <strong>0%</strong>로 완벽하게 제어하여 배관 진동 및 수격 사고를 미연에 원천 차단하는 혁신을 이룩했습니다.
+                            </p>
+                            <p>
+                                당사는 국제 표준 <strong>품질경영시스템(ISO 9001)</strong> 규격에 부합하는 정밀 부품 전수 검사를 엄수하고 있으며, '정량펌프 유지관리지침서'에 명시된 완벽한 사후 예방 진단과 기술 지원을 통하여 최상의 설비 가동률과 산업 현장의 안전을 책임지고 보증하겠습니다.
+                            </p>
+                            <p class="greeting-signature">
+                                <strong>비에이텍주식회사</strong> 대표이사 김 태 영
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- 경영 미션 카드 -->
+                    <div class="mission-content">
+                        <div class="mission-card">
+                            <span class="mission-tag">Corporate Mission</span>
+                            <h3>맑고 깨끗한 수생태계 보전과 지속 가능한 친환경 인프라 확충</h3>
+                            <p>
+                                우리는 미세 기포 발생이나 초정밀 유량 편차의 영역을 넘어서는 무결점의 펌프 하우징 설계를 지향합니다. 독성 및 강력한 부식성을 지닌 화학 약품의 완벽한 밀폐 이송 메커니즘을 상시 고도화하여, 누출 사고 없는 안전한 작업 환경과 깨끗한 수생태 보전에 기여합니다.
+                            </p>
+                            <div class="mission-stats-mini">
+                                <div class="mini-stat">
+                                    <span class="num">0.0%</span>
+                                    <span class="lbl">설계 한계 맥동율</span>
+                                </div>
+                                <div class="mini-stat">
+                                    <span class="num">100%</span>
+                                    <span class="lbl">완벽한 전수 검사</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: 회사 개요 및 건물 전경 -->
+        <section class="overview-section" aria-labelledby="overview-title">
+            <div class="section-container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Corporate Information</span>
+                    <h2 id="overview-title">(주)비에이텍 회사 개요</h2>
+                    <p class="section-desc">탄탄한 기술력과 공인된 대내외 품질 규격 인증으로 철저한 신뢰를 약속합니다.</p>
+                </div>
+                
+                <div class="overview-grid">
+                    <!-- 좌측: 기업 정보 HTML Table -->
+                    <div class="overview-table-box">
+                        <table class="corporate-table" id="corporate-profile-table">
+                            <tbody>
+                                <tr>
+                                    <th>기업 상호명</th>
+                                    <td>비에이텍주식회사 (BAETECK CO., LTD.)</td>
+                                </tr>
+                                <tr>
+                                    <th>대표이사</th>
+                                    <td>김 태 영</td>
+                                </tr>
+                                <tr>
+                                    <th>설립 연월일</th>
+                                    <td>2016년 3월 15일</td>
+                                </tr>
+                                <tr>
+                                    <th>품질 보증 규격</th>
+                                    <td><strong>ISO 9001:2015</strong> 품질경영시스템 인증 획득</td>
+                                </tr>
+                                <tr>
+                                    <th>핵심 보유 특허</th>
+                                    <td>등속도 구동 캠 방식 무맥동 다이어프램 정량펌프 외 다수 특허 출원 및 등록</td>
+                                </tr>
+                                <tr>
+                                    <th>핵심 업태 및 종목</th>
+                                    <td>
+                                        수처리 공정용 정량펌프 및 다이어프램형 무맥동 정량펌프 전문 제조,<br>
+                                        수처리 약품 주입 스키드(Skid) 설비 설계·시공, 예방 정밀 유지보수 및 오버홀 수리
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>본사 및 스마트 팩토리</th>
+                                    <td>강원특별자치도 춘천시 퇴계로 1번지</td>
+                                </tr>
+                                <tr>
+                                    <th>연락처 &amp; 팩스</th>
+                                    <td>
+                                        <strong>TEL :</strong> 033-248-1111 &nbsp;|&nbsp; 
+                                        <strong>FAX :</strong> 033-248-1234
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 우측: 세련된 회색톤의 건물 전경 이미지 플레이스홀더 영역 -->
+                    <div class="overview-image-box">
+                        <div class="building-image-placeholder" title="(주)비에이텍 사옥 전경 (이미지 준비중)">
+                            <div class="placeholder-icon">🏢</div>
+                            <div class="placeholder-title">(주)비에이텍 사옥 전경</div>
+                            <div class="placeholder-subtitle">(이미지 준비중)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: 핵심 가치 및 기술 지향점 -->
+        <section class="values-section" aria-labelledby="values-title">
+            <div class="section-container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Value Pillars</span>
+                    <h2 id="values-title">비에이텍의 3대 가치 이념</h2>
+                    <p class="section-desc">우리는 타협하지 않는 정밀 기술과 완벽한 책임감을 바탕으로 움직입니다.</p>
+                </div>
+                
+                <div class="values-grid">
+                    <!-- 카드 1: 정밀 기술주의 -->
+                    <article class="value-card fade-up" id="value-card-precision">
+                        <div class="value-icon-box">
+                            <!-- 하이테크 정밀 기구 설계를 상징하는 CPU/칩 형태의 SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                        </div>
+                        <span class="value-tag">Precision Engineering</span>
+                        <h3>정밀 기술주의</h3>
+                        <p class="value-text">
+                            독보적인 특허 메커니즘인 '등속도캠(Constant Velocity Cam)' 기술 및 두 개의 접액부를 교차 제어하는 특허 구동 메커니즘을 융합하여 맥동율 0%에 수렴하는 완전 연속 직선 유동(Continuous Linear Flow)을 구현합니다. 유량 맥동에 따른 플랜트 배관 파손을 완벽히 방지하고 공정 안정화를 실현합니다.
+                        </p>
+                    </article>
+                    
+                    <!-- 카드 2: 깨끗한 환경 인프라 기여 -->
+                    <article class="value-card fade-up" id="value-card-eco">
+                        <div class="value-icon-box">
+                            <!-- 지구 및 깨끗한 수자원 순환을 상징하는 글로브 형태의 SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        </div>
+                        <span class="value-tag">Eco-Friendly Infrastructure</span>
+                        <h3>친환경 인프라 기여</h3>
+                        <p class="value-text">
+                            수처리 공정 약품의 정밀 주입을 통해 깨끗하고 안전한 수자원을 안정적으로 확보합니다. 유해/부식성 화학 약품의 무누설 정량 투입 메커니즘을 고도화하여 수생태계 환경 재해를 근본적으로 예방하고, 환경 친화적 산업 인프라 확충에 중추적인 역할을 다합니다.
+                        </p>
+                    </article>
+                    
+                    <!-- 카드 3: 철저한 사후 관리 지원 -->
+                    <article class="value-card fade-up" id="value-card-maintenance">
+                        <div class="value-icon-box">
+                            <!-- 철저한 오버홀 및 유지관리 엔지니어링 서비스를 뜻하는 도구 형태의 SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tool"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                        </div>
+                        <span class="value-tag">Proactive Service</span>
+                        <h3>철저한 사후 관리</h3>
+                        <p class="value-text">
+                            공식 '정량펌프 유지관리지침서'의 정교한 매뉴얼에 입각한 표준화된 예비품 세트(다이어프램, 체크 밸브 등) 지원 체계를 완벽히 구축하고 정밀 오버홀(Overhaul) 정비 서비스를 전담 지원합니다. 체계적인 주기 점검과 신속 대응을 통해 설비 가동 수명을 극대화합니다.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">BAETECK</div>
+                <div class="footer-company-name">(주)비에이텍</div>
+                <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
+            </div>
+            
+            <div class="footer-info">
+                <h4>CONTACT INFO</h4>
+                <address>
+                    <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                    <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                    <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                </address>
+            </div>
+            
+            <div class="footer-links">
+                <h4>QUICK LINK</h4>
+                <ul>
+                    <li><a href="./intro.html" class="active">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html">고객문의</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">Copyright &copy; 2026 BAETECK CO., LTD. All Rights Reserved.</p>
+                <div class="footer-meta">
+                    <span>정량펌프 제작 · 설치 · 오버홀 수리 전문기업</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 인터랙션 제어용 자바스크립트 -->
+    <script src="./script.js"></script>
+</body>
+</html>
