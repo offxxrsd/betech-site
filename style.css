@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    (주)비에이텍 - 프리미엄 다크/라이트 기업 디자인 시스템 & 스타일시트
    Author: Professional Web Publisher & Front-End Developer
    Colors: Deep Ocean Blue (#0A1C3A), Pure Aqua Blue (#00A3E0), Light Gray (#F8FAFC)
@@ -1001,30 +1001,30 @@ input, button, select, textarea {
 
 
 /* ==========================================================================
-   14. 蹂댁쑀?λ퉬 肄섑뀗痢??곸뿭 ?ㅽ???(GNB ?곕룞 & ?몄텧 ?쒖뼱)
+   15. 보유장비 상세 정보 카드 및 그리드 시스템 (Equipment Specs Page)
    ========================================================================== */
-.equipment-section {
-    background-color: var(--color-bg-light);
+.equipment-spec-section {
+    background-color: var(--color-bg-white);
+    padding: 6rem 0;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity, transform;
 }
 
-/* 珥덇린 ?④? ?곹깭 */
-.equipment-section.hidden {
+/* 초기 숨김 상태 */
+.equipment-spec-section.hidden {
     display: none !important;
     opacity: 0;
 }
 
-/* ?쒖꽦???곹깭 */
-.equipment-section.active {
+/* 활성화 상태 */
+.equipment-spec-section.active {
     display: block !important;
-    animation: slideDownFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: eqSlideDownFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes slideDownFadeIn {
+@keyframes eqSlideDownFadeIn {
     from {
         opacity: 0;
         transform: translateY(-20px);
@@ -1035,132 +1035,266 @@ input, button, select, textarea {
     }
 }
 
-.equipment-tags-box {
-    margin-bottom: 3.5rem;
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: var(--color-primary);
-    background-color: var(--color-bg-card);
-    padding: 1.5rem 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
-    width: 100%;
-    border: 1px solid var(--color-border);
-}
-
-.equipment-tag-item {
-    color: var(--color-secondary);
-    transition: var(--transition-base);
-    cursor: default;
-}
-
-.equipment-tag-item:hover {
-    color: var(--color-primary);
-    transform: scale(1.05);
-}
-
-.equipment-divider {
-    color: var(--color-border);
-    font-weight: 300;
-}
-
-.equipment-images-stack {
+.equipment-portfolio-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
-    max-width: 900px;
-    margin: 0 auto 4rem auto;
+    gap: 6rem;
 }
 
-.equipment-img-wrapper {
+.equipment-block {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 3rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-base);
+    will-change: transform, box-shadow;
+}
+
+.equipment-block:hover {
+    box-shadow: var(--shadow-md);
+    border-color: rgba(0, 163, 224, 0.2);
+    transform: translateY(-4px);
+}
+
+.equipment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 3.5rem;
+    margin-bottom: 2.5rem;
+    align-items: center;
+}
+
+/* 좌측 프레임 */
+.equipment-photo-column {
+    width: 100%;
+}
+
+.equipment-frame {
     position: relative;
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
     border: 1px solid var(--color-border);
-    transition: var(--transition-base);
     background-color: #000;
 }
 
-.equipment-img-wrapper:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(0, 163, 224, 0.3);
-}
-
-.equipment-img {
+.eq-display-img {
     width: 100%;
     height: auto;
-    object-fit: cover;
-    max-height: 480px;
     display: block;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
 }
 
-.equipment-img-wrapper:hover .equipment-img {
-    transform: scale(1.03);
+.equipment-frame:hover .eq-display-img {
+    transform: scale(1.04);
     opacity: 0.9;
 }
 
-.equipment-img-caption {
+.eq-badge {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(180deg, transparent 0%, rgba(10, 28, 58, 0.9) 100%);
+    top: 1rem;
+    left: 1rem;
+    background-color: var(--color-primary);
     color: #ffffff;
-    padding: 1.75rem 2rem;
-    font-size: 1.05rem;
-    font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    letter-spacing: -0.01em;
+    box-shadow: 0 2px 8px rgba(10, 28, 58, 0.3);
+    z-index: 5;
 }
 
-.equipment-notice-box {
-    max-width: 800px;
-    margin: 0 auto;
-    background: linear-gradient(135deg, rgba(0, 163, 224, 0.06) 0%, rgba(10, 28, 58, 0.02) 100%);
-    padding: 2.25rem 3rem;
-    border-radius: 50px;
-    border: 1px dashed var(--color-secondary);
+.eq-badge-aqua {
+    background-color: var(--color-secondary);
+}
+
+.eq-badge-blue {
+    background-color: var(--color-primary-light);
+}
+
+/* 우측 상세정보 */
+.equipment-desc-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.eq-category {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--color-secondary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+}
+
+.eq-title-ko {
+    font-size: 1.85rem;
+    color: var(--color-primary);
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+}
+
+.eq-title-en {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+}
+
+.eq-summary {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--color-secondary);
+}
+
+.eq-bullets-box {
+    margin-bottom: 1.75rem;
+}
+
+.eq-bullets-box h5, .eq-apps-box h5 {
+    font-size: 0.95rem;
+    color: var(--color-primary);
+    font-weight: 750;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+}
+
+.eq-bullets-box ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.eq-bullets-box ul li {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.eq-bullets-box ul li::before {
+    content: '•';
+    color: var(--color-secondary);
+    font-size: 1.2rem;
+    position: absolute;
+    left: 0;
+    top: -0.1rem;
+}
+
+.eq-apps-box p {
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+/* 기술 사양 테이블 */
+.eq-spec-table-box {
+    width: 100%;
+    margin-top: 1.5rem;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
     box-shadow: var(--shadow-sm);
 }
 
-.equipment-notice-text {
-    font-size: 1.15rem;
-    font-weight: 600;
+.eq-spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.eq-spec-table th, .eq-spec-table td {
+    padding: 0.95rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.eq-spec-table thead th {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border-bottom: none;
+}
+
+.eq-spec-table tbody th {
+    background-color: var(--color-bg-light);
     color: var(--color-primary);
-    line-height: 1.7;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    width: 20%;
+    border-right: 1px solid var(--color-border);
+}
+
+.eq-spec-table tbody td {
+    color: var(--color-text-main);
+    font-weight: 500;
+    width: 30%;
+}
+
+.eq-spec-table tbody td:not(:last-child) {
+    border-right: 1px solid var(--color-border);
+}
+
+.eq-spec-table tbody tr:last-child th,
+.eq-spec-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ==========================================================================
+   16. 보유장비 상세 반응형 대응 (Media Queries)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .equipment-grid {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+    }
+    .eq-spec-table tbody th {
+        width: 25%;
+    }
+    .eq-spec-table tbody td {
+        width: 25%;
+    }
 }
 
 @media (max-width: 768px) {
-    .equipment-tags-box {
-        font-size: 1.1rem;
-        padding: 1.25rem 1rem;
+    .equipment-block {
+        padding: 1.75rem;
     }
-    .equipment-divider {
-        display: none;
+    .eq-title-ko {
+        font-size: 1.5rem;
     }
-    .equipment-tag-item {
+    .eq-spec-table tbody tr {
+        display: flex;
+        flex-direction: column;
+    }
+    .eq-spec-table tbody th, .eq-spec-table tbody td {
+        width: 100% !important;
+        border-right: none !important;
+    }
+    .eq-spec-table tbody th {
         background-color: var(--color-bg-light);
-        padding: 0.35rem 0.75rem;
-        border-radius: 20px;
-        border: 1px solid var(--color-border);
+        padding-top: 0.75rem;
+        padding-bottom: 0.35rem;
     }
-    .equipment-notice-box {
-        padding: 1.5rem 1.75rem;
-        border-radius: 24px;
-    }
-    .equipment-notice-text {
-        font-size: 1rem;
-    }
-    .equipment-img-caption {
-        padding: 1.25rem 1.5rem;
-        font-size: 0.95rem;
+    .eq-spec-table tbody td {
+        padding-top: 0.35rem;
+        padding-bottom: 0.75rem;
     }
 }

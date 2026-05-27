@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------------------------------
     // 5. [보유장비] GNB 메뉴 클릭 동적 노출 및 스크롤 연동
     // ----------------------------------------------------
-    const equipmentMenuLinks = document.querySelectorAll('a[href="./equipment.html"], a[href="equipment.html"], a[href="#equipment-section"]');
-    const equipmentSection = document.getElementById('equipment-section');
+    const equipmentMenuLinks = document.querySelectorAll('a[href="./equipment.html"], a[href="equipment.html"], a[href="#equipment-spec-section"]');
+    const equipmentSection = document.getElementById('equipment-spec-section');
     
     if (equipmentSection) {
         equipmentMenuLinks.forEach(link => {
