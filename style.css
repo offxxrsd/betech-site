@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    (주)비에이텍 - 프리미엄 다크/라이트 기업 디자인 시스템 & 스타일시트
    Author: Professional Web Publisher & Front-End Developer
    Colors: Deep Ocean Blue (#0A1C3A), Pure Aqua Blue (#00A3E0), Light Gray (#F8FAFC)
@@ -25,7 +25,7 @@
     
     /* Layout & Animation */
     --max-width: 1200px;
-    --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 10px 25px -5px rgba(10, 28, 58, 0.08), 0 8px 10px -6px rgba(10, 28, 58, 0.05);
     --shadow-lg: 0 20px 40px -10px rgba(10, 28, 58, 0.12);
@@ -199,7 +199,9 @@ input, button, select, textarea {
     z-index: 1000;
     background-color: transparent;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    transition: var(--transition-base);
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: background-color, box-shadow;
+    transform: translate3d(0, 0, 0);
 }
 
 /* 스크롤 시 부착되는 네비게이션 스타일 */
@@ -217,7 +219,7 @@ input, button, select, textarea {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: var(--transition-base);
+    transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .main-header.scrolled .header-container {
@@ -810,6 +812,7 @@ input, button, select, textarea {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
 }
 
 .fade-up.visible {
@@ -996,38 +999,168 @@ input, button, select, textarea {
     }
 }
 
+
 /* ==========================================================================
-   전역 스크롤 스냅(Scroll Snap) 및 컷 전환 인터랙션 시스템
+   14. 蹂댁쑀?λ퉬 肄섑뀗痢??곸뿭 ?ㅽ???(GNB ?곕룞 & ?몄텧 ?쒖뼱)
    ========================================================================== */
-:root {
-    --transition-base: all 0.35s cubic-bezier(0.3, 1.3, 0.3, 1); /* 기계적으로 살짝 튕기며 정밀하게 맞춰지는 타격감 곡선 */
+.equipment-section {
+    background-color: var(--color-bg-light);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    will-change: opacity, transform;
 }
 
-html {
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
+/* 珥덇린 ?④? ?곹깭 */
+.equipment-section.hidden {
+    display: none !important;
+    opacity: 0;
 }
 
-body {
-    -webkit-overflow-scrolling: touch;
+/* ?쒖꽦???곹깭 */
+.equipment-section.active {
+    display: block !important;
+    animation: slideDownFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* 주요 장면(섹션) 단위별 자석식 고정 스냅 정의 */
-section, 
-header, 
-footer,
-.intro-hero-section,
-.overview-section,
-.values-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    scroll-margin-top: 80px; /* 고정 GNB 헤더의 영역(80px)을 감안한 상단 마진 확보 */
+@keyframes slideDownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.intro-hero-section {
-    scroll-margin-top: 0; /* 히어로 섹션은 화면 최상단에 완전 밀착 */
+.equipment-tags-box {
+    margin-bottom: 3.5rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background-color: var(--color-bg-card);
+    padding: 1.5rem 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    border: 1px solid var(--color-border);
 }
 
-footer, .main-footer {
-    scroll-snap-align: end; /* 푸터는 화면 최하단 스냅에 맞춰지도록 스냅 조율 */
+.equipment-tag-item {
+    color: var(--color-secondary);
+    transition: var(--transition-base);
+    cursor: default;
+}
+
+.equipment-tag-item:hover {
+    color: var(--color-primary);
+    transform: scale(1.05);
+}
+
+.equipment-divider {
+    color: var(--color-border);
+    font-weight: 300;
+}
+
+.equipment-images-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto 4rem auto;
+}
+
+.equipment-img-wrapper {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+    transition: var(--transition-base);
+    background-color: #000;
+}
+
+.equipment-img-wrapper:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(0, 163, 224, 0.3);
+}
+
+.equipment-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 480px;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+.equipment-img-wrapper:hover .equipment-img {
+    transform: scale(1.03);
+    opacity: 0.9;
+}
+
+.equipment-img-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 28, 58, 0.9) 100%);
+    color: #ffffff;
+    padding: 1.75rem 2rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.equipment-notice-box {
+    max-width: 800px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(0, 163, 224, 0.06) 0%, rgba(10, 28, 58, 0.02) 100%);
+    padding: 2.25rem 3rem;
+    border-radius: 50px;
+    border: 1px dashed var(--color-secondary);
+    box-shadow: var(--shadow-sm);
+}
+
+.equipment-notice-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+}
+
+@media (max-width: 768px) {
+    .equipment-tags-box {
+        font-size: 1.1rem;
+        padding: 1.25rem 1rem;
+    }
+    .equipment-divider {
+        display: none;
+    }
+    .equipment-tag-item {
+        background-color: var(--color-bg-light);
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        border: 1px solid var(--color-border);
+    }
+    .equipment-notice-box {
+        padding: 1.5rem 1.75rem;
+        border-radius: 24px;
+    }
+    .equipment-notice-text {
+        font-size: 1rem;
+    }
+    .equipment-img-caption {
+        padding: 1.25rem 1.5rem;
+        font-size: 0.95rem;
+    }
 }
