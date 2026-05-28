@@ -137,48 +137,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ----------------------------------------------------
-    // 5. [보유장비] GNB 메뉴 클릭 동적 노출 및 스크롤 연동
+    // 5. [보유장비] GNB 메뉴 클릭 동적 노출 및 스크롤 연동 (전역 지원)
     // ----------------------------------------------------
-    const equipmentMenuLinks = document.querySelectorAll('a[href="./equipment.html"], a[href="equipment.html"], a[href="#equipment-spec-section"]');
+    const equipmentMenuLinks = document.querySelectorAll('a[href="./equipment.html"], a[href="equipment.html"], a[href="#equipment-spec-section"], a[href*="show=equipment"]');
     const equipmentSection = document.getElementById('equipment-spec-section');
     
-    if (equipmentSection) {
-        equipmentMenuLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                // 현재 페이지가 메인 페이지(index.html)일 경우, 링크 이동 대신 동적 노출 적용
-                const isMainPage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.html');
+    equipmentMenuLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // 현재 페이지가 메인 페이지(index.html)일 경우, 링크 이동 대신 동적 노출 적용
+            const isMainPage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.html');
+            const targetSection = document.getElementById('equipment-spec-section');
+            
+            if (isMainPage && targetSection) {
+                e.preventDefault();
                 
-                if (isMainPage) {
-                    e.preventDefault();
-                    
-                    // 숨겨진 영역 활성화 (hidden 제거, active 추가)
-                    equipmentSection.classList.remove('hidden');
-                    equipmentSection.classList.add('active');
-                    
-                    // 모바일 햄버거 메뉴가 열려있을 경우 닫기 처리
-                    if (mobileToggle && mobileMenu && mobileMenu.classList.contains('active')) {
-                        mobileToggle.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        mobileToggle.setAttribute('aria-expanded', 'false');
-                        document.body.style.overflow = '';
-                    }
-                    
-                    // 활성화된 보유장비 콘텐츠 영역으로 부드럽게 스크롤
-                    setTimeout(() => {
-                        equipmentSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }, 50); // display 변경 및 렌더링 대기용 미세 딜레이
-                } else {
-                    // 메인 페이지가 아닐 경우, 메인 페이지의 보유장비 영역을 펼치고 이동하기 위해 쿼리스트링 전달
-                    e.preventDefault();
-                    window.location.href = './index.html?show=equipment';
+                // 숨겨진 영역 활성화 (hidden 제거, active 추가)
+                targetSection.classList.remove('hidden');
+                targetSection.classList.add('active');
+                
+                // 모바일 햄버거 메뉴가 열려있을 경우 닫기 처리
+                if (mobileToggle && mobileMenu && mobileMenu.classList.contains('active')) {
+                    mobileToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    mobileToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
                 }
-            });
+                
+                // 활성화된 보유장비 콘텐츠 영역으로 부드럽게 스크롤
+                setTimeout(() => {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 50); // display 변경 및 렌더링 대기용 미세 딜레이
+            } else {
+                // 메인 페이지가 아니거나 메인 페이지인데 섹션이 없을 경우, 메인 페이지의 보유장비 영역을 펼치고 이동하기 위해 쿼리스트링 전달
+                e.preventDefault();
+                window.location.href = './index.html?show=equipment';
+            }
         });
-        
-        // 다른 페이지에서 메인 페이지로 유입 시 ?show=equipment 쿼리가 있으면 즉시 펼치고 스크롤 다운
+    });
+    
+    // 다른 페이지에서 메인 페이지로 유입 시 ?show=equipment 쿼리가 있으면 즉시 펼치고 스크롤 다운
+    if (equipmentSection) {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('show') === 'equipment') {
             equipmentSection.classList.remove('hidden');

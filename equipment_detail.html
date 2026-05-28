@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)비에이텍 - 보유장비 상세 기술정보</title>
+    
+    <!-- SEO 및 메타 태그 정의 -->
+    <meta name="description" content="(주)비에이텍의 핵심 보유 장비 명세 상세페이지. 지상 거치형 대용량 원심펌프 시스템 등 물 공학 및 수처리 공정용 최신 설비 사양을 상세히 제공합니다.">
+    <meta name="keywords" content="비에이텍, 원심펌프, 입형다단펌프, 병렬펌프, 수처리 설비, 펌프 사양, 기술 명세">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="(주)비에이텍 - 보유장비 상세 기술정보">
+    <meta property="og:description" content="최상의 기계적 내구성과 고정밀 유체 제어. 비에이텍의 핵심 보유 설비 상세 사양을 확인해보세요.">
+    <meta property="og:image" content="./images/equipment_photo1.webp">
+    
+    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 외부 공통 스타일시트 연동 -->
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        /* GNB 보유장비 강제 활성화 스타일 */
+        .desktop-nav ul li a[href*="#equipment-spec-section"],
+        .desktop-nav ul li a[href*="equipment"] {
+            color: var(--color-accent) !important;
+        }
+        .desktop-nav ul li a[href*="#equipment-spec-section"]::after,
+        .desktop-nav ul li a[href*="equipment"]::after {
+            transform: scaleX(1) !important;
+            transform-origin: left !important;
+        }
+        .main-header.scrolled .desktop-nav ul li a[href*="#equipment-spec-section"],
+        .main-header.scrolled .desktop-nav ul li a[href*="equipment"] {
+            color: var(--color-secondary) !important;
+        }
+    </style>
+</head>
+<body class="loading-active" id="detail-body">
+
+    <!-- GNB (Global Navigation Bar) 헤더 영역 -->
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <!-- 로고 및 상호명 -->
+            <a href="./index.html" class="logo" id="header-logo">
+                <span class="brand-en">BAETECK</span>
+                <span class="brand-ko">(주)비에이텍</span>
+            </a>
+            
+            <!-- 데스크톱 네비게이션 메뉴 -->
+            <nav class="desktop-nav" aria-label="메인 네비게이션">
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./index.html?show=equipment">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
+                </ul>
+            </nav>
+            
+            <!-- 모바일 햄버거 메뉴 버튼 -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+        
+        <!-- 모바일 드롭다운 메뉴 -->
+        <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
+            <ul>
+                <li><a href="./intro.html">기업소개</a></li>
+                <li><a href="product.html">제품소개</a></li>
+                <li><a href="./index.html?show=equipment">보유장비</a></li>
+                <li><a href="./sales_history.html">주요업력</a></li>
+                <li><a href="./map.html">찾아오시는 길</a></li>
+                <li><a href="./inquiry.html">고객문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 서브페이지 전용 상세 상단 바 -->
+    <div class="detail-header-bar">
+        <div class="detail-header-container">
+            <button type="button" class="detail-back-btn" onclick="goBackOrHome()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>장비 리스트 목록으로 돌아가기</span>
+            </button>
+            <div style="font-family:'Montserrat',sans-serif; font-size:0.85rem; font-weight:700; color:var(--color-secondary);">
+                EQUIPMENT DETAILS
+            </div>
+        </div>
+    </div>
+
+    <main class="detail-section">
+        <div class="detail-container">
+            
+            <!-- A. 스켈레톤 로더 영역 (로딩 중 활성화) -->
+            <div class="detail-skeleton-content" id="skeleton-loader-view">
+                <div class="detail-card">
+                    <div class="detail-grid">
+                        <div class="skeleton skeleton-image"></div>
+                        <div>
+                            <div class="skeleton skeleton-subtitle" style="width:20%; margin-bottom:1rem;"></div>
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-subtitle"></div>
+                            <div class="skeleton skeleton-summary"></div>
+                            <div class="skeleton skeleton-text"></div>
+                            <div class="skeleton skeleton-text"></div>
+                            <div class="skeleton skeleton-text short"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="skeleton skeleton-subtitle" style="width:30%; margin-bottom:1.5rem;"></div>
+                        <div class="skeleton skeleton-table-row"></div>
+                        <div class="skeleton skeleton-table-row"></div>
+                        <div class="skeleton skeleton-table-row"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B. 실제 본문 콘텐츠 영역 (로딩 완료 시 표시) -->
+            <div class="detail-actual-content" id="actual-data-view" style="display:none;">
+                <article class="detail-card">
+                    <div class="detail-grid">
+                        <!-- 좌측: 고화질 WebP 이미지 프레임 -->
+                        <div class="detail-image-box">
+                            <img src="" alt="" class="detail-img" id="eq-main-image" loading="lazy">
+                            <span class="eq-badge" id="eq-badge-label"></span>
+                            <div class="detail-img-spinner" id="eq-image-spinner"></div>
+                        </div>
+                        
+                        <!-- 우측: 상세 명세 설명 -->
+                        <div class="detail-desc-column">
+                            <span class="eq-category" id="eq-category-label"></span>
+                            <h1 class="eq-title-ko" id="eq-title-ko-label"></h1>
+                            <h2 class="eq-title-en" id="eq-title-en-label"></h2>
+                            <p class="eq-summary" id="eq-summary-label"></p>
+                            
+                            <div class="eq-bullets-box">
+                                <h3 id="eq-bullets-title"></h3>
+                                <ul id="eq-bullets-list"></ul>
+                            </div>
+                            
+                            <div class="eq-apps-box">
+                                <h3 id="eq-apps-title"></h3>
+                                <p id="eq-apps-desc"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 하단: 기술 사양 상세 테이블 -->
+                    <div class="eq-spec-table-box">
+                        <table class="eq-spec-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" id="eq-table-title"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="eq-table-body"></tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 프리미엄 고객 유도 CTA 박스 -->
+                    <div class="detail-cta-box">
+                        <div class="detail-cta-text">
+                            <h4>해당 설비를 활용한 맞춤형 시스템 설계 및 시공이 필요하십니까?</h4>
+                            <p>비에이텍은 단순 장비 활용을 넘어 현장 특화 배관 시공, 유량 밸런싱 공학 설계, 신속 사후관리까지 원스톱으로 지원합니다.</p>
+                        </div>
+                        <div class="detail-cta-actions">
+                            <a href="tel:033-248-1111" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <span>대표 전화 상담</span>
+                            </a>
+                            <a href="./inquiry.html" class="btn btn-outline">상세 기술 및 온라인 문의</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- C. 에러 핸들링 Fallback 영역 (데이터 매핑 실패/타임아웃 시 노출) -->
+            <div class="detail-actual-content" id="error-fallback-view" style="display:none;">
+                <div class="error-container">
+                    <div class="error-icon-box">!</div>
+                    <h2 class="error-title">설비 정보를 불러올 수 없습니다</h2>
+                    <p class="error-message" id="error-fallback-message">
+                        요청하신 장비의 ID가 유효하지 않거나 데이터베이스와의 연결에 오류가 발생했습니다.<br>
+                        이전 캐시 오류 또는 잘못된 URL 정보일 수 있으니 아래의 안내를 이용해 주시기 바랍니다.
+                    </p>
+                    <div class="error-actions">
+                        <button type="button" class="btn btn-primary" onclick="window.location.reload();">
+                            <span>페이지 새로고침</span>
+                        </button>
+                        <a href="./index.html?show=equipment" class="btn btn-outline">
+                            <span>보유장비 리스트로 가기</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">BAETECK</div>
+                <div class="footer-company-name">(주)비에이텍</div>
+                <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
+            </div>
+            
+            <div class="footer-info">
+                <h4>CONTACT INFO</h4>
+                <address>
+                    <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                    <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                    <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                </address>
+            </div>
+            
+            <div class="footer-links">
+                <h4>QUICK LINK</h4>
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./index.html?show=equipment">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html">고객문의</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">Copyright &copy; 2026 BAETECK CO., LTD. All Rights Reserved.</p>
+                <div class="footer-meta">
+                    <span>정량펌프 제작 · 설치 · 오버홀 수리 전문기업</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
+    <script src="./script.js"></script>
+
+    <!-- 상세페이지 데이터 바인딩 및 라우팅/로딩 제어용 특화 스크립트 -->
+    <script>
+        // 1. 보유장비 로컬 데이터베이스 (BATECH Equipment Database)
+        const BATECH_EQUIPMENT_DB = {
+            "1": {
+                id: 1,
+                name: "지상 거치형 대용량 원심펌프 시스템",
+                category: "CENTRIFUGAL PUMPS",
+                subtitle: "Ground-Mounted High-Capacity Centrifugal Pump System",
+                badge: "대용량 산업용",
+                badgeClass: "", // Default primary
+                image: "images/equipment_photo1.webp",
+                summary: "“강력한 내구성과 동력 전달 효율을 극대화한 산업용 대유량 이송의 표준”",
+                description: "지상 거치형 대용량 원심펌프 시스템은 가혹한 산업 현장과 대규모 수처리 플랜트에서 요구되는 고유량, 고압성, 고효율 액체 이송을 완벽히 감당하도록 설계되었습니다. 정밀 가공된 커플링과 탄소강 주강 베이스는 연속 가동 시에도 뒤틀림이나 진동을 발생시키지 않아 기계적 응력과 마모를 최소화합니다. 또한, 회전축 결합 부위에는 중대재해처벌법 및 산업안전 규격을 완벽하게 충족하는 고시인성 커플링 가드(Coupling Guard)를 탑재하여 현장 작업자의 안전사고를 완벽하게 방지합니다.",
+                bulletTitle: "주요 기술적 장점",
+                bullets: [
+                    "모터와 펌프 헤드 간의 축 정렬(Shaft Alignment) 공차를 극소화하여 동력 전달 효율을 극대화하였습니다.",
+                    "회전 부위에 고인장 강도의 노란 안전 커버(Coupling Guard)를 장착하여 중대재해처벌법 대비 규격을 완벽하게 충족하였습니다.",
+                    "저진동 탄소강 주강 베이스 프레임 설계를 채택하여 연속 고속 운전 시 소음을 탁월하게 억제합니다.",
+                    "흡입 및 토출 하우징의 신속 개폐 구조로 설계되어 임펠러 진단과 신속한 사후관리를 보장합니다."
+                ],
+                appTitle: "주요 적용 분야 (Applications)",
+                applications: "하·폐수 처리장 대용량 원수 이송 라인, 플랜트 공업 용수 공급 계통, 대규모 농업 용수 관개 시설",
+                tableTitle: "KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)",
+                tableRows: [
+                    { key: "토출 유량 (Capacity)", val: "50 ~ 800 m³/hr" },
+                    { key: "전동기 동력 (Motor Power)", val: "15 ~ 110 kW (IE3 프리미엄 고효율 모터)" },
+                    { key: "총 양정 (Total Head)", val: "10 ~ 120 m" },
+                    { key: "주요 재질 (Materials)", val: "주철 (GC200) / 스테인리스 주강 (SSC13)" },
+                    { key: "허용 사용 온도 (Liquid Temp)", val: "-10°C ~ +90°C" },
+                    { key: "제어 인터페이스 (Control)", val: "통합 인버터 제어반 연동 자동 가변 제어" }
+                ]
+            },
+            "2": {
+                id: 2,
+                name: "WILO 입형 다단 원심펌프 시스템",
+                category: "MULTISTAGE VERTICAL PUMPS",
+                subtitle: "WILO Vertical Multistage Centrifugal Pump System",
+                badge: "고압 & 초절전",
+                badgeClass: "eq-badge-aqua",
+                image: "images/equipment_photo2.webp",
+                summary: "“초절전 수직 적층 실린더 구조로 설치 공간 최소화와 초고압 토출 성능을 동시 실현”",
+                description: "WILO 입형 다단 원심펌프 시스템은 세계적인 펌프 제조사 WILO의 고성능 친환경 전동 모터를 탑재한 수직형 가압 펌핑 시스템입니다. 수직 다단 적층형 구조 설계로 설치 가대 면적을 가로형 펌프 대비 70% 이상 절감하며, 다단 실린더를 통해 매우 안정적인 25bar 등급의 강력한 고압 토출 성능을 실현합니다. 완전 밀폐형 카트리지 타입 기계식 씰(Mechanical Seal)을 탑재하여 약품 유체의 단 1방울의 누출도 원천 보증하며, 접액부 전체 정밀 특수 스텐강 채용으로 극도의 내화학성을 달성했습니다.",
+                bulletTitle: "주요 기술적 장점",
+                bullets: [
+                    "상단에 신뢰성 높은 고효율 WILO 녹색 전동기를 탑재하여 전력 소모를 최소화하고 공정 안정성을 확보했습니다.",
+                    "접액부 전체에 SUS304 / SUS316L 정밀 스테인리스강 실린더를 적용하여 화학적 내부식성과 내압성이 매우 탁월합니다.",
+                    "수직형(Vertical) 컴팩트 공간 절약 레이아웃을 통해 가압 스키드(Skid) 모듈의 설치 면적을 혁신적으로 절감했습니다.",
+                    "카트리지 타입 고성능 메카니컬 씰(Mechanical Seal) 장착으로 약품 유체 누출율 0%와 신속 씰 교체를 보증합니다."
+                ],
+                appTitle: "주요 적용 분야 (Applications)",
+                applications: "용수 가압 및 상수 급수 시스템, 산업용 보일러 고압 급수 계통, 소방 가압 가설 설비, 고정밀 수처리 약품 주입 스키드",
+                tableTitle: "KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)",
+                tableRows: [
+                    { key: "토출 유량 (Capacity)", val: "1.0 ~ 55 m³/hr" },
+                    { key: "허용 사용 압력 (Max. Pressure)", val: "25 bar (2.5 MPa) 고부하용" },
+                    { key: "최고 양정 (Max. Head)", val: "20 ~ 240 m" },
+                    { key: "허용 온도 범위 (Liquid Temp.)", val: "-15°C ~ +120°C 고압 액상 지원" },
+                    { key: "실린더 재질 (Casing)", val: "SUS304 / SUS316L 정밀 합금강" },
+                    { key: "모터 회전수 (RPM)", val: "2,900 ~ 3,500 rpm" }
+                ]
+            },
+            "3": {
+                id: 3,
+                name: "대형 원심펌프 멀티 병렬 라인업",
+                category: "PARALLEL SYSTEM ENGINEERING",
+                subtitle: "Multi-Parallel Heavy-Duty Centrifugal Pump Lineup",
+                badge: "플랜트 대규모 공정",
+                badgeClass: "eq-badge-blue",
+                image: "images/equipment_photo3.webp",
+                summary: "“연속 운전 신뢰성을 위해 다중 밸런싱 병렬 제어 공학을 적용한 고유량 이송 센터”",
+                description: "대형 원심펌프 멀티 병렬 라인업은 2대에서 최대 4대의 대형 원심 펌프를 단일 제어 루프로 연동하여 운전 부하를 가변 제어하는 대규모 플랜트 시스템입니다. 스마트 인버터(VFD) 통합 판넬을 적용하여 공정 유입량에 맞게 최적의 운전 펌프 대수를 가변하고 실시간 부하 밸런싱을 시행하여 모터 수명 연장과 40% 이상의 극적인 전력 에너지를 절약합니다. 각 플랜지 조인트에는 완벽한 수격(Water Hammering) 압력 소거 댐퍼 조인트가 내장되어 있어 기기 기동 및 정지 시 파이프라인 손상을 철저히 예방합니다.",
+                bulletTitle: "주요 기술적 장점",
+                bullets: [
+                    "강도 해석을 필한 베이스 프레임 상에 다수의 대형 원심 펌프를 병렬로 배치하여 최적의 부하 분산 및 교대 운전이 가능합니다.",
+                    "인버터(VFD) 자동 제어 판넬을 적용하여 공정 유량 수용량 변화에 맞춰 회전 주파수를 스마트하게 자동 가변 제어합니다.",
+                    "흡입 및 토출 플랜지 조인트에 방진 설계를 채택하여 기계 기동 시 발생하는 파손용 수격(Water Hammering) 압력을 예방합니다.",
+                    "임펠러의 3D 정밀 컴퓨터 밸런싱을 거쳐 조립하여 가혹한 고압 가동 시에도 캐비테이션(공동 현상) 발생을 억제합니다."
+                ],
+                appTitle: "주요 적용 분야 (Applications)",
+                applications: "광역 배수 가압장 및 종합 취수원, 대규모 제철 및 석유화학 플랜트 순환 냉각수 공급 계통, 신도시 수처리 가압 스테이션",
+                tableTitle: "KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)",
+                tableRows: [
+                    { key: "시스템 구성 (Configuration)", val: "2대 ~ 4대 멀티 병렬 가동 및 제어" },
+                    { key: "제어 인터페이스 (Control Method)", val: "인버터 통합형 VFD (Modbus / Profibus 이더넷 판넬)" },
+                    { key: "합산 최대 유량 (Total Flow)", val: "Max. 3,200 m³/hr" },
+                    { key: "전동기 규격 (Motor Standard)", val: "삼상 고유도 전동기 (IE3 / IE4 프리미엄 모터)" },
+                    { key: "베이스 프레임 구조", val: "진동 분산용 중형 고구조강 가변 스키드" },
+                    { key: "전원 규격 (Voltage)", val: "3상 380V/440V 60Hz" }
+                ]
+            }
+        };
+
+        // 2. 컴포넌트 상태(State) 완전 초기화 및 데이터 호출 함수 (Resolves Cache Stale)
+        function initAndLoadDetail() {
+            // [State Reset] 기존 렌더링된 상태 및 DOM 내용물 원점 초기화
+            const body = document.getElementById('detail-body');
+            body.className = 'loading-active'; // 즉시 로딩(스켈레톤 활성화) 상태로 전환
+            
+            document.getElementById('skeleton-loader-view').style.display = 'block';
+            document.getElementById('actual-data-view').style.display = 'none';
+            document.getElementById('error-fallback-view').style.display = 'none';
+
+            // 이미지 바인딩 초기화
+            const img = document.getElementById('eq-main-image');
+            img.src = '';
+            img.alt = '';
+            img.className = 'detail-img';
+            document.getElementById('eq-image-spinner').style.display = 'block';
+
+            // 텍스트 바인딩 초기화
+            document.getElementById('eq-badge-label').innerText = '';
+            document.getElementById('eq-badge-label').className = 'eq-badge';
+            document.getElementById('eq-category-label').innerText = '';
+            document.getElementById('eq-title-ko-label').innerText = '';
+            document.getElementById('eq-title-en-label').innerText = '';
+            document.getElementById('eq-summary-label').innerText = '';
+            document.getElementById('eq-bullets-title').innerText = '';
+            document.getElementById('eq-bullets-list').innerHTML = '';
+            document.getElementById('eq-apps-title').innerText = '';
+            document.getElementById('eq-apps-desc').innerText = '';
+            document.getElementById('eq-table-title').innerText = '';
+            document.getElementById('eq-table-body').innerHTML = '';
+
+            // 3. URL 파라미터 파싱 및 라우팅 안정화 (Resolves Routing Mapping)
+            const urlParams = new URLSearchParams(window.location.search);
+            const idParam = urlParams.get('id');
+            const nameParam = urlParams.get('name');
+
+            let selectedData = null;
+
+            // ID 값으로 우선 1차 매핑 시도
+            if (idParam && BATECH_EQUIPMENT_DB[idParam]) {
+                selectedData = BATECH_EQUIPMENT_DB[idParam];
+            } 
+            // ID 매핑이 실패하거나 없을 경우, 한글 인코딩 경로(name)를 활용해 2차 유연성 복구 매핑
+            else if (nameParam) {
+                const decodedName = decodeURIComponent(nameParam).trim();
+                for (const key in BATECH_EQUIPMENT_DB) {
+                    if (BATECH_EQUIPMENT_DB[key].name === decodedName) {
+                        selectedData = BATECH_EQUIPMENT_DB[key];
+                        break;
+                    }
+                }
+            }
+
+            // 4. 모방 지연을 적용해 스켈레톤 노출 보장 (0.8s) 후 UI 렌더링
+            setTimeout(() => {
+                if (selectedData) {
+                    renderActualData(selectedData);
+                } else {
+                    renderErrorFallback("요청하신 보유장비의 ID 또는 사양 한글명이 데이터베이스 정보와 일치하지 않습니다. 주소를 다시 확인하거나 리스트로 돌아가 선택해주세요.");
+                }
+            }, 800);
+        }
+
+        // 5. 성공 시 데이터 렌더링 함수
+        function renderActualData(data) {
+            // 이미지 및 스피너 로드 완료 제어 (Timeout 방지)
+            const img = document.getElementById('eq-main-image');
+            const spinner = document.getElementById('eq-image-spinner');
+            
+            // 이미지 lazy loading & load event 연결
+            img.src = data.image;
+            img.alt = data.name;
+            
+            img.onload = function() {
+                img.classList.add('loaded'); // 트랜지션 애니메이션 실행
+                spinner.style.display = 'none'; // 로드 완료 시 스피너 소거
+            };
+
+            img.onerror = function() {
+                spinner.style.display = 'none';
+                img.src = './water_hero_bg.png'; // 백업용 펌프 배경화면 로드
+                img.classList.add('loaded');
+            };
+
+            // 배지 클래스 제어
+            const badge = document.getElementById('eq-badge-label');
+            badge.innerText = data.badge;
+            if (data.badgeClass) {
+                badge.classList.add(data.badgeClass);
+            }
+
+            // 각 텍스트 요소 바인딩
+            document.getElementById('eq-category-label').innerText = data.category;
+            document.getElementById('eq-title-ko-label').innerText = data.name;
+            document.getElementById('eq-title-en-label').innerText = data.subtitle;
+            document.getElementById('eq-summary-label').innerText = data.summary;
+            
+            // 본문 텍스트 주입
+            const descParagraph = document.createElement('p');
+            descParagraph.className = 'product-desc';
+            descParagraph.style.marginTop = '1rem';
+            descParagraph.innerText = data.description;
+            document.getElementById('eq-summary-label').after(descParagraph);
+
+            // 주요 기술적 장점 불릿 리스트 렌더링
+            document.getElementById('eq-bullets-title').innerText = data.bulletTitle;
+            const bulletsContainer = document.getElementById('eq-bullets-list');
+            data.bullets.forEach(bullet => {
+                const li = document.createElement('li');
+                li.innerText = bullet;
+                bulletsContainer.appendChild(li);
+            });
+
+            // 주요 적용 분야 렌더링
+            document.getElementById('eq-apps-title').innerText = data.appTitle;
+            document.getElementById('eq-apps-desc').innerText = data.applications;
+
+            // 기술 사양 테이블 렌더링
+            document.getElementById('eq-table-title').innerText = data.tableTitle;
+            const tableBody = document.getElementById('eq-table-body');
+            data.tableRows.forEach(row => {
+                const tr = document.createElement('tr');
+                const th = document.createElement('th');
+                th.innerText = row.key;
+                const td = document.createElement('td');
+                td.innerText = row.val;
+                tr.appendChild(th);
+                tr.appendChild(td);
+                tableBody.appendChild(tr);
+            });
+
+            // 화면 노출 상태 변경 (Skeleton -> Actual)
+            document.getElementById('skeleton-loader-view').style.display = 'none';
+            document.getElementById('actual-data-view').style.display = 'block';
+            
+            const body = document.getElementById('detail-body');
+            body.classList.remove('loading-active');
+            body.classList.add('loading-done');
+        }
+
+        // 6. 실패 시 에러 폴백 렌더링 함수 (Resolves Fallback)
+        function renderErrorFallback(msg) {
+            document.getElementById('error-fallback-message').innerText = msg;
+
+            document.getElementById('skeleton-loader-view').style.display = 'none';
+            document.getElementById('error-fallback-view').style.display = 'block';
+            
+            const body = document.getElementById('detail-body');
+            body.classList.remove('loading-active');
+            body.classList.add('loading-done');
+        }
+
+        // 7. 뒤로 가기 / 목록 이동 헬퍼
+        function goBackOrHome() {
+            if (document.referrer.includes('index.html')) {
+                // 이전 페이지가 메인 페이지였을 경우 뒤로가기를 실행해 스크롤 유지 보장
+                window.history.back();
+            } else {
+                // 다이렉트 유입 등으로 이전 페이지 정보가 없으면 메인 보유장비 영역으로 직접 타겟팅 이동
+                window.location.href = './index.html?show=equipment';
+            }
+        }
+
+        // DOM 로드 완료 즉시 상태 초기화 및 데이터 로드 시작
+        document.addEventListener('DOMContentLoaded', () => {
+            initAndLoadDetail();
+        });
+    </script>
+</body>
+</html>
