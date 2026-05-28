@@ -43,7 +43,7 @@
 </head>
 <body id="detail-body">
     <script>
-        // [중복 렌더링 & 스크롤 잔상 차단] 페이지 진입 즉시 브라우저 스크롤 위치 최상단으로 강제 초기화
+        // [중복 렌더링 & 스크롤 잔상 원천 차단] 페이지 첫 렌더링 시작 전 즉각 스크롤 최상단 리셋
         window.scrollTo({ top: 0, behavior: 'instant' });
     </script>
 
@@ -235,7 +235,7 @@
         </div>
     </footer>
 
-    <!-- 상세페이지 데이터 바인딩 및 라우팅/로딩 제어용 특화 스크립트 (동기식 렌더러) -->
+    <!-- 상세페이지 데이터 바인딩 및 라우팅/로딩 제어용 특화 스크립트 -->
     <script>
         // 1. 보유장비 로컬 데이터베이스 (BATECH Equipment Database)
         const BATECH_EQUIPMENT_DB = {
@@ -328,7 +328,7 @@
             }
         };
 
-        // 2. 컴포넌트 상태(State) 완전 초기화 및 데이터 호출 함수 (동기식 렌더러)
+        // 2. 컴포넌트 상태(State) 완전 초기화 및 데이터 호출 함수 (동기식 즉시 로더)
         function initAndLoadDetail() {
             // [State Reset] 기존 렌더링된 상태 및 DOM 내용물 원점 초기화
             document.getElementById('actual-data-view').style.display = 'none';
@@ -472,8 +472,10 @@
             }
         }
 
-        // DOM 파싱 즉시 (DOMContentLoaded 대기 최소화) 동기식 로딩 개시
-        initAndLoadDetail();
+        // DOM 파싱 및 로드 완료 즉시(DOMContentLoaded) 안전하고 깨끗한 동기식 로딩 개시
+        document.addEventListener('DOMContentLoaded', () => {
+            initAndLoadDetail();
+        });
     </script>
 
     <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
