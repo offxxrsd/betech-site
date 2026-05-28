@@ -331,8 +331,13 @@
         // 2. 컴포넌트 상태(State) 완전 초기화 및 데이터 호출 함수 (동기식 즉시 로더)
         function initAndLoadDetail() {
             // [State Reset] 기존 렌더링된 상태 및 DOM 내용물 원점 초기화
-            document.getElementById('actual-data-view').style.display = 'none';
-            document.getElementById('error-fallback-view').style.display = 'none';
+            const actualView = document.getElementById('actual-data-view');
+            const errorView = document.getElementById('error-fallback-view');
+            
+            actualView.style.display = 'none';
+            actualView.classList.remove('visible');
+            errorView.style.display = 'none';
+            errorView.classList.remove('visible');
 
             // 이미지 바인딩 초기화
             const img = document.getElementById('eq-main-image');
@@ -451,14 +456,24 @@
                 tableBody.appendChild(tr);
             });
 
-            // 화면 즉시 노출
-            document.getElementById('actual-data-view').style.display = 'block';
+            // 화면 즉시 노출 및 초안전 애니메이션 리빌 추가
+            const actualView = document.getElementById('actual-data-view');
+            actualView.style.display = 'block';
+            
+            // 강제 리플로우를 통해 display 변경 효과와 트랜지션 클래스 추가를 순차화
+            actualView.offsetHeight; 
+            actualView.classList.add('visible');
         }
 
         // 6. 실패 시 에러 폴백 렌더링 함수
         function renderErrorFallback(msg) {
             document.getElementById('error-fallback-message').innerText = msg;
-            document.getElementById('error-fallback-view').style.display = 'block';
+            const errorView = document.getElementById('error-fallback-view');
+            errorView.style.display = 'block';
+            
+            // 강제 리플로우 및 애니메이션 클래스 동시 적용
+            errorView.offsetHeight;
+            errorView.classList.add('visible');
         }
 
         // 7. 뒤로 가기 / 목록 이동 헬퍼
