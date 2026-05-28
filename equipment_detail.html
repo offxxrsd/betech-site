@@ -35,9 +35,17 @@
         .main-header.scrolled .desktop-nav ul li a[href*="equipment"] {
             color: var(--color-secondary) !important;
         }
+        .mobile-nav ul li a[href*="equipment"] {
+            color: var(--color-accent) !important;
+            border-bottom-color: rgba(0, 229, 255, 0.3);
+        }
     </style>
 </head>
-<body class="loading-active" id="detail-body">
+<body id="detail-body">
+    <script>
+        // [중복 렌더링 & 스크롤 잔상 차단] 페이지 진입 즉시 브라우저 스크롤 위치 최상단으로 강제 초기화
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    </script>
 
     <!-- GNB (Global Navigation Bar) 헤더 영역 -->
     <header class="main-header" id="header">
@@ -81,129 +89,109 @@
         </nav>
     </header>
 
-    <!-- 서브페이지 전용 상세 상단 바 -->
-    <div class="detail-header-bar">
-        <div class="detail-header-container">
-            <button type="button" class="detail-back-btn" onclick="goBackOrHome()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-                <span>장비 리스트 목록으로 돌아가기</span>
-            </button>
-            <div style="font-family:'Montserrat',sans-serif; font-size:0.85rem; font-weight:700; color:var(--color-secondary);">
-                EQUIPMENT DETAILS
+    <main>
+        <!-- 서브페이지 전용 히어로 배너 (기존 제품소개/회사소개와 완전히 동일한 톤앤매너) -->
+        <section class="subpage-hero" style="background-image: url('./images/company_building.webp');" aria-labelledby="sub-hero-title">
+            <div class="subpage-hero-content">
+                <div class="subpage-hero-tag" id="sub-hero-tag-label">EQUIPMENT PORTFOLIO</div>
+                <h1 id="sub-hero-title">보유장비 상세 기술 명세</h1>
+                <p id="sub-hero-desc">최상의 기계적 내구성과 고정밀 유체 제어를 만족하는 비에이텍 핵심 산업용 설비 라인업의 상세 스펙입니다.</p>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <main class="detail-section">
-        <div class="detail-container">
-            
-            <!-- A. 스켈레톤 로더 영역 (로딩 중 활성화) -->
-            <div class="detail-skeleton-content" id="skeleton-loader-view">
-                <div class="detail-card">
-                    <div class="detail-grid">
-                        <div class="skeleton skeleton-image"></div>
-                        <div>
-                            <div class="skeleton skeleton-subtitle" style="width:20%; margin-bottom:1rem;"></div>
-                            <div class="skeleton skeleton-title"></div>
-                            <div class="skeleton skeleton-subtitle"></div>
-                            <div class="skeleton skeleton-summary"></div>
-                            <div class="skeleton skeleton-text"></div>
-                            <div class="skeleton skeleton-text"></div>
-                            <div class="skeleton skeleton-text short"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="skeleton skeleton-subtitle" style="width:30%; margin-bottom:1.5rem;"></div>
-                        <div class="skeleton skeleton-table-row"></div>
-                        <div class="skeleton skeleton-table-row"></div>
-                        <div class="skeleton skeleton-table-row"></div>
-                    </div>
+        <!-- 상세 정보 섹션 -->
+        <section class="detail-section">
+            <div class="detail-container">
+                <div class="detail-header-container" style="margin-bottom: 2rem;">
+                    <button type="button" class="detail-back-btn" onclick="goBackOrHome()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        <span>장비 목록으로 돌아가기</span>
+                    </button>
                 </div>
-            </div>
-
-            <!-- B. 실제 본문 콘텐츠 영역 (로딩 완료 시 표시) -->
-            <div class="detail-actual-content" id="actual-data-view" style="display:none;">
-                <article class="detail-card">
-                    <div class="detail-grid">
-                        <!-- 좌측: 고화질 WebP 이미지 프레임 -->
-                        <div class="detail-image-box">
-                            <img src="" alt="" class="detail-img" id="eq-main-image" loading="lazy">
-                            <span class="eq-badge" id="eq-badge-label"></span>
-                            <div class="detail-img-spinner" id="eq-image-spinner"></div>
+                
+                <!-- 실제 본문 콘텐츠 영역 ( fade-up 추가하여 타 페이지들과 동일한 카메라 셔터/기계 컷 진입 효과 적용 ) -->
+                <div class="detail-actual-content fade-up" id="actual-data-view" style="display:none;">
+                    <article class="detail-card">
+                        <div class="detail-grid">
+                            <!-- 좌측: 고화질 WebP 이미지 프레임 (동기식으로 한 번에 로딩) -->
+                            <div class="detail-image-box">
+                                <img src="" alt="" class="detail-img loaded" id="eq-main-image" loading="lazy">
+                                <span class="eq-badge" id="eq-badge-label"></span>
+                            </div>
+                            
+                            <!-- 우측: 상세 명세 설명 -->
+                            <div class="detail-desc-column">
+                                <span class="eq-category" id="eq-category-label"></span>
+                                <h1 class="eq-title-ko" id="eq-title-ko-label"></h1>
+                                <h2 class="eq-title-en" id="eq-title-en-label"></h2>
+                                <p class="eq-summary" id="eq-summary-label"></p>
+                                
+                                <div class="eq-bullets-box">
+                                    <h3 id="eq-bullets-title"></h3>
+                                    <ul id="eq-bullets-list"></ul>
+                                </div>
+                                
+                                <div class="eq-apps-box">
+                                    <h3 id="eq-apps-title"></h3>
+                                    <p id="eq-apps-desc"></p>
+                                </div>
+                            </div>
                         </div>
                         
-                        <!-- 우측: 상세 명세 설명 -->
-                        <div class="detail-desc-column">
-                            <span class="eq-category" id="eq-category-label"></span>
-                            <h1 class="eq-title-ko" id="eq-title-ko-label"></h1>
-                            <h2 class="eq-title-en" id="eq-title-en-label"></h2>
-                            <p class="eq-summary" id="eq-summary-label"></p>
-                            
-                            <div class="eq-bullets-box">
-                                <h3 id="eq-bullets-title"></h3>
-                                <ul id="eq-bullets-list"></ul>
+                        <!-- 하단: 기술 사양 상세 테이블 -->
+                        <div class="eq-spec-table-box">
+                            <table class="eq-spec-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" id="eq-table-title"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="eq-table-body"></tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- 프리미엄 고객 유도 CTA 박스 -->
+                        <div class="detail-cta-box">
+                            <div class="detail-cta-text">
+                                <h4>해당 설비를 활용한 맞춤형 시스템 설계 및 시공이 필요하십니까?</h4>
+                                <p>비에이텍은 단순 장비 활용을 넘어 현장 특화 배관 시공, 유량 밸런싱 공학 설계, 신속 사후관리까지 원스톱으로 지원합니다.</p>
                             </div>
-                            
-                            <div class="eq-apps-box">
-                                <h3 id="eq-apps-title"></h3>
-                                <p id="eq-apps-desc"></p>
+                            <div class="detail-cta-actions">
+                                <a href="tel:033-248-1111" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    <span>대표 전화 상담</span>
+                                </a>
+                                <a href="./inquiry.html" class="btn btn-outline">상세 기술 및 온라인 문의</a>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- 하단: 기술 사양 상세 테이블 -->
-                    <div class="eq-spec-table-box">
-                        <table class="eq-spec-table">
-                            <thead>
-                                <tr>
-                                    <th colspan="2" id="eq-table-title"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="eq-table-body"></tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- 프리미엄 고객 유도 CTA 박스 -->
-                    <div class="detail-cta-box">
-                        <div class="detail-cta-text">
-                            <h4>해당 설비를 활용한 맞춤형 시스템 설계 및 시공이 필요하십니까?</h4>
-                            <p>비에이텍은 단순 장비 활용을 넘어 현장 특화 배관 시공, 유량 밸런싱 공학 설계, 신속 사후관리까지 원스톱으로 지원합니다.</p>
-                        </div>
-                        <div class="detail-cta-actions">
-                            <a href="tel:033-248-1111" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                <span>대표 전화 상담</span>
-                            </a>
-                            <a href="./inquiry.html" class="btn btn-outline">상세 기술 및 온라인 문의</a>
-                        </div>
-                    </div>
-                </article>
-            </div>
+                    </article>
+                </div>
 
-            <!-- C. 에러 핸들링 Fallback 영역 (데이터 매핑 실패/타임아웃 시 노출) -->
-            <div class="detail-actual-content" id="error-fallback-view" style="display:none;">
-                <div class="error-container">
-                    <div class="error-icon-box">!</div>
-                    <h2 class="error-title">설비 정보를 불러올 수 없습니다</h2>
-                    <p class="error-message" id="error-fallback-message">
-                        요청하신 장비의 ID가 유효하지 않거나 데이터베이스와의 연결에 오류가 발생했습니다.<br>
-                        이전 캐시 오류 또는 잘못된 URL 정보일 수 있으니 아래의 안내를 이용해 주시기 바랍니다.
-                    </p>
-                    <div class="error-actions">
-                        <button type="button" class="btn btn-primary" onclick="window.location.reload();">
-                            <span>페이지 새로고침</span>
-                        </button>
-                        <a href="./index.html?show=equipment" class="btn btn-outline">
-                            <span>보유장비 리스트로 가기</span>
-                        </a>
+                <!-- C. 에러 핸들링 Fallback 영역 (데이터 매핑 실패 시 노출) -->
+                <div class="detail-actual-content fade-up" id="error-fallback-view" style="display:none;">
+                    <div class="error-container">
+                        <div class="error-icon-box">!</div>
+                        <h2 class="error-title">설비 정보를 불러올 수 없습니다</h2>
+                        <p class="error-message" id="error-fallback-message">
+                            요청하신 장비의 ID가 유효하지 않거나 데이터베이스와의 연결에 오류가 발생했습니다.<br>
+                            이전 캐시 오류 또는 잘못된 URL 정보일 수 있으니 아래의 안내를 이용해 주시기 바랍니다.
+                        </p>
+                        <div class="error-actions">
+                            <button type="button" class="btn btn-primary" onclick="window.location.reload();">
+                                <span>페이지 새로고침</span>
+                            </button>
+                            <a href="./index.html?show=equipment" class="btn btn-outline">
+                                <span>보유장비 리스트로 가기</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
@@ -247,10 +235,7 @@
         </div>
     </footer>
 
-    <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
-    <script src="./script.js"></script>
-
-    <!-- 상세페이지 데이터 바인딩 및 라우팅/로딩 제어용 특화 스크립트 -->
+    <!-- 상세페이지 데이터 바인딩 및 라우팅/로딩 제어용 특화 스크립트 (동기식 렌더러) -->
     <script>
         // 1. 보유장비 로컬 데이터베이스 (BATECH Equipment Database)
         const BATECH_EQUIPMENT_DB = {
@@ -343,13 +328,9 @@
             }
         };
 
-        // 2. 컴포넌트 상태(State) 완전 초기화 및 데이터 호출 함수 (Resolves Cache Stale)
+        // 2. 컴포넌트 상태(State) 완전 초기화 및 데이터 호출 함수 (동기식 렌더러)
         function initAndLoadDetail() {
             // [State Reset] 기존 렌더링된 상태 및 DOM 내용물 원점 초기화
-            const body = document.getElementById('detail-body');
-            body.className = 'loading-active'; // 즉시 로딩(스켈레톤 활성화) 상태로 전환
-            
-            document.getElementById('skeleton-loader-view').style.display = 'block';
             document.getElementById('actual-data-view').style.display = 'none';
             document.getElementById('error-fallback-view').style.display = 'none';
 
@@ -357,8 +338,6 @@
             const img = document.getElementById('eq-main-image');
             img.src = '';
             img.alt = '';
-            img.className = 'detail-img';
-            document.getElementById('eq-image-spinner').style.display = 'block';
 
             // 텍스트 바인딩 초기화
             document.getElementById('eq-badge-label').innerText = '';
@@ -367,6 +346,13 @@
             document.getElementById('eq-title-ko-label').innerText = '';
             document.getElementById('eq-title-en-label').innerText = '';
             document.getElementById('eq-summary-label').innerText = '';
+            
+            // 기존에 추가된 p 태그 제거
+            const existingDesc = document.querySelector('.detail-desc-column .product-desc');
+            if (existingDesc) {
+                existingDesc.remove();
+            }
+
             document.getElementById('eq-bullets-title').innerText = '';
             document.getElementById('eq-bullets-list').innerHTML = '';
             document.getElementById('eq-apps-title').innerText = '';
@@ -396,42 +382,33 @@
                 }
             }
 
-            // 4. 모방 지연을 적용해 스켈레톤 노출 보장 (0.8s) 후 UI 렌더링
-            setTimeout(() => {
-                if (selectedData) {
-                    renderActualData(selectedData);
-                } else {
-                    renderErrorFallback("요청하신 보유장비의 ID 또는 사양 한글명이 데이터베이스 정보와 일치하지 않습니다. 주소를 다시 확인하거나 리스트로 돌아가 선택해주세요.");
-                }
-            }, 800);
+            // 4. [동기식 즉시 로딩] 대기 지연(setTimeout)을 배제하여 깜빡임 제거 및 레이아웃 튐 차단
+            if (selectedData) {
+                renderActualData(selectedData);
+            } else {
+                renderErrorFallback("요청하신 보유장비의 ID 또는 사양 한글명이 데이터베이스 정보와 일치하지 않습니다. 주소를 다시 확인하거나 리스트로 돌아가 선택해주세요.");
+            }
         }
 
         // 5. 성공 시 데이터 렌더링 함수
         function renderActualData(data) {
-            // 이미지 및 스피너 로드 완료 제어 (Timeout 방지)
+            // 이미지 바인딩
             const img = document.getElementById('eq-main-image');
-            const spinner = document.getElementById('eq-image-spinner');
-            
-            // 이미지 lazy loading & load event 연결
             img.src = data.image;
             img.alt = data.name;
-            
-            img.onload = function() {
-                img.classList.add('loaded'); // 트랜지션 애니메이션 실행
-                spinner.style.display = 'none'; // 로드 완료 시 스피너 소거
-            };
 
-            img.onerror = function() {
-                spinner.style.display = 'none';
-                img.src = './water_hero_bg.png'; // 백업용 펌프 배경화면 로드
-                img.classList.add('loaded');
-            };
+            // 서브페이지 전용 히어로 배너 텍스트 동적 동기화
+            document.getElementById('sub-hero-title').innerText = data.name;
+            document.getElementById('sub-hero-desc').innerText = data.summary;
+            document.getElementById('sub-hero-tag-label').innerText = data.category;
 
             // 배지 클래스 제어
             const badge = document.getElementById('eq-badge-label');
             badge.innerText = data.badge;
             if (data.badgeClass) {
-                badge.classList.add(data.badgeClass);
+                badge.className = `eq-badge ${data.badgeClass}`;
+            } else {
+                badge.className = 'eq-badge';
             }
 
             // 각 텍스트 요소 바인딩
@@ -474,25 +451,14 @@
                 tableBody.appendChild(tr);
             });
 
-            // 화면 노출 상태 변경 (Skeleton -> Actual)
-            document.getElementById('skeleton-loader-view').style.display = 'none';
+            // 화면 즉시 노출
             document.getElementById('actual-data-view').style.display = 'block';
-            
-            const body = document.getElementById('detail-body');
-            body.classList.remove('loading-active');
-            body.classList.add('loading-done');
         }
 
-        // 6. 실패 시 에러 폴백 렌더링 함수 (Resolves Fallback)
+        // 6. 실패 시 에러 폴백 렌더링 함수
         function renderErrorFallback(msg) {
             document.getElementById('error-fallback-message').innerText = msg;
-
-            document.getElementById('skeleton-loader-view').style.display = 'none';
             document.getElementById('error-fallback-view').style.display = 'block';
-            
-            const body = document.getElementById('detail-body');
-            body.classList.remove('loading-active');
-            body.classList.add('loading-done');
         }
 
         // 7. 뒤로 가기 / 목록 이동 헬퍼
@@ -506,10 +472,11 @@
             }
         }
 
-        // DOM 로드 완료 즉시 상태 초기화 및 데이터 로드 시작
-        document.addEventListener('DOMContentLoaded', () => {
-            initAndLoadDetail();
-        });
+        // DOM 파싱 즉시 (DOMContentLoaded 대기 최소화) 동기식 로딩 개시
+        initAndLoadDetail();
     </script>
+
+    <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
+    <script src="./script.js"></script>
 </body>
 </html>
