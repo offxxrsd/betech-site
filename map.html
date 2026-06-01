@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)비에이텍 - 찾아오시는 길</title>
+    
+    <!-- SEO 및 메타 태그 정의 -->
+    <meta name="description" content="(주)비에이텍의 본사 및 스마트 팩토리 오시는 길을 안내합니다. 강원특별자치도 춘천시 퇴계공단길 49-7 주소 정보와 지도 및 카카오맵 실시간 길찾기 서비스를 편리하게 제공합니다.">
+    <meta name="keywords" content="비에이텍, 비에이텍 주소, 비에이텍 위치, 비에이텍 찾아오시는 길, 춘천 펌프공장, 정량펌프 제조공장, 비에이텍 지도, 카카오맵 길찾기">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="(주)비에이텍 - 찾아오시는 길">
+    <meta property="og:description" content="정밀한 유체 제어와 특허받은 무맥동 기술. 비에이텍으로 오시는 길을 편리한 지도와 함께 안내합니다.">
+    <meta property="og:image" content="./water_hero_bg.png">
+    
+    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 외부 공통 스타일시트 연동 -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- 찾아오시는 길 페이지 전용 특화 프리미엄 스타일 -->
+    <style>
+        /* GNB 활성화 상태 표시 스타일 */
+        .desktop-nav ul li a[href*="map.html"] {
+            color: var(--color-accent) !important;
+        }
+        .desktop-nav ul li a[href*="map.html"]::after {
+            transform: scaleX(1) !important;
+            transform-origin: left !important;
+        }
+        .main-header.scrolled .desktop-nav ul li a[href*="map.html"] {
+            color: var(--color-secondary) !important;
+        }
+        .mobile-nav ul li a[href*="map.html"] {
+            color: var(--color-accent) !important;
+            border-bottom-color: rgba(0, 229, 255, 0.3);
+        }
+
+        /* 서브페이지 전용 히어로 배너 (기존 페이지들과 완벽한 동기화) */
+        .subpage-hero {
+            position: relative;
+            width: 100%;
+            height: 45vh;
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+        .subpage-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 44, 0.9) 0%, rgba(11, 40, 80, 0.75) 100%);
+            z-index: 1;
+        }
+        .subpage-hero-content {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .subpage-hero-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            color: var(--color-accent);
+            margin-bottom: 0.75rem;
+            opacity: 0.9;
+        }
+        .subpage-hero h1 {
+            font-size: 2.75rem;
+            font-weight: 850;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .subpage-hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* 찾아오시는 길 핵심 섹션 */
+        .map-section {
+            background-color: var(--color-bg-light);
+            padding: 7rem 0;
+            position: relative;
+        }
+        .map-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* 오시는 길 상세 정보 카드 */
+        .address-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-base);
+        }
+        .address-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+            z-index: 10;
+        }
+        .address-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 163, 224, 0.2);
+        }
+        .company-title {
+            font-size: 1.85rem;
+            color: var(--color-primary);
+            font-weight: 850;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .company-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--color-secondary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+            margin-bottom: 2rem;
+        }
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .info-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background-color: rgba(0, 163, 224, 0.08);
+            color: var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition-base);
+        }
+        .address-card:hover .info-icon-box {
+            background-color: var(--color-secondary);
+            color: #ffffff;
+        }
+        .info-content h4 {
+            font-size: 0.95rem;
+            color: var(--color-primary);
+            font-weight: 750;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.01em;
+        }
+        .info-content p {
+            font-size: 0.98rem;
+            color: var(--color-text-main);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        .info-content a:hover {
+            color: var(--color-secondary);
+            text-decoration: underline;
+        }
+
+        .transport-box {
+            border-top: 1px solid var(--color-border);
+            padding-top: 2rem;
+            margin-top: 1rem;
+        }
+        .transport-box h3 {
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            font-weight: 800;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.01em;
+        }
+        .transport-item {
+            margin-bottom: 1.25rem;
+        }
+        .transport-item:last-child {
+            margin-bottom: 0;
+        }
+        .transport-label {
+            display: inline-block;
+            font-size: 0.825rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 30px;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+        .label-car {
+            background-color: rgba(0, 163, 224, 0.08);
+            color: var(--color-secondary);
+        }
+        .label-bus {
+            background-color: rgba(10, 28, 58, 0.08);
+            color: var(--color-primary);
+        }
+        .transport-desc {
+            font-size: 0.925rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* 프리미엄 지도 카드 프레임 */
+        .map-frame-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-base);
+        }
+        .map-frame-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 163, 224, 0.25);
+        }
+        .map-image-wrapper {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+            background-color: #f8fafc;
+            aspect-ratio: 4 / 3;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer; /* 손가락(Pointer) 커서 강제 적용 */
+        }
+        .map-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
+        }
+        .map-image-wrapper:hover .map-img {
+            transform: scale(1.03);
+            filter: brightness(0.95);
+        }
+
+        /* 돋보기/링크 아이콘 오버레이 효과 */
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 28, 58, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #ffffff;
+            gap: 0.75rem;
+            z-index: 5;
+        }
+        .map-image-wrapper:hover .map-overlay {
+            opacity: 1;
+        }
+        .overlay-icon-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--color-secondary);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 163, 224, 0.4);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .map-image-wrapper:hover .overlay-icon-box {
+            transform: scale(1);
+        }
+        .overlay-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 지도를 누르면 카카오맵 길찾기로 연결됩니다 안내 문구 */
+        .map-guide-banner {
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 1rem;
+            background-color: rgba(0, 163, 224, 0.04);
+            border: 1px dashed rgba(0, 163, 224, 0.25);
+            border-radius: 10px;
+            transition: var(--transition-base);
+        }
+        .map-frame-card:hover .map-guide-banner {
+            background-color: rgba(0, 163, 224, 0.08);
+            border-color: var(--color-secondary);
+        }
+        .map-guide-banner svg {
+            color: var(--color-secondary);
+            animation: bounceLeftRight 1.5s infinite ease-in-out;
+        }
+        .map-guide-text {
+            font-size: 0.925rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: -0.02em;
+        }
+
+        @keyframes bounceLeftRight {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(4px); }
+        }
+
+        /* ==========================================================================
+           찾아오시는 길 반응형 미디어 쿼리
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .map-grid {
+                grid-template-columns: 1fr;
+                gap: 3.5rem;
+                max-width: 700px;
+                margin: 0 auto;
+            }
+            .subpage-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .subpage-hero {
+                height: 35vh;
+                min-height: 260px;
+            }
+            .subpage-hero h1 {
+                font-size: 2rem;
+            }
+            .subpage-hero p {
+                font-size: 1rem;
+            }
+            .map-section {
+                padding: 4.5rem 0;
+            }
+            .address-card {
+                padding: 2rem;
+            }
+            .company-title {
+                font-size: 1.5rem;
+            }
+            .map-frame-card {
+                padding: 1rem;
+            }
+            .map-guide-text {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GNB (Global Navigation Bar) 헤더 영역 -->
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <!-- 로고 및 상호명 -->
+            <a href="./index.html" class="logo" id="header-logo">
+                <span class="brand-en">BAETECK</span>
+                <span class="brand-ko">(주)비에이텍</span>
+            </a>
+            
+            <!-- 데스크톱 네비게이션 메뉴 -->
+            <nav class="desktop-nav" aria-label="메인 네비게이션">
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./index.html?show=equipment">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
+                </ul>
+            </nav>
+            
+            <!-- 모바일 햄버거 메뉴 버튼 -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+        
+        <!-- 모바일 드롭다운 메뉴 -->
+        <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
+            <ul>
+                <li><a href="./intro.html">기업소개</a></li>
+                <li><a href="product.html">제품소개</a></li>
+                <li><a href="./index.html?show=equipment">보유장비</a></li>
+                <li><a href="./sales_history.html">주요업력</a></li>
+                <li><a href="./map.html">찾아오시는 길</a></li>
+                <li><a href="./inquiry.html">고객문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 서브페이지 전용 히어로 배너 (물빛 수처리 테마 유지) -->
+        <section class="subpage-hero" style="background-image: url('./water_hero_bg.png');" aria-labelledby="sub-hero-title">
+            <div class="subpage-hero-content">
+                <div class="subpage-hero-tag">LOCATION & CONTACT</div>
+                <h1 id="sub-hero-title">찾아오시는 길</h1>
+                <p>비에이텍은 춘천 스마트 팩토리에서 고품질 친환경 유체 이송 펌프 생산에 주력하고 있으며, 언제나 고객사의 방문을 진심으로 환영합니다.</p>
+            </div>
+        </section>
+
+        <!-- 찾아오시는 길 상세 섹션 -->
+        <section class="map-section" aria-labelledby="map-section-title">
+            <div class="section-container">
+                <div class="section-header text-center">
+                    <span class="section-tag">VISIT US</span>
+                    <h2 id="map-section-title">본사 및 스마트 팩토리 안내</h2>
+                    <p class="section-desc">최적의 정밀 기술을 바탕으로 완벽한 품질을 실현하는 현장으로 안내해 드립니다.</p>
+                </div>
+
+                <div class="map-grid">
+                    <!-- 1. 좌측: 주소 및 연락처 상세 정보 카드 (fade-up 상속) -->
+                    <div class="address-card fade-up">
+                        <h3 class="company-title">(주)비에이텍</h3>
+                        <div class="company-subtitle">BAETECK CO., LTD.</div>
+                        
+                        <div class="info-list">
+                            <!-- 주소 정보 -->
+                            <div class="info-item">
+                                <div class="info-icon-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                </div>
+                                <div class="info-content">
+                                    <h4>본사 및 스마트 팩토리 주소</h4>
+                                    <p>강원특별자치도 춘천시 퇴계공단길 49-7 (퇴계동)</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 전화번호 정보 -->
+                            <div class="info-item">
+                                <div class="info-icon-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                </div>
+                                <div class="info-content">
+                                    <h4>대표 전화 및 팩스</h4>
+                                    <p><strong>TEL :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 이메일 정보 -->
+                            <div class="info-item">
+                                <div class="info-icon-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                </div>
+                                <div class="info-content">
+                                    <h4>기술영업 및 상담 이메일</h4>
+                                    <p><a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 교통편 안내 -->
+                        <div class="transport-box">
+                            <h3>교통 및 오시는 방법</h3>
+                            <div class="transport-item">
+                                <span class="transport-label label-car">자가용 이용 시</span>
+                                <p class="transport-desc">남춘천 IC 진출 후 춘천시내 방면으로 15분 이동 &rarr; 퇴계공단 사거리 통과 후 퇴계공단길 진입 후 약 300m 직진</p>
+                            </div>
+                            <div class="transport-item">
+                                <span class="transport-label label-bus">대중교통 이용 시</span>
+                                <p class="transport-desc">경춘선 남춘천역 하차 후 퇴계공단 방면 시내버스 탑승 &rarr; '퇴계공단입구' 정류장 하차 후 도보 5분 거리</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 우측: 프리미엄 지도 카드 (fade-up 상속, images/155002.png 연동) -->
+                    <div class="map-frame-card fade-up">
+                        <div class="map-image-wrapper" onclick="openKakaoMap(event)" aria-label="카카오맵 길찾기 바로가기">
+                            <img src="./images/155002.png" alt="(주)비에이텍 지도 위치 약도" class="map-img">
+                            
+                            <!-- 호버 시 디스플레이될 오버레이 레이어 -->
+                            <div class="map-overlay">
+                                <div class="overlay-icon-box">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"></path><path d="M10 14L21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+                                </div>
+                                <span class="overlay-text">카카오맵 길찾기 바로가기</span>
+                            </div>
+                        </div>
+
+                        <!-- 하단 안내 문구 영역 -->
+                        <div class="map-guide-banner">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <span class="map-guide-text">지도를 누르면 카카오맵 길찾기로 연결됩니다.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">BAETECK</div>
+                <div class="footer-company-name">(주)비에이텍</div>
+                <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
+            </div>
+            
+            <div class="footer-info">
+                <h4>CONTACT INFO</h4>
+                <address>
+                    <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                    <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                    <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                </address>
+            </div>
+            
+            <div class="footer-links">
+                <h4>QUICK LINK</h4>
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./index.html?show=equipment">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html">고객문의</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">Copyright &copy; 2026 BAETECK CO., LTD. All Rights Reserved.</p>
+                <div class="footer-meta">
+                    <span>정량펌프 제작 · 설치 · 오버홀 수리 전문기업</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
+    <script src="./script.js"></script>
+
+    <!-- 카카오맵 연동 및 스마트 모바일 앱 딥링크 스크립트 -->
+    <script>
+        function openKakaoMap(e) {
+            if (e) e.preventDefault();
+            
+            const webUrl = "https://map.kakao.com/link/to/비에이텍,37.85044,127.72886";
+            const appUrl = "kakaomap://route?ep=37.85044,127.72886&by=CAR";
+            
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // 앱 실행 시도 시작 시간
+                const startTime = Date.now();
+                
+                // 네이티브 앱 스키마 주소로 페이지를 강제 리다이렉트 (설치 시 앱 실행)
+                window.location.href = appUrl;
+                
+                // 1.5초(1500ms) 대기 후, 앱 미반응 시(미설치 등) 모바일 웹 페이지로의 폴백 분기 처리
+                setTimeout(() => {
+                    // 브라우저 백그라운드 전환 여부 감지 (앱이 켜졌다면 시간 격차가 크게 벌어짐)
+                    if (Date.now() - startTime < 2000) {
+                        window.location.href = webUrl;
+                    }
+                }, 1500);
+            } else {
+                // 데스크톱 환경에서는 새 창(새 탭)으로 카카오맵 길찾기 웹 사이트 다이렉트 오픈
+                window.open(webUrl, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
