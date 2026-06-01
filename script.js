@@ -137,46 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ----------------------------------------------------
-    // 5. [보유장비] GNB 메뉴 클릭 동적 노출 및 스크롤 연동 (초안전 전역 연동)
+    // 5. [보유장비] 하위 호환성용 쿼리스트링 감지 및 자동 펼침
     // ----------------------------------------------------
-    const equipmentMenuLinks = document.querySelectorAll('a[href="./equipment.html"], a[href="equipment.html"], a[href="#equipment-spec-section"], a[href*="show=equipment"]');
     const equipmentSection = document.getElementById('equipment-spec-section');
-    
-    // GNB 보유장비 링크 클릭 시 동작 정의
-    equipmentMenuLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const currentSection = document.getElementById('equipment-spec-section');
-            const isMainPage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.html');
-            
-            if (isMainPage && currentSection) {
-                // 메인 페이지에 보유장비 섹션이 실재할 경우: 동적 펼치기 & 부드러운 스크롤
-                e.preventDefault();
-                currentSection.classList.remove('hidden');
-                currentSection.classList.add('active');
-                
-                // 모바일 햄버거 메뉴가 열려있을 경우 닫기 처리
-                if (mobileToggle && mobileMenu && mobileMenu.classList.contains('active')) {
-                    mobileToggle.classList.remove('active');
-                    mobileMenu.classList.remove('active');
-                    mobileToggle.setAttribute('aria-expanded', 'false');
-                    document.body.style.overflow = '';
-                }
-                
-                setTimeout(() => {
-                    currentSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }, 50);
-            } else {
-                // 서브 페이지 또는 섹션이 존재하지 않는 경우: 쿼리스트링과 함께 메인으로 안내 리다이렉트
-                e.preventDefault();
-                window.location.href = './index.html?show=equipment';
-            }
-        });
-    });
-    
-    // 다른 페이지에서 메인 페이지로 유입 시 ?show=equipment 쿼리가 있으면 즉시 펼치고 스크롤 다운
     if (equipmentSection) {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('show') === 'equipment') {
@@ -189,8 +152,53 @@ document.addEventListener('DOMContentLoaded', () => {
                         behavior: 'smooth',
                         block: 'start'
                     });
-                }, 300); // 리소스 로드 후 부드럽게 스크롤링 시작
+                }, 300);
             });
         }
     }
+
+    // ----------------------------------------------------
+    // 6. AnimatePresence 시뮬레이션 기반 전역 페이지 트랜지션 엔진
+    // ----------------------------------------------------
+    // 브라우저 렌더링 완료 즉시 페이드인(Enter) 주입
+    document.body.classList.add('page-loaded');
+
+    // 페이지 이탈(Exit) 시 페이드아웃 적용을 위한 통합 클릭 위임
+    document.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a');
+        if (!anchor) return;
+
+        const href = anchor.getAttribute('href');
+        const target = anchor.getAttribute('target');
+
+        // 외부 링크, 메일, 전화, 해시 링크, 새 창, 딥링크, 특수키 클릭은 예외 분기
+        if (
+            !href ||
+            href.startsWith('#') ||
+            href.startsWith('tel:') ||
+            href.startsWith('mailto:') ||
+            href.startsWith('javascript:') ||
+            href.startsWith('kakaomap:') ||
+            target === '_blank' ||
+            href.includes('//') ||
+            e.ctrlKey ||
+            e.metaKey ||
+            e.shiftKey
+        ) {
+            return;
+        }
+
+        // 로컬 HTML 페이지간 이동 감지 시 AnimatePresence Exit 효과 구동
+        if (href.includes('.html') || href.startsWith('./') || href.startsWith('../')) {
+            e.preventDefault();
+            
+            // exiting 클래스를 부여해 즉각적인 페이드아웃 개시
+            document.body.classList.add('page-exiting');
+
+            // 0.35초 후 자연스러운 교체가 일어나도록 리다이렉트
+            setTimeout(() => {
+                window.location.href = href;
+            }, 350);
+        }
+    }, { passive: false });
 });
