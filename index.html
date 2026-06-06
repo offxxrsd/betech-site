@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)비에이텍 - 정량펌프 및 수처리 전문 제조 기업</title>
+    
+    <!-- SEO 및 메타 태그 정의 -->
+    <meta name="description" content="다이어프램형 무맥동 정량 펌프(PAC, PKD 시리즈) 전문 제조 및 설치, 유지보수 전문 기업 (주)비에이텍입니다. 정밀한 기술로 깨끗한 수처리를 실현합니다.">
+    <meta name="keywords" content="비에이텍, 정량펌프, 무맥동 펌프, 다이어프램 펌프, 수처리, PAC 시리즈, PKD 시리즈, 펌프 수리, 펌프 설치, 춘천 펌프">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="(주)비에이텍 - 정량펌프 및 수처리 전문 제조 기업">
+    <meta property="og:description" content="정밀한 기술로 깨끗한 미래를 흐르게 합니다. 무맥동 정량펌프 제작 및 수처리 솔루션 전문.">
+    <meta property="og:image" content="./water_hero_bg.png">
+    
+    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 외부 스타일시트 연동 -->
+    <link rel="stylesheet" href="./style.css">
+    
+    <!-- 메인 히어로 비디오 및 GNB 레이아웃 전용 특화 스타일 -->
+    <style>
+        /* GNB 메뉴 5개 축소에 따른 여백 재배치 및 균형화 */
+        .desktop-nav ul {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: clamp(1.8rem, 3.5vw, 2.8rem) !important; /* 메뉴 개수가 줄어 여백을 기존보다 넓혀 균형 조절 */
+        }
+
+        .desktop-nav ul li a {
+            font-size: 1.05rem !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        /* 고객문의 하이라이트 링크 (우측 맨 끝 버튼 스타일) */
+        .desktop-nav ul li a.highlight-link {
+            padding: 0.75rem 1.6rem !important;
+            border: 2px solid var(--color-accent, #00e5ff) !important;
+            border-radius: 30px !important;
+            background-color: rgba(0, 229, 255, 0.05) !important;
+            color: var(--color-accent, #00e5ff) !important;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .desktop-nav ul li a.highlight-link:hover {
+            background-color: var(--color-accent, #00e5ff) !important;
+            color: #0a192c !important;
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #0a192c; /* 딥 네이비 기저 배경색 */
+            padding: 100px 0 60px 0;
+        }
+
+        /* 135deg 선형 그라데이션과 배경 이미지를 가진 언더레이어 */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 44, 0.95) 0%, rgba(11, 40, 80, 0.8) 100%), url('./water_hero_bg.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        /* 메인 콘텐츠와 비디오를 담을 그리드 컨테이너 */
+        .hero-grid-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr; /* 좌측 57.5%, 우측 42.5% */
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-left-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        .hero-right-column {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        /* 비디오 컨테이너 */
+        .hero-video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 163, 224, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            aspect-ratio: 16 / 10; /* 시각적 균형을 이루는 영상 비율 */
+            background-color: #0b1c30;
+        }
+
+        /* 비디오 좌측 가장자리 블렌딩 오버레이 마스크 */
+        .video-overlay-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 딥 네이비 배경색(#0a192c)과 자연스럽게 오버랩되도록 설정 */
+            background: linear-gradient(90deg, #0a192c 0%, rgba(10, 25, 44, 0.7) 12%, rgba(10, 25, 44, 0) 45%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .hero-motor-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.95;
+        }
+
+        /* 기존 hero-content 스타일의 오버라이드 */
+        .hero-content {
+            text-align: left;
+            padding: 0;
+        }
+
+        #hero-title {
+            font-size: 2.75rem !important;
+            line-height: 1.25 !important;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 모바일 및 태블릿 반응형 미디어 쿼리 */
+        @media (max-width: 1024px) {
+            .hero-section {
+                min-height: auto;
+                padding: 120px 0 60px 0;
+            }
+            .hero-grid-container {
+                grid-template-columns: 1fr; /* 1열 배치로 자동 전환 */
+                gap: 3rem;
+                text-align: center;
+            }
+            .hero-left-column {
+                align-items: center;
+            }
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-right-column {
+                max-width: 550px;
+                margin: 0 auto;
+            }
+            .video-overlay-mask {
+                background: linear-gradient(180deg, rgba(10, 25, 44, 0.4) 0%, rgba(10, 25, 44, 0) 25%, rgba(10, 25, 44, 0.7) 100%);
+            }
+            #hero-title {
+                font-size: 2.25rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 100px 0 50px 0;
+            }
+            #hero-title {
+                font-size: 1.85rem !important;
+            }
+            .hero-video-wrapper {
+                border-radius: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GNB (Global Navigation Bar) 헤더 영역 -->
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <!-- 로고 및 상호명 -->
+            <a href="./index.html" class="logo" id="header-logo">
+                <span class="brand-en">BAETECK</span>
+                <span class="brand-ko">(주)비에이텍</span>
+            </a>
+            
+            <!-- 데스크톱 네비게이션 메뉴 -->
+            <nav class="desktop-nav" aria-label="메인 네비게이션">
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="#equipment-spec-section">보유장비</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
+                </ul>
+            </nav>
+            
+            <!-- 모바일 햄버거 메뉴 버튼 -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+        
+        <!-- 모바일 드롭다운 메뉴 -->
+        <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
+            <ul>
+                <li><a href="./intro.html">기업소개</a></li>
+                <li><a href="product.html">제품소개</a></li>
+                <li><a href="#equipment-spec-section">보유장비</a></li>
+                <li><a href="./map.html">찾아오시는 길</a></li>
+                <li><a href="./inquiry.html">고객문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section (메인 비주얼 영역) -->
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="hero-grid-container">
+                <!-- 좌측 영역: 메인 카피 및 액션 버튼 -->
+                <div class="hero-left-column">
+                    <div class="hero-content">
+                        <div class="hero-tag">WATER TREATMENT & METERING PUMPS</div>
+                        <h1 id="hero-title" class="fade-in">
+                            정밀한 기술로<br>
+                            <span class="blue-grad-text">깨끗한 미래</span>를 흐르게 합니다.
+                        </h1>
+                        <p class="hero-subtitle fade-in">
+                            (주)비에이텍은 다이어프램형 무맥동 정량 펌프 제작 및 수처리 설비의 무결점 설치·수리를 제공하는 엔지니어링 파트너입니다.
+                        </p>
+                        <div class="hero-actions fade-in">
+                            <a href="product.html" class="btn btn-primary" id="cta-product">
+                                <span>주요 제품 보기</span>
+                                <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                            <a href="./inquiry.html" class="btn btn-outline" id="cta-inquiry">견적 및 기술 문의</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 우측 영역: 가동 비디오 및 그라데이션 오버레이 마스크 -->
+                <div class="hero-right-column">
+                    <div class="hero-video-wrapper">
+                        <!-- 좌측 그라데이션 오버레이 마스크: 동영상이 딥 네이비 배경에 자연스럽게 흡수되도록 함 -->
+                        <div class="video-overlay-mask"></div>
+                        <video class="hero-motor-video" autoplay muted loop playsinline poster="./equipment_photo1.jpg">
+                            <source src="./모터영상.mp4" type="video/mp4">
+                            우수한 정밀도의 모터 가동 영상입니다. 지원하지 않는 브라우저입니다.
+                        </video>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 마우스 휠 다운 유도 아이콘 -->
+            <div class="scroll-indicator">
+                <span class="mouse">
+                    <span class="wheel"></span>
+                </span>
+                <span class="scroll-text">SCROLL DOWN</span>
+            </div>
+        </section>
+
+        <!-- Features Section (핵심 경쟁력 요약) -->
+        <section class="features-section" id="features" aria-labelledby="features-title">
+            <div class="section-container">
+                <div class="section-header text-center">
+                    <span class="section-tag">CORE COMPETENCE</span>
+                    <h2 id="features-title">비에이텍만의 핵심 기술력</h2>
+                    <p class="section-desc">완벽한 수처리 솔루션과 혁신적인 펌프 제어 기술로 산업 현장을 리드합니다.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <!-- 카드 1: 무맥동 펌프 기술 -->
+                    <article class="feature-card fade-up" id="card-tech">
+                        <div class="card-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        </div>
+                        <h3>무맥동 다이어프램 정량펌프 기술</h3>
+                        <p class="card-text">
+                            PAC 및 PKD 시리즈 등 최고 정밀도의 무맥동 다이어프램 정량 펌프를 직접 설계·제작합니다. 맥동 현상을 원천 차단하여 정밀하고 균일한 약품 투입을 보장합니다.
+                        </p>
+                        <a href="product.html" class="card-link">제품 라인업 보기 &rarr;</a>
+                    </article>
+
+                    <!-- 카드 2: 체계적인 사후관리 (유지관리지침서 연동 강조) -->
+                    <article class="feature-card fade-up" id="card-maintenance">
+                        <div class="card-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <h3>철저한 사후관리 및 정밀 오버홀</h3>
+                        <p class="card-text">
+                            정량펌프 유지관리지침서에 따른 철저한 예방 점검과 신속 수리 서비스를 시행합니다. 축적된 수리 노하우로 유체의 누출을 방지하고 설비 수명을 극대화합니다.
+                        </p>
+                        <a href="./정량펌프 유지관리지침서.pdf" target="_blank" class="card-link link-pdf">유지관리지침서 다운로드 (PDF) &rarr;</a>
+                    </article>
+
+                    <!-- 카드 3: 맞춤형 솔루션 -->
+                    <article class="feature-card fade-up" id="card-solution">
+                        <div class="card-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                        </div>
+                        <h3>맞춤형 친환경 수처리 솔루션</h3>
+                        <p class="card-text">
+                            하폐수 처리, 정수장, 산업 폐수 설비 등 현장의 유체 성상과 운전 압력을 반영하여 최적화된 맞춤형 펌프 패키지 제작 및 완벽한 현장 배관 시공을 약속드립니다.
+                        </p>
+                        <a href="./equipment.html" class="card-link">장비 및 인프라 확인 &rarr;</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section (수치로 보는 신뢰성 - 미니 인포그래픽) -->
+        <section class="stats-section" aria-label="기업 지표 요약">
+            <div class="section-container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">자체 설계 및 국내 제작</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">신속 수리 및 기술 대응</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0.01%</div>
+                        <div class="stat-label">미세 유량 정밀 오차 보증</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">국내 수처리 설비 시공 레퍼런스</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 보유장비 상세 섹션 (초기 상태: 숨김) -->
+        <section id="equipment-spec-section" class="equipment-spec-section hidden" aria-labelledby="eq-main-title">
+            <div class="section-container">
+                <!-- 섹션 헤더 -->
+                <div class="section-header text-center">
+                    <span class="section-tag">EQUIPMENT PORTFOLIO</span>
+                    <h2 id="eq-main-title">비에이텍 핵심 보유 장비 명세</h2>
+                    <p class="section-desc">최상의 기계적 내구성과 고정밀 유체 제어를 만족하는 고신뢰성 핵심 산업용 설비 라인업입니다.</p>
+                </div>
+
+                <div class="equipment-portfolio-container">
+                    
+                    <!-- 장비 1 블록 -->
+                    <a href="./equipment_detail.html?id=1&name=%EC%A7%80%EC%83%81%20%EA%B1%B0%EC%B9%98%ED%98%95%20%EB%8C%80%EC%9A%A9%EB%9F%89%20%EC%9B%90%EC%8B%AC%ED%8E%8C%ED%94%84%20%EC%8B%9C%EC%8A%A4%ED%85%9C" class="equipment-block-link">
+                        <article class="equipment-block">
+                            <div class="equipment-grid">
+                                <!-- 좌측: 제품 사진 -->
+                                <div class="equipment-photo-column">
+                                    <div class="equipment-frame">
+                                        <img src="images/equipment_photo1.webp" alt="지상 거치형 대용량 원심펌프 시스템" class="eq-display-img" loading="lazy">
+                                        <div class="eq-badge">대용량 산업용</div>
+                                    </div>
+                                </div>
+                                <!-- 우측: 제품 설명 -->
+                                <div class="equipment-desc-column">
+                                    <span class="eq-category">CENTRIFUGAL PUMPS</span>
+                                    <h3 class="eq-title-ko">지상 거치형 대용량 원심펌프 시스템</h3>
+                                    <h4 class="eq-title-en">Ground-Mounted High-Capacity Centrifugal Pump System</h4>
+                                    <p class="eq-summary">“강력한 내구성과 동력 전달 효율을 극대화한 산업용 대유량 이송의 표준”</p>
+                                    
+                                    <div class="eq-bullets-box">
+                                        <h5>주요 기술적 장점</h5>
+                                        <ul>
+                                            <li>모터와 펌프 헤드 간의 축 정렬(Shaft Alignment) 공차를 극소화하여 동력 전달 효율을 극대화하였습니다.</li>
+                                            <li>회전 부위에 고인장 강도의 노란 안전 커버(Coupling Guard)를 장착하여 중대재해처벌법 대비 규격을 완벽하게 충족하였습니다.</li>
+                                            <li>저진동 탄소강 주강 베이스 프레임 설계를 채택하여 연속 고속 운전 시 소음을 탁월하게 억제합니다.</li>
+                                            <li>흡입 및 토출 하우징의 신속 개폐 구조로 설계되어 임펠러 진단과 신속한 사후관리를 보장합니다.</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="eq-apps-box">
+                                        <h5>주요 적용 분야 (Applications)</h5>
+                                        <p>하·폐수 처리장 대용량 원수 이송 라인, 플랜트 공업 용수 공급 계통, 대규모 농업 용수 관개 시설</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 하단: 기술 사양 표 -->
+                            <div class="eq-spec-table-box">
+                                <table class="eq-spec-table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4">KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>토출 유량 (Capacity)</th>
+                                            <td>50 ~ 800 m³/hr</td>
+                                            <th>전동기 동력 (Motor Power)</th>
+                                            <td>15 ~ 110 kW (IE3 프리미엄 고효율 모터)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>총 양정 (Total Head)</th>
+                                            <td>10 ~ 120 m</td>
+                                            <th>주요 재질 (Materials)</th>
+                                            <td>주철 (GC200) / 스테인리스 주강 (SSC13)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </a>
+
+                    <!-- 장비 2 블록 -->
+                    <a href="./equipment_detail.html?id=2&name=WILO%20%EC%9E%85%ED%98%95%20%EB%8B%A4%EB%8B%A8%20%EC%9B%90%EC%8B%AC%ED%8E%8C%ED%94%84%20%EC%8B%9C%EC%8A%A4%ED%85%9C" class="equipment-block-link">
+                        <article class="equipment-block">
+                            <div class="equipment-grid">
+                                <!-- 좌측: 제품 사진 -->
+                                <div class="equipment-photo-column">
+                                    <div class="equipment-frame">
+                                        <img src="images/equipment_photo2.webp" alt="WILO 입형 다단 원심펌프 시스템" class="eq-display-img" loading="lazy">
+                                        <div class="eq-badge eq-badge-aqua">고압 & 초절전</div>
+                                    </div>
+                                </div>
+                                <!-- 우측: 제품 설명 -->
+                                <div class="equipment-desc-column">
+                                    <span class="eq-category">MULTISTAGE VERTICAL PUMPS</span>
+                                    <h3 class="eq-title-ko">WILO 입형 다단 원심펌프 시스템</h3>
+                                    <h4 class="eq-title-en">WILO Vertical Multistage Centrifugal Pump System</h4>
+                                    <p class="eq-summary">“초절전 수직 적층 실린더 구조로 설치 공간 최소화와 초고압 토출 성능을 동시 실현”</p>
+                                    
+                                    <div class="eq-bullets-box">
+                                        <h5>주요 기술적 장점</h5>
+                                        <ul>
+                                            <li>상단에 신뢰성 높은 고효율 WILO 녹색 전동기를 탑재하여 전력 소모를 최소화하고 공정 안정성을 확보했습니다.</li>
+                                            <li>접액부 전체에 SUS304 / SUS316L 정밀 스테인리스강 실린더를 적용하여 화학적 내부식성과 내압성이 매우 탁월합니다.</li>
+                                            <li>수직형(Vertical) 컴팩트 공간 절약 레이아웃을 통해 가압 스키드(Skid) 모듈의 설치 면적을 혁신적으로 절감했습니다.</li>
+                                            <li>카트리지 타입 고성능 메카니컬 씰(Mechanical Seal) 장착으로 약품 유체 누출율 0%와 신속 씰 교체를 보증합니다.</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="eq-apps-box">
+                                        <h5>주요 적용 분야 (Applications)</h5>
+                                        <p>용수 가압 및 상수 급수 시스템, 산업용 보일러 고압 급수 계통, 소방 가압 가설 설비, 고정밀 수처리 약품 주입 스키드</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 하단: 기술 사양 표 -->
+                            <div class="eq-spec-table-box">
+                                <table class="eq-spec-table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4">KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>토출 유량 (Capacity)</th>
+                                            <td>1.0 ~ 55 m³/hr</td>
+                                            <th>허용 사용 압력 (Max. Pressure)</th>
+                                            <td>25 bar (2.5 MPa) 고부하용</td>
+                                        </tr>
+                                        <tr>
+                                            <th>최고 양정 (Max. Head)</th>
+                                            <td>20 ~ 240 m</td>
+                                            <th>허용 온도 범위 (Liquid Temp.)</th>
+                                            <td>-15°C ~ +120°C 고압 액상 지원</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </a>
+
+                    <!-- 장비 3 블록 -->
+                    <a href="./equipment_detail.html?id=3&name=%EB%8C%80%ED%98%95%20%EC%9B%90%EC%8B%AC%ED%8E%8C%ED%94%84%20%EB%A9%80%ED%8B%B0%20%EB%B3%91%EB%A0%AC%20%EB%9D%BC%EC%9D%B8%EC%97%85" class="equipment-block-link">
+                        <article class="equipment-block">
+                            <div class="equipment-grid">
+                                <!-- 좌측: 제품 사진 -->
+                                <div class="equipment-photo-column">
+                                    <div class="equipment-frame">
+                                        <img src="images/equipment_photo3.webp" alt="대형 원심펌프 멀티 병렬 라인업" class="eq-display-img" loading="lazy">
+                                        <div class="eq-badge eq-badge-blue">플랜트 대규모 공정</div>
+                                    </div>
+                                </div>
+                                <!-- 우측: 제품 설명 -->
+                                <div class="equipment-desc-column">
+                                    <span class="eq-category">PARALLEL SYSTEM ENGINEERING</span>
+                                    <h3 class="eq-title-ko">대형 원심펌프 멀티 병렬 라인업</h3>
+                                    <h4 class="eq-title-en">Multi-Parallel Heavy-Duty Centrifugal Pump Lineup</h4>
+                                    <p class="eq-summary">“연속 운전 신뢰성을 위해 다중 밸런싱 병렬 제어 공학을 적용한 고유량 이송 센터”</p>
+                                    
+                                    <div class="eq-bullets-box">
+                                        <h5>주요 기술적 장점</h5>
+                                        <ul>
+                                            <li>강도 해석을 필한 베이스 프레임 상에 다수의 대형 원심 펌프를 병렬로 배치하여 최적의 부하 분산 및 교대 운전이 가능합니다.</li>
+                                            <li>인버터(VFD) 자동 제어 판넬을 적용하여 공정 유량 수용량 변화에 맞춰 회전 주파수를 스마트하게 자동 가변 제어합니다.</li>
+                                            <li>흡입 및 토출 플랜지 조인트에 방진 설계를 채택하여 기계 기동 시 발생하는 파손용 수격(Water Hammering) 압력을 예방합니다.</li>
+                                            <li>임펠러의 3D 정밀 컴퓨터 밸런싱을 거쳐 조립하여 가혹한 고압 가동 시에도 캐비테이션(공동 현상) 발생을 억제합니다.</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="eq-apps-box">
+                                        <h5>주요 적용 분야 (Applications)</h5>
+                                        <p>광역 배수 가압장 및 종합 취수원, 대규모 제철 및 석유화학 플랜트 순환 냉각수 공급 계통, 신도시 수처리 가압 스테이션</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 하단: 기술 사양 표 -->
+                            <div class="eq-spec-table-box">
+                                <table class="eq-spec-table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4">KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>시스템 구성 (Configuration)</th>
+                                            <td>2대 ~ 4대 멀티 병렬 가동 및 제어</td>
+                                            <th>제어 인터페이스 (Control Method)</th>
+                                            <td>인버터 통합형 VFD (Modbus / Profibus 이더넷 판넬)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>합산 최대 유량 (Total Flow)</th>
+                                            <td>Max. 3,200 m³/hr</td>
+                                            <th>전동기 규격 (Motor Standard)</th>
+                                            <td>삼상 고유도 전동기 (IE3 / IE4 프리미엄 모터)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section (기술 문의 유도) -->
+        <section class="cta-banner-section" aria-labelledby="cta-banner-title">
+            <div class="section-container text-center">
+                <h2 id="cta-banner-title">유체 제어, 최고의 신뢰성을 보장합니다</h2>
+                <p>무맥동 정량펌프의 선정부터 도면 설계, 시공 및 철저한 유지관리까지 한 번에 상담받으세요.</p>
+                <div class="cta-btns">
+                    <a href="tel:033-248-1111" class="btn btn-primary-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        033-248-1111
+                    </a>
+                    <a href="./inquiry.html" class="btn btn-outline-white">온라인 상담신청</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">BAETECK</div>
+                <div class="footer-company-name">(주)비에이텍</div>
+                <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
+            </div>
+            
+            <div class="footer-info">
+                <h4>CONTACT INFO</h4>
+                <address>
+                    <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                    <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                    <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                </address>
+            </div>
+            
+            <div class="footer-links">
+                <h4>QUICK LINK</h4>
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="#equipment-spec-section">보유장비</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html">고객문의</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">Copyright &copy; 2026 BAETECK CO., LTD. All Rights Reserved.</p>
+                <div class="footer-meta">
+                    <span>정량펌프 제작 · 설치 · 오버홀 수리 전문기업</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 인터랙션 제어용 자바스크립트 -->
+    <script src="./script.js"></script>
+</body>
+</html>
