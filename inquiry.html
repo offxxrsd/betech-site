@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)비에이텍 - 고객문의</title>
+    
+    <!-- SEO 및 메타 태그 정의 -->
+    <meta name="description" content="(주)비에이텍의 고객지원 및 문의 페이지입니다. 정밀 다이어프램 정량펌프 견적 의뢰, 현장 시공 설계 상담, 오버홀 수리 및 사후관리 등 1:1 채팅 문의와 실시간 전화 상담 서비스를 간편하게 이용하실 수 있습니다.">
+    <meta name="keywords" content="비에이텍, 비에이텍 문의, 펌프 견적 문의, 펌프 수리 접수, 수처리 설계 상담, 1:1 문의, EmailJS 문의, 비에이텍 전화번호">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="(주)비에이텍 - 고객문의">
+    <meta property="og:description" content="정밀한 유체 제어와 특허받은 무맥동 기술. 비에이텍의 1:1 채팅문의 및 신속 전화상담 솔루션을 만나보세요.">
+    <meta property="og:image" content="./water_hero_bg.png">
+    
+    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 외부 공통 스타일시트 연동 -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- 고객문의 페이지 전용 특화 프리미엄 스타일 -->
+    <style>
+        /* GNB 활성화 상태 표시 스타일 */
+        .desktop-nav ul li a[href*="inquiry.html"] {
+            color: var(--color-accent) !important;
+        }
+        .desktop-nav ul li a[href*="inquiry.html"]::after {
+            transform: scaleX(1) !important;
+            transform-origin: left !important;
+        }
+        .main-header.scrolled .desktop-nav ul li a[href*="inquiry.html"] {
+            color: var(--color-secondary) !important;
+        }
+        .mobile-nav ul li a[href*="inquiry.html"] {
+            color: var(--color-accent) !important;
+            border-bottom-color: rgba(0, 229, 255, 0.3);
+        }
+
+        /* 서브페이지 전용 히어로 배너 (기존 페이지들과 완벽한 동기화) */
+        .subpage-hero {
+            position: relative;
+            width: 100%;
+            height: 45vh;
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+        .subpage-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 44, 0.9) 0%, rgba(11, 40, 80, 0.75) 100%);
+            z-index: 1;
+        }
+        .subpage-hero-content {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .subpage-hero-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            color: var(--color-accent);
+            margin-bottom: 0.75rem;
+            opacity: 0.9;
+        }
+        .subpage-hero h1 {
+            font-size: 2.75rem;
+            font-weight: 850;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .subpage-hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* 고객문의 핵심 섹션 (중앙 집중형 반응형 배치) */
+        .inquiry-section {
+            background-color: var(--color-bg-light);
+            padding: 7rem 0;
+            position: relative;
+        }
+        
+        .inquiry-container-box {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 고객지원 메인 카드 프레임 */
+        .inquiry-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 24px;
+            padding: 4rem 3.5rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-base);
+        }
+        .inquiry-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+            z-index: 10;
+        }
+        .inquiry-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 163, 224, 0.2);
+        }
+
+        /* 1:1 채팅문의 헤더 */
+        .inquiry-block-title {
+            font-size: 1.45rem;
+            color: var(--color-primary);
+            font-weight: 850;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-left: 5px solid var(--color-secondary);
+            padding-left: 0.85rem;
+            letter-spacing: -0.02em;
+        }
+        .inquiry-block-title svg {
+            color: var(--color-secondary);
+        }
+
+        /* 폼 디자인 요소 */
+        .inquiry-form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .inquiry-label-sub {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .inquiry-textarea {
+            width: 100%;
+            min-height: 140px; /* 4~5줄 정도의 넉넉한 기저 높이 확보 */
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            font-size: 0.98rem;
+            line-height: 1.6;
+            color: var(--color-text-main);
+            background-color: var(--color-bg-light);
+            transition: var(--transition-base);
+            resize: vertical; /* 수직 크기조절만 허용 */
+            font-family: inherit;
+        }
+        
+        .inquiry-textarea:focus {
+            outline: 3px solid rgba(0, 163, 224, 0.25);
+            border-color: var(--color-secondary);
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 163, 224, 0.05);
+        }
+
+        /* 보내기 버튼 강화 */
+        .btn-submit-inquiry {
+            width: 100%;
+            height: 52px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(10, 28, 58, 0.2);
+            transition: var(--transition-base);
+            gap: 0.6rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .btn-submit-inquiry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(10, 28, 58, 0.35);
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+        }
+        
+        .btn-submit-inquiry:disabled {
+            background: var(--color-border) !important;
+            color: var(--color-text-muted) !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* 인라인 폼 결과 알림 (Toast/Status banner) */
+        .inquiry-status-banner {
+            display: none;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1.1rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            font-size: 0.925rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            transition: var(--transition-base);
+        }
+        .status-success {
+            display: flex;
+            background-color: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #10b981;
+        }
+        .status-error {
+            display: flex;
+            background-color: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #ef4444;
+        }
+
+        /* 스피너 아이콘 애니메이션 */
+        .spinner-icon {
+            display: none;
+            animation: inquiry-spin 0.8s infinite linear;
+        }
+        
+        @keyframes inquiry-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 전화상담 하단 분기 섹션 */
+        .tel-inquiry-box {
+            border-top: 1px solid var(--color-border);
+            padding-top: 2.5rem;
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tel-btn-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(0, 163, 224, 0.04);
+            border: 1px solid rgba(0, 163, 224, 0.12);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            transition: var(--transition-base);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .tel-btn-wrapper:hover {
+            background-color: rgba(0, 163, 224, 0.08);
+            border-color: var(--color-secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tel-left-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .tel-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--color-secondary);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 163, 224, 0.25);
+        }
+        .tel-texts h4 {
+            font-size: 1.05rem;
+            color: var(--color-primary);
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+        }
+        .tel-texts p {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
+        .tel-number-display {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--color-secondary);
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ==========================================================================
+           고객문의 반응형 미디어 쿼리
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .subpage-hero {
+                height: 35vh;
+                min-height: 260px;
+            }
+            .subpage-hero h1 {
+                font-size: 2rem;
+            }
+            .subpage-hero p {
+                font-size: 1rem;
+            }
+            .inquiry-section {
+                padding: 4.5rem 0;
+            }
+            .inquiry-card {
+                padding: 2.5rem 2rem;
+            }
+            .tel-btn-wrapper {
+                flex-direction: column;
+                gap: 1.25rem;
+                align-items: flex-start;
+                padding: 1.5rem;
+            }
+            .tel-number-display {
+                align-self: flex-end;
+                font-size: 1.25rem;
+            }
+        }
+
+        /* ==========================================================================
+           자주 묻는 질문 (FAQ) 아코디언 섹션 스타일
+           ========================================================================== */
+        .faq-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 24px;
+            padding: 4rem 3.5rem;
+            margin-top: 3rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-base);
+        }
+        
+        .faq-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 163, 224, 0.2);
+        }
+        
+        .faq-header-block {
+            margin-bottom: 2.5rem;
+            border-left: 5px solid var(--color-accent);
+            padding-left: 0.85rem;
+        }
+        
+        .faq-main-title {
+            font-size: 1.45rem;
+            color: var(--color-primary);
+            font-weight: 850;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .faq-sub-copy {
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+        
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .faq-item {
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: var(--color-bg-light);
+            transition: var(--transition-base);
+        }
+        
+        .faq-item.active {
+            border-color: rgba(0, 163, 224, 0.3);
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 163, 224, 0.04);
+        }
+        
+        .faq-trigger {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.75rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            color: var(--color-text-main);
+            transition: var(--transition-base);
+            outline: none;
+        }
+        
+        .faq-trigger:hover {
+            background-color: rgba(0, 163, 224, 0.03);
+        }
+        
+        .faq-question {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            line-height: 1.4;
+        }
+        
+        .q-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--color-secondary);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        
+        .faq-arrow-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-muted);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .faq-item.active .faq-arrow-icon {
+            transform: rotate(180deg);
+            color: var(--color-secondary);
+        }
+        
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .faq-answer {
+            padding: 0 1.75rem 1.5rem 1.75rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--color-text-main);
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .a-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--color-accent);
+            color: var(--color-primary);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        
+        .faq-answer p {
+            margin: 0;
+            flex-grow: 1;
+            font-weight: 400;
+        }
+        
+        .faq-answer p strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .faq-answer p strong.highlight-text {
+            color: var(--color-secondary);
+            background-color: rgba(0, 163, 224, 0.06);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .faq-card {
+                padding: 2.5rem 2rem;
+                margin-top: 2rem !important;
+            }
+            .faq-trigger {
+                padding: 1rem 1.25rem;
+            }
+            .faq-question {
+                font-size: 0.95rem;
+            }
+            .faq-answer {
+                padding: 0 1.25rem 1.25rem 1.25rem;
+                font-size: 0.9rem;
+                gap: 0.5rem;
+            }
+            .q-badge, .a-badge {
+                width: 20px;
+                height: 20px;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* GNB 메뉴 5개 축소에 따른 여백 재배치 및 균형화 */
+        .desktop-nav ul {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: clamp(1.8rem, 3.5vw, 2.8rem) !important;
+        }
+
+        .desktop-nav ul li a {
+            font-size: 1.05rem !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        /* 고객문의 하이라이트 링크 (우측 맨 끝 버튼 스타일) */
+        .desktop-nav ul li a.highlight-link {
+            padding: 0.75rem 1.6rem !important;
+            border: 2px solid var(--color-accent, #00e5ff) !important;
+            border-radius: 30px !important;
+            background-color: rgba(0, 229, 255, 0.05) !important;
+            color: var(--color-accent, #00e5ff) !important;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .desktop-nav ul li a.highlight-link:hover {
+            background-color: var(--color-accent, #00e5ff) !important;
+            color: #0a192c !important;
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.35);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GNB (Global Navigation Bar) 헤더 영역 -->
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <!-- 로고 및 상호명 -->
+            <a href="./index.html" class="logo" id="header-logo">
+                <span class="brand-en">BAETECK</span>
+                <span class="brand-ko">(주)비에이텍</span>
+            </a>
+            
+            <!-- 데스크톱 네비게이션 메뉴 -->
+            <nav class="desktop-nav" aria-label="메인 네비게이션">
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
+                </ul>
+            </nav>
+            
+            <!-- 모바일 햄버거 메뉴 버튼 -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+        
+        <!-- 모바일 드롭다운 메뉴 -->
+        <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
+            <ul>
+                <li><a href="./intro.html">기업소개</a></li>
+                <li><a href="product.html">제품소개</a></li>
+                <li><a href="./equipment.html">보유장비</a></li>
+                <li><a href="./map.html">찾아오시는 길</a></li>
+                <li><a href="./inquiry.html">고객문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 서브페이지 히어로 배너 (물빛 테마 일관성 유지) -->
+        <section class="subpage-hero" style="background-image: url('./water_hero_bg.png');" aria-labelledby="sub-hero-title">
+            <div class="subpage-hero-content">
+                <div class="subpage-hero-tag">SUPPORT & INQUIRY</div>
+                <h1 id="sub-hero-title">고객지원 및 문의</h1>
+                <p>현장 유체 조건에 적합한 최적의 펌프 모델 선정, 견적 의뢰 및 기술 상담 내용을 남겨주시면 정성을 다해 답변드리겠습니다.</p>
+            </div>
+        </section>
+
+        <!-- 문의 영역 (중앙 정렬 반응형 카드 배치) -->
+        <section class="inquiry-section">
+            <div class="inquiry-container-box">
+                
+                <!-- 메인 고객 지원 카드 (fade-up 정밀 상속) -->
+                <div class="inquiry-card fade-up">
+                    
+                    <!-- 1. 1:1 채팅문의 섹션 -->
+                    <div class="inquiry-chat-section">
+                        <h3 class="inquiry-block-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            <span>1:1 채팅문의</span>
+                        </h3>
+                        
+                        <form id="inquiryForm" onsubmit="sendEmail(event)">
+                            <div class="inquiry-form-group">
+                                <label for="inquiryMessage" class="inquiry-label-sub">문의 내용 (상담을 원하시는 기술 제원 및 수리 접수 내용을 상세히 적어주세요)</label>
+                                <textarea id="inquiryMessage" class="inquiry-textarea" placeholder="이곳에 문의 내용을 작성해 주세요..." required></textarea>
+                            </div>
+                            
+                            <!-- 보내기 버튼 -->
+                            <button type="submit" class="btn-submit-inquiry" id="btnSubmit">
+                                <!-- 스피너(전송중일때만 노출) -->
+                                <svg class="spinner-icon" id="spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                                <span id="btnText">문의 내용 보내기</span>
+                            </button>
+                        </form>
+                        
+                        <!-- 결과 안내 배너 -->
+                        <div class="inquiry-status-banner" id="statusBanner">
+                            <span id="statusText"></span>
+                        </div>
+                    </div>
+
+                    <!-- 2. 전화상담 섹션 (하단 배치, tel 링크 탑재) -->
+                    <div class="tel-inquiry-box">
+                        <h3 class="inquiry-block-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span>전화상담</span>
+                        </h3>
+                        
+                        <!-- tel 링크 매핑된 컴포넌트 -->
+                        <a href="tel:033-248-1111" class="tel-btn-wrapper" aria-label="비에이텍 대표 전화 통화 연결">
+                            <div class="tel-left-info">
+                                <div class="tel-icon-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                </div>
+                                <div class="tel-texts">
+                                    <h4>대표 상담 전화 연결</h4>
+                                    <p>클릭 시 춘천 본사 상담 센터로 바로 통화 연결됩니다.</p>
+                                </div>
+                            </div>
+                            <div class="tel-number-display">
+                                <span>033-248-1111</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. 자주 묻는 질문 (FAQ) 아코디언 섹션 -->
+                <div class="faq-card fade-up">
+                    <div class="faq-header-block">
+                        <h3 class="faq-main-title">❓ 자주 묻는 질문 (FAQ)</h3>
+                        <p class="faq-sub-copy">문의 전 확인하시면 원하시는 답변을 더 빠르게 찾으실 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="faq-accordion">
+                        <!-- FAQ Item 1 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" aria-expanded="false">
+                                <span class="faq-question">
+                                    <span class="q-badge">Q</span>
+                                    제품의 무상 보증기간과 기준은 어떻게 되나요?
+                                </span>
+                                <span class="faq-arrow-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </span>
+                            </button>
+                            <div class="faq-content">
+                                <div class="faq-answer">
+                                    <span class="a-badge">A</span>
+                                    <p>판매일로부터 <strong>1년간 무상 보증</strong>이 가능합니다. 단, 사용자의 취급주의로 인한 고장, 임의 수리 및 개조, 당사 지정품 이외의 부품 사용 시에는 보증기간 내라도 유상으로 처리되며 <strong>임의 개조 시 보증을 받으실 수 없습니다.</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- FAQ Item 2 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" aria-expanded="false">
+                                <span class="faq-question">
+                                    <span class="q-badge">Q</span>
+                                    수리(A/S)를 의뢰할 때 어떤 정보를 미리 준비해야 하나요?
+                                </span>
+                                <span class="faq-arrow-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </span>
+                            </button>
+                            <div class="faq-content">
+                                <div class="faq-answer">
+                                    <span class="a-badge">A</span>
+                                    <p>빠르고 정확한 진단을 위해 명판에 기재된 <strong class="highlight-text">[모델명 및 제조번호]</strong>, <strong class="highlight-text">[구입처 및 사용 조건]</strong>, <strong class="highlight-text">[현재 고장 상태와 이송액 종류]</strong>를 미리 확인 후 문의해 주시기 바랍니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- FAQ Item 3 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" aria-expanded="false">
+                                <span class="faq-question">
+                                    <span class="q-badge">Q</span>
+                                    택배나 화물로 펌프를 보낼 때 주의사항이 있나요?
+                                </span>
+                                <span class="faq-arrow-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </span>
+                            </button>
+                            <div class="faq-content">
+                                <div class="faq-answer">
+                                    <span class="a-badge">A</span>
+                                    <p>공장 수리를 위해 제품을 반송하실 때는 반드시 액체가 닿는 내부(접액부)를 <strong>완전히 세척한 후</strong> 보내주셔야 합니다. 특히 <strong>인체에 유해한 액체를 취급하셨던 장비라면 반드시 당사와 사전에 협의 후 반송</strong>해 주시기 바랍니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- FAQ Item 4 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" aria-expanded="false">
+                                <span class="faq-question">
+                                    <span class="q-badge">Q</span>
+                                    단종된 제품도 부품 구입이나 수리가 가능한가요?
+                                </span>
+                                <span class="faq-arrow-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </span>
+                            </button>
+                            <div class="faq-content">
+                                <div class="faq-answer">
+                                    <span class="a-badge">A</span>
+                                    <p>당사는 제품 기능 유지를 위한 보수용 성능부품의 최저 보유기간을 <strong>제조일로부터 5년간</strong>으로 규정하고 있습니다. <strong>5년 이내의 장비는 안정적인 부품 공급과 수리가 가능</strong>합니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">BAETECK</div>
+                <div class="footer-company-name">(주)비에이텍</div>
+                <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
+            </div>
+            
+            <div class="footer-info">
+                <h4>CONTACT INFO</h4>
+                <address>
+                    <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                    <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                    <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                </address>
+            </div>
+            
+            <div class="footer-links">
+                <h4>QUICK LINK</h4>
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./index.html?show=equipment">보유장비</a></li>
+                    <li><a href="./sales_history.html">주요업력</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html">고객문의</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">Copyright &copy; 2026 BAETECK CO., LTD. All Rights Reserved.</p>
+                <div class="footer-meta">
+                    <span>정량펌프 제작 · 설치 · 오버홀 수리 전문기업</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
+    <script src="./script.js"></script>
+
+    <!-- EmailJS SDK 연동 및 비동기 전송 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // ==========================================================================
+        // [EmailJS 연동 개발자 가이드 주석]
+        // 관리자분께서 본인의 EmailJS 계정으로 직접 이메일 전송을 연동하기 위해 수정해야 할 변수 리스트입니다.
+        //
+        // 1. serviceID (서비스 ID):
+        //    - 발급 경로: EmailJS 대시보드 -> "Email Services" 메뉴 클릭 -> "Add Service"를 눌러 메일 계정 연동 후 생성되는 서비스 ID (예: 'service_xxxx')
+        //
+        // 2. templateID (템플릿 ID):
+        //    - 발급 경로: EmailJS 대시보드 -> "Email Templates" 메뉴 클릭 -> "Create Template"을 눌러 이메일 템플릿 생성 후 나타나는 템플릿 ID (예: 'template_xxxx')
+        //    - 템플릿 내용 설정 가이드:
+        //      * 템플릿의 "To Email" 수신 주소 칸에 수신 전용 이메일인 [ aaa@naver.com ]을 입력하셔야 문의가 해당 주소로 수신됩니다.
+        //      * 템플릿 내부 텍스트에는 {{message}} 매개변수를 삽입하여 이 창에서 작성한 문의 내용이 본문에 바인딩되도록 작성해주시기 바랍니다.
+        //
+        // 3. publicKey (공개 키 / API Key):
+        //    - 발급 경로: EmailJS 대시보드 -> "Account" -> "API Keys" 메뉴 탭 진입 -> "Public Key" 영역에서 복사할 수 있는 키값 (예: 'your_public_key')
+        // ==========================================================================
+        
+        const EMAILJS_CONFIG = {
+            serviceID: "YOUR_SERVICE_ID",   // <-- [수정 필요] 여기에 발급받은 서비스 ID를 넣어주세요.
+            templateID: "YOUR_TEMPLATE_ID", // <-- [수정 필요] 여기에 발급받은 템플릿 ID를 넣어주세요.
+            publicKey: "YOUR_PUBLIC_KEY"    // <-- [수정 필요] 여기에 발급받은 공개 키(Public Key)를 넣어주세요.
+        };
+
+        // EmailJS 모듈 초기화 (키값이 수정되었을 때만 초기화 진행)
+        if (EMAILJS_CONFIG.publicKey && EMAILJS_CONFIG.publicKey !== "YOUR_PUBLIC_KEY") {
+            emailjs.init({
+                publicKey: EMAILJS_CONFIG.publicKey
+            });
+        }
+
+        // 이메일 전송 비동기 함수
+        function sendEmail(e) {
+            e.preventDefault();
+            
+            const messageInput = document.getElementById("inquiryMessage");
+            const btnSubmit = document.getElementById("btnSubmit");
+            const btnText = document.getElementById("btnText");
+            const spinner = document.getElementById("spinner");
+            const statusBanner = document.getElementById("statusBanner");
+            const statusText = document.getElementById("statusText");
+
+            const content = messageInput.value.trim();
+            if (!content) {
+                alert("문의 내용을 작성해 주세요.");
+                return;
+            }
+
+            // 초기 가이드 플레이스홀더를 변경하지 않은 경우 친절하게 안내 후 진행 중단
+            if (EMAILJS_CONFIG.serviceID === "YOUR_SERVICE_ID" || EMAILJS_CONFIG.templateID === "YOUR_TEMPLATE_ID" || EMAILJS_CONFIG.publicKey === "YOUR_PUBLIC_KEY") {
+                alert("[안내] 현재 EmailJS API 키 설정이 개발 가이드 플레이스홀더 상태입니다.\n\ninquiry.html 파일 하단의 자바스크립트 주석을 읽고, 본인의 EmailJS Service ID, Template ID, Public Key를 기재하시면 메일 발송이 정상 가동됩니다.\n\n(작성하신 내용은 데모 시뮬레이션용 성공으로 가상 처리됩니다.)");
+                
+                // 개발 가이드용 가상 전송 성공 시뮬레이션
+                simulateDemoSuccess(btnSubmit, btnText, spinner, statusBanner, statusText, messageInput, content);
+                return;
+            }
+
+            // 실제 EmailJS 전송 프로세스 개시
+            // UI 제어: 버튼 비활성화 및 로딩 스피너 활성화
+            btnSubmit.disabled = true;
+            spinner.style.display = "inline-block";
+            btnText.innerText = "문의 내용 전송 중...";
+            
+            // 상태창 리셋
+            statusBanner.style.display = "none";
+            statusBanner.className = "inquiry-status-banner";
+
+            // 전송 파라미터 매핑
+            const templateParams = {
+                message: content,
+                to_email: "aaa@naver.com"
+            };
+
+            emailjs.send(EMAILJS_CONFIG.serviceID, EMAILJS_CONFIG.templateID, templateParams)
+                .then((response) => {
+                    // 전송 성공 처리
+                    statusBanner.className = "inquiry-status-banner status-success";
+                    statusText.innerText = "문의 메일이 성공적으로 전송되었습니다! 기재된 이메일 주소로 신속하게 안내해 드리겠습니다.";
+                    statusBanner.style.display = "flex";
+                    
+                    // 폼 초기화
+                    messageInput.value = "";
+                })
+                .catch((error) => {
+                    // 전송 실패 처리
+                    statusBanner.className = "inquiry-status-banner status-error";
+                    statusText.innerText = "전송에 실패했습니다. 네트워크 상태를 확인하시거나 대표번호로 직접 문의해 주시기 바랍니다.";
+                    statusBanner.style.display = "flex";
+                    console.error("EmailJS Error:", error);
+                })
+                .finally(() => {
+                    // UI 복구
+                    btnSubmit.disabled = false;
+                    spinner.style.display = "none";
+                    btnText.innerText = "문의 내용 보내기";
+                });
+        }
+
+        // 키값 미입력 시의 가상 성공 데모 함수
+        function simulateDemoSuccess(btnSubmit, btnText, spinner, statusBanner, statusText, messageInput, content) {
+            btnSubmit.disabled = true;
+            spinner.style.display = "inline-block";
+            btnText.innerText = "가상 문의 내용 전송 중...";
+            
+            setTimeout(() => {
+                btnSubmit.disabled = false;
+                spinner.style.display = "none";
+                btnText.innerText = "문의 내용 보내기";
+                
+                statusBanner.className = "inquiry-status-banner status-success";
+                statusText.innerHTML = "<strong>[데모 성공 시뮬레이션]</strong> 문의 내용이 무사히 접수되었습니다! (EmailJS 키값이 정식 입력되면 aaa@naver.com으로 메일이 즉시 자동 전송됩니다.)<br><br><strong>작성한 내용:</strong><br>" + content.replace(/\n/g, "<br>");
+                statusBanner.style.display = "flex";
+                
+                messageInput.value = "";
+            }, 1000);
+        }
+
+        // ==========================================================================
+        // 자주 묻는 질문 (FAQ) 아코디언 인터랙션 제어
+        // ==========================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqTriggers = document.querySelectorAll('.faq-trigger');
+            
+            faqTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const item = trigger.closest('.faq-item');
+                    const content = item.querySelector('.faq-content');
+                    const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+                    
+                    // 싱글 아코디언 모드: 하나의 질문이 열릴 때 다른 열려있는 질문을 자동으로 닫음
+                    document.querySelectorAll('.faq-item').forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+                            otherItem.querySelector('.faq-content').style.maxHeight = null;
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // 상태 토글
+                    if (isExpanded) {
+                        trigger.setAttribute('aria-expanded', 'false');
+                        content.style.maxHeight = null;
+                        item.classList.remove('active');
+                    } else {
+                        trigger.setAttribute('aria-expanded', 'true');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
