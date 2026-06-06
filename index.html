@@ -19,6 +19,153 @@
     
     <!-- 외부 스타일시트 연동 -->
     <link rel="stylesheet" href="./style.css">
+    
+    <!-- 메인 히어로 비디오 레이아웃 전용 특화 스타일 -->
+    <style>
+        .hero-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #0a192c; /* 딥 네이비 기저 배경색 */
+            padding: 100px 0 60px 0;
+        }
+
+        /* 135deg 선형 그라데이션과 배경 이미지를 가진 언더레이어 */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 44, 0.95) 0%, rgba(11, 40, 80, 0.8) 100%), url('./water_hero_bg.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        /* 메인 콘텐츠와 비디오를 담을 그리드 컨테이너 */
+        .hero-grid-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr; /* 좌측 57.5%, 우측 42.5% */
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-left-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        .hero-right-column {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        /* 비디오 컨테이너 */
+        .hero-video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 163, 224, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            aspect-ratio: 16 / 10; /* 시각적 균형을 이루는 영상 비율 */
+            background-color: #0b1c30;
+        }
+
+        /* 비디오 좌측 가장자리 블렌딩 오버레이 마스크 */
+        .video-overlay-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 딥 네이비 배경색(#0a192c)과 자연스럽게 오버랩되도록 설정 */
+            background: linear-gradient(90deg, #0a192c 0%, rgba(10, 25, 44, 0.7) 12%, rgba(10, 25, 44, 0) 45%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .hero-motor-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.95;
+        }
+
+        /* 기존 hero-content 스타일의 오버라이드 */
+        .hero-content {
+            text-align: left;
+            padding: 0;
+        }
+
+        #hero-title {
+            font-size: 2.75rem !important;
+            line-height: 1.25 !important;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 모바일 및 태블릿 반응형 미디어 쿼리 */
+        @media (max-width: 1024px) {
+            .hero-section {
+                min-height: auto;
+                padding: 120px 0 60px 0;
+            }
+            .hero-grid-container {
+                grid-template-columns: 1fr; /* 1열 배치로 자동 전환 */
+                gap: 3rem;
+                text-align: center;
+            }
+            .hero-left-column {
+                align-items: center;
+            }
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-right-column {
+                max-width: 550px;
+                margin: 0 auto;
+            }
+            .video-overlay-mask {
+                background: linear-gradient(180deg, rgba(10, 25, 44, 0.4) 0%, rgba(10, 25, 44, 0) 25%, rgba(10, 25, 44, 0.7) 100%);
+            }
+            #hero-title {
+                font-size: 2.25rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 100px 0 50px 0;
+            }
+            #hero-title {
+                font-size: 1.85rem !important;
+            }
+            .hero-video-wrapper {
+                border-radius: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -66,24 +213,42 @@
 
     <main>
         <!-- Hero Section (메인 비주얼 영역) -->
-        <section class="hero-section" style="background-image: linear-gradient(135deg, rgba(10, 25, 44, 0.85) 0%, rgba(11, 40, 80, 0.7) 100%), url('./water_hero_bg.png');" aria-labelledby="hero-title">
-            <div class="hero-content">
-                <div class="hero-tag">WATER TREATMENT & METERING PUMPS</div>
-                <h1 id="hero-title" class="fade-in">
-                    정밀한 기술로<br>
-                    <span class="blue-grad-text">깨끗한 미래</span>를 흐르게 합니다.
-                </h1>
-                <p class="hero-subtitle fade-in">
-                    (주)비에이텍은 다이어프램형 무맥동 정량 펌프 제작 및 수처리 설비의 무결점 설치·수리를 제공하는 엔지니어링 파트너입니다.
-                </p>
-                <div class="hero-actions fade-in">
-                    <a href="product.html" class="btn btn-primary" id="cta-product">
-                        <span>주요 제품 보기</span>
-                        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </a>
-                    <a href="./inquiry.html" class="btn btn-outline" id="cta-inquiry">견적 및 기술 문의</a>
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="hero-grid-container">
+                <!-- 좌측 영역: 메인 카피 및 액션 버튼 -->
+                <div class="hero-left-column">
+                    <div class="hero-content">
+                        <div class="hero-tag">WATER TREATMENT & METERING PUMPS</div>
+                        <h1 id="hero-title" class="fade-in">
+                            정밀한 기술로<br>
+                            <span class="blue-grad-text">깨끗한 미래</span>를 흐르게 합니다.
+                        </h1>
+                        <p class="hero-subtitle fade-in">
+                            (주)비에이텍은 다이어프램형 무맥동 정량 펌프 제작 및 수처리 설비의 무결점 설치·수리를 제공하는 엔지니어링 파트너입니다.
+                        </p>
+                        <div class="hero-actions fade-in">
+                            <a href="product.html" class="btn btn-primary" id="cta-product">
+                                <span>주요 제품 보기</span>
+                                <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                            <a href="./inquiry.html" class="btn btn-outline" id="cta-inquiry">견적 및 기술 문의</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 우측 영역: 가동 비디오 및 그라데이션 오버레이 마스크 -->
+                <div class="hero-right-column">
+                    <div class="hero-video-wrapper">
+                        <!-- 좌측 그라데이션 오버레이 마스크: 동영상이 딥 네이비 배경에 자연스럽게 흡수되도록 함 -->
+                        <div class="video-overlay-mask"></div>
+                        <video class="hero-motor-video" autoplay muted loop playsinline poster="./equipment_photo1.jpg">
+                            <source src="./모터영상.mp4" type="video/mp4">
+                            우수한 정밀도의 모터 가동 영상입니다. 지원하지 않는 브라우저입니다.
+                        </video>
+                    </div>
                 </div>
             </div>
+            
             <!-- 마우스 휠 다운 유도 아이콘 -->
             <div class="scroll-indicator">
                 <span class="mouse">
