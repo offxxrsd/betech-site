@@ -448,21 +448,18 @@
            ========================================================================== */
         #csr-pipeline-section {
             width: 100vw;
-            height: 100vh; /* ScrollTrigger pin-spacer가 높이를 관리하므로 100vh로 고정 */
+            height: 100vh;
             background-color: #ffffff;
             position: relative;
             overflow: hidden;
-            overscroll-behavior: contain;
             transform: scale(1) !important; /* 화면 확대/스케일 버그 방지 */
         }
 
         .sticky-wrapper {
-            position: sticky;
-            top: 0;
+            position: relative;
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            overscroll-behavior: contain;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -512,18 +509,97 @@
         /* 가로 슬라이드 트랙 */
         .cartoon-viewport {
             width: 100%;
+            height: 100vh;
             padding: 0 10%;
-            overflow: visible;
+            overflow: hidden; /* 가로 스크롤 및 공백 방지 */
             display: flex;
             align-items: center;
-            margin-top: 5vh;
+            margin-top: 0;
         }
 
         .cartoon-track {
             display: flex;
             flex-wrap: nowrap; /* 카드 줄바꿈 방지 */
             align-items: center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform; /* 하드웨어 가속 강제 (60fps 보장) */
+        }
+
+        /* CSR 네비게이션 버튼 스타일 */
+        .csr-nav-btn {
+            position: absolute;
+            top: 55%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(11, 28, 48, 0.15);
+            color: #0b1c30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            outline: none;
+        }
+
+        .csr-nav-btn:hover {
+            background: #ffffff;
+            border-color: var(--color-secondary, #00a3e0);
+            box-shadow: 0 0 20px rgba(0, 163, 224, 0.4);
+            transform: translateY(-50%) scale(1.08);
+            color: var(--color-secondary, #00a3e0);
+        }
+
+        .csr-nav-btn.prev-btn {
+            left: 4%;
+        }
+
+        .csr-nav-btn.next-btn {
+            right: 4%;
+        }
+
+        .csr-nav-btn.next-btn.completed {
+            width: auto;
+            height: 54px;
+            border-radius: 27px;
+            padding: 0 1.8rem;
+            background: linear-gradient(135deg, #00a3e0 0%, #00e5ff 100%);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 8px 25px rgba(0, 229, 255, 0.4);
+        }
+
+        .csr-nav-btn.next-btn.completed:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.6);
+        }
+
+        .csr-nav-btn .btn-text {
+            display: none;
+            white-space: nowrap;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        .csr-nav-btn.next-btn.completed .btn-text {
+            display: inline;
+        }
+
+        .csr-nav-btn.next-btn.completed svg {
+            transform: rotate(90deg);
+            transition: transform 0.3s ease;
+        }
+
+        .csr-nav-btn.disabled {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
         }
 
         /* 만화 카드 스타일 */
@@ -1461,6 +1537,15 @@
                     </div>
                 </div>
 
+                <!-- 좌우 네비게이션 버튼 -->
+                <button class="csr-nav-btn prev-btn" aria-label="이전 카드">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="csr-nav-btn next-btn" aria-label="다음 카드">
+                    <span class="btn-text">캠페인 완료 및 다음 페이지로 이동</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="next-icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+
                 <!-- 우측 수직 파이프라인 가이드 컴포넌트 -->
                 <div class="pipe-guide-wrapper">
                     <!-- 스크롤 진행에 맞추어 높이(height)가 0%에서 100%로 충만해지는 물줄기 -->
@@ -1888,101 +1973,108 @@
         window.addEventListener('load', () => {
             gsap.registerPlugin(ScrollTrigger);
 
-            // 1. 사회공헌(CSR) 가로 스크롤 애니메이션
+            // 1. 사회공헌(CSR) 클릭 기반 가로 슬라이더 인터랙션
             const track = document.querySelector('.cartoon-track');
             const waterStream = document.querySelector('.water-stream');
+            const prevBtn = document.querySelector('.csr-nav-btn.prev-btn');
+            const nextBtn = document.querySelector('.csr-nav-btn.next-btn');
+            const cards = document.querySelectorAll('.cartoon-card');
+            const csrSection = document.querySelector('#csr-pipeline-section');
             
-            if (track && waterStream) {
-                // 정확한 가로 이동 거리 계산 공식: 전체 만화 트랙 너비에서 뷰포트 너비를 차감
-                const getScrollAmount = () => {
-                    const maxScroll = track.scrollWidth - window.innerWidth;
-                    return Math.max(0, maxScroll);
+            if (track && waterStream && prevBtn && nextBtn && cards.length > 0) {
+                let currentSlide = 0;
+                const totalSlides = cards.length;
+                let isTransitioning = false;
+                
+                const updateSlider = () => {
+                    // 1. 트랙 이동 (offsetLeft 활용으로 반응형 위치 자동 조절)
+                    const activeCard = cards[currentSlide];
+                    if (activeCard) {
+                        const offsetLeft = activeCard.offsetLeft;
+                        track.style.transform = `translateX(${-offsetLeft}px)`;
+                    }
+                    
+                    // 2. 우측 물줄기 진행 표시 (0% ~ 100%)
+                    const progress = currentSlide / (totalSlides - 1);
+                    waterStream.style.height = `${progress * 100}%`;
+                    
+                    // 3. 이전 버튼 활성화/비활성화
+                    if (currentSlide === 0) {
+                        prevBtn.classList.add('disabled');
+                    } else {
+                        prevBtn.classList.remove('disabled');
+                    }
+                    
+                    // 4. 다음 버튼 상태 분기 (마지막 카드 도달 여부)
+                    if (currentSlide === totalSlides - 1) {
+                        nextBtn.classList.add('completed');
+                    } else {
+                        nextBtn.classList.remove('completed');
+                    }
                 };
-
-                // GSAP 스크롤 트리거 정의
-                // 가상 객체 프레임을 활용해 가로 이동 및 물줄기 높이를 안전 바운더리 내로 제약(clamping)
-                const playhead = { frame: 0 };
-                gsap.to(playhead, {
-                    frame: 1,
-                    ease: "none",
-                    scrollTrigger: {
-                        id: "csr-scroll",
-                        trigger: "#csr-pipeline-section",
-                        pin: true,                  // 스크롤 핀 고정 활성화
-                        scrub: 1,                   // 1초 관성 스크롤 제어로 부드러운 스크러빙
-                        start: "top top",           // 뷰포트 상단에 도달할 때 시작
-                        end: () => "+=" + getScrollAmount(), 
-                        invalidateOnRefresh: true,  // 브라우저 윈도우 리사이즈 시 수치 강제 재계산
-                        onUpdate: (self) => {
-                            // progress를 0과 1 사이로 철저히 제한 (Clamping)하여 오버런 방지
-                            const progress = Math.max(0, Math.min(1, self.progress));
-                            const scrollAmount = getScrollAmount();
-                            const currentX = -scrollAmount * progress;
-
-                            // 가로 만화 카드 트랙의 transform x 좌표를 안전 한계점 내로 강제 고정
-                            gsap.set(track, { x: currentX });
-
-                            // 스크롤 진행 프로그레스(0.0 ~ 1.0)와 우측 물줄기 높이(0% ~ 100%) 바인딩
-                            gsap.to(waterStream, {
-                                height: `${progress * 100}%`,
-                                duration: 0.1,
-                                ease: "power1.out"
+                
+                // 초기화
+                updateSlider();
+                
+                // 이전 버튼 클릭
+                prevBtn.addEventListener('click', () => {
+                    if (currentSlide > 0) {
+                        currentSlide--;
+                        updateSlider();
+                    }
+                });
+                
+                // 다음 버튼 클릭
+                nextBtn.addEventListener('click', () => {
+                    if (currentSlide < totalSlides - 1) {
+                        currentSlide++;
+                        updateSlider();
+                    } else {
+                        // 마지막 카드에서 클릭 시 다음 도면 아카이브 섹션으로 부드럽게 스냅 스크롤링
+                        const nextSection = document.querySelector('#blueprint-archive-section');
+                        if (nextSection) {
+                            const nextTop = nextSection.getBoundingClientRect().top + window.pageYOffset;
+                            window.scrollTo({
+                                top: nextTop,
+                                behavior: 'smooth'
                             });
                         }
                     }
                 });
+                
+                // 창 크기 변경에 따른 리사이즈 처리
+                window.addEventListener('resize', () => {
+                    updateSlider();
+                });
 
-                // [신규] 스크롤 체이닝 차단 및 만화 끝단 스무스 스냅 제어 휠 핸들러
-                let isTransitioning = false;
-                let wheelAccumulator = 0;
-
-                window.addEventListener('wheel', (e) => {
-                    const scrollTriggerInstance = ScrollTrigger.getById("csr-scroll");
-                    if (!scrollTriggerInstance) return;
-
-                    const progress = scrollTriggerInstance.progress;
-
-                    // 마지막 카드 도달 상태 (progress가 거의 1)
-                    if (progress >= 0.98) {
-                        const currentScroll = window.scrollY;
-                        const triggerEnd = scrollTriggerInstance.end;
-
-                        // 스크롤이 트리거 영역 마지막 지점 부근이고 사용자가 휠 다운할 때
-                        if (e.deltaY > 0 && currentScroll < triggerEnd + 50) {
-                            const nextSection = document.querySelector('#blueprint-archive-section');
-                            if (nextSection && !isTransitioning) {
-                                e.preventDefault(); // 버블링 및 다음 섹션 강제 스크롤 차단
-                                wheelAccumulator += e.deltaY;
-
-                                // 사용자가 '한 번 더 확실하게' 아래로 굴렸을 때 (누적 120 이상)
-                                if (wheelAccumulator > 120) {
+                // 마우스 휠 체이닝 제어 (휠 다운 차단 및 마지막 슬라이드에서 스냅 스크롤링)
+                if (csrSection) {
+                    csrSection.addEventListener('wheel', (e) => {
+                        if (e.deltaY > 0) {
+                            // 휠 다운 시
+                            if (currentSlide < totalSlides - 1) {
+                                e.preventDefault(); // 스크롤 차단하여 카드 완성 유도
+                            } else {
+                                // 마지막 카드 도달 시 다음 섹션으로 스냅 스크롤링
+                                e.preventDefault();
+                                if (!isTransitioning) {
                                     isTransitioning = true;
-                                    wheelAccumulator = 0;
-
-                                    const nextTop = nextSection.getBoundingClientRect().top + window.pageYOffset;
-                                    window.scrollTo({
-                                        top: nextTop,
-                                        behavior: 'smooth'
-                                    });
-
-                                    // 트랜지션 완료 동안 추가 휠 무시
+                                    const nextSection = document.querySelector('#blueprint-archive-section');
+                                    if (nextSection) {
+                                        const nextTop = nextSection.getBoundingClientRect().top + window.pageYOffset;
+                                        window.scrollTo({
+                                            top: nextTop,
+                                            behavior: 'smooth'
+                                        });
+                                    }
                                     setTimeout(() => {
                                         isTransitioning = false;
                                     }, 1000);
                                 }
                             }
-                        } else {
-                            wheelAccumulator = 0;
                         }
-                    } else {
-                        wheelAccumulator = 0;
-                    }
-                }, { passive: false });
-
-                // 브라우저 윈도우 크기 변화에 대응한 ScrollTrigger 강제 리프레시
-                window.addEventListener('resize', () => {
-                    ScrollTrigger.refresh();
-                });
+                    }, { passive: false });
+                }
             }
 
 

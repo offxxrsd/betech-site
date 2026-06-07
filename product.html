@@ -563,6 +563,329 @@
             }
         }
 
+        /* 통합 품질 인증 사양서 보기 버튼 스타일 */
+        .btn-pdf-modal-trigger {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            border: 1px solid var(--color-accent, #00e5ff);
+            color: var(--color-accent, #00e5ff);
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            margin: 0 auto;
+        }
+
+        .btn-pdf-modal-trigger:hover {
+            background: var(--color-accent, #00e5ff);
+            color: #061022;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-pdf-modal-trigger .btn-icon {
+            stroke: currentColor;
+        }
+
+        /* 3개 상자 완료 시 개별 발광(Glow) 효과 */
+        .stat-item.completed-glow {
+            border-color: #00e5ff !important;
+            box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.2), 0 0 20px rgba(0, 229, 255, 0.45) !important;
+            transform: scale(1.02);
+        }
+
+        .stat-item.completed-glow .stat-number {
+            color: #00e5ff !important;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
+        }
+
+        .stat-item.completed-glow .num-suffix {
+            color: rgba(0, 229, 255, 0.8) !important;
+        }
+
+        .stat-item.completed-glow .stat-label {
+            color: #ffffff !important;
+        }
+
+        /* 통합 PDF 뷰어 모달 스타일 */
+        #pdf-viewer-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        #pdf-viewer-modal.hidden {
+            display: none !important;
+        }
+
+        .pdf-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(3, 9, 20, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            cursor: pointer;
+        }
+
+        .pdf-modal-container {
+            position: relative;
+            width: 100%;
+            max-width: 1024px; /* max-w-5xl */
+            height: 85vh;
+            background-color: #061022;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 229, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            overflow: hidden;
+            transform: scale(0.95);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .pdf-modal-container.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .pdf-modal-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #09152a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pdf-modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pdf-modal-title .indicator-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #00e5ff;
+            box-shadow: 0 0 8px #00e5ff;
+            animation: pulse-glow-mod 1.5s infinite;
+        }
+
+        @keyframes pulse-glow-mod {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .pdf-modal-subtitle {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 0.15rem;
+        }
+
+        .pdf-modal-close-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            padding: 0.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-modal-close-btn:hover {
+            color: #00e5ff;
+            border-color: #00e5ff;
+            background-color: rgba(0, 229, 255, 0.05);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+        }
+
+        .pdf-modal-tabs {
+            padding: 0 1.5rem;
+            background-color: #081326;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 0.5rem;
+            padding-top: 0.75rem;
+        }
+
+        .pdf-tab-btn {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            border-top: 2px solid transparent;
+            border-radius: 8px 8px 0 0;
+            background-color: transparent;
+            border-left: none; border-right: none; border-bottom: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-tab-btn:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .pdf-tab-btn.active {
+            color: #00e5ff;
+            border-color: #00e5ff;
+            background-color: #061022;
+        }
+
+        .pdf-modal-content-layout {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        @media (max-width: 1024px) {
+            .pdf-modal-content-layout {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+        }
+
+        .pdf-modal-meta-col {
+            width: 320px;
+            padding: 1.5rem;
+            background-color: rgba(4, 12, 26, 0.4);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 1024px) {
+            .pdf-modal-meta-col {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        .pdf-meta-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #00e5ff;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.25rem;
+        }
+
+        .pdf-meta-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .pdf-meta-desc {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .pdf-spec-table-container {
+            margin-top: 1.5rem;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .pdf-spec-table {
+            width: 100%;
+            font-size: 0.75rem;
+            border-collapse: collapse;
+        }
+
+        .pdf-spec-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: rgba(6, 18, 38, 0.5);
+        }
+
+        .pdf-spec-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .pdf-spec-table td.lbl {
+            padding: 0.6rem 0.75rem;
+            font-weight: 700;
+            color: rgba(0, 229, 255, 0.8);
+            background-color: rgba(8, 21, 46, 0.35);
+            width: 90px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pdf-spec-table td.val {
+            padding: 0.6rem 0.75rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.4;
+        }
+
+        .pdf-download-btn {
+            margin-top: 1.5rem;
+            width: 100%;
+            height: 44px;
+            border-radius: 8px;
+            border: 1px solid #00e5ff;
+            background-color: transparent;
+            color: #00e5ff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.05);
+        }
+
+        .pdf-download-btn:hover {
+            background-color: #00e5ff;
+            color: #061022;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+        }
+
+        .pdf-modal-viewer-col {
+            flex: 1;
+            background-color: #030914;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 450px;
+        }
+
+        .pdf-iframe-container {
+            width: 100%;
+            height: 100%;
+            background-color: #02060e;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: opacity 0.25s ease;
+        }
+
+        .pdf-iframe-container.fade {
+            opacity: 0;
+        }
+
         /* 고유한 반응형 테크니컬 표 스타일 */
         .modal-table-wrapper {
             width: 100%;
@@ -1078,8 +1401,8 @@
 
     <!-- Stats Section (수치로 보는 신뢰성 - 디지토닉 계기판 테마) -->
     <section class="stats-section" aria-label="기업 지표 요약">
-        <div class="section-container">
-            <div class="stats-grid">
+        <div class="section-container" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="stats-grid" style="margin-bottom: 3.5rem; width: 100%;">
                 <!-- 220여개 지표 -->
                 <div class="stat-item">
                     <div class="stat-number" data-type="normal" data-target="220">
@@ -1102,6 +1425,15 @@
                     <div class="stat-label">누적 출하 정밀 정량 펌프</div>
                 </div>
             </div>
+
+            <!-- 통합 품질 인증 사양서 보기 버튼 (세련된 다크 테마 글로우 효과 추가) -->
+            <button type="button" onclick="openPdfModal()" class="btn btn-pdf-modal-trigger">
+                <svg class="btn-icon" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                통합 품질 인증 사양서 보기
+            </button>
         </div>
     </section>
 
@@ -1152,24 +1484,150 @@
     <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
     <script src="./script.js"></script>
 
-    <!-- 핵심 지표 섹션 (Stats Section) 디지털 타코메터 및 발광 애니메이션 스크립트 -->
+    <!-- 핵심 지표 섹션 (Stats Section) 디지털 타코메터 및 발광 애니메이션 스크립트 + 통합 PDF 뷰어 연동 -->
     <script>
+        // PDF 및 명세서 매핑 데이터 선언
+        const tabData = {
+            kc: {
+                title: '수도용 위생안전인증 (KC)',
+                pdfPath: './인증서3.pdf',
+                desc: '한국물기술인증원 공인 수도용 위생안전기준 적합 제품 인증',
+                specTable: [
+                    { label: '인증번호', value: 'KCW-2025-0163' },
+                    { label: '제품명', value: '부스터 펌프 시스템' },
+                    { label: '인증기관', value: '한국물기술인증원' }
+                ]
+            },
+            iso: {
+                title: '품질경영시스템 (ISO 9001)',
+                pdfPath: './인증서2.pdf',
+                desc: 'ICR 글로벌 표준 품질경영 규격 인증 획득',
+                specTable: [
+                    { label: '인증서번호', value: 'QI291124' },
+                    { label: '범위', value: '부스터펌프시스템 및 각종 산업용 펌프 제조 일체' },
+                    { label: '인증기관', value: 'ICR' }
+                ]
+            },
+            mainbiz: {
+                title: '경영혁신형 중소기업 (MAIN-BIZ)',
+                pdfPath: './인증서1.pdf',
+                desc: '중소벤처기업부 장관 공인 경영 혁신 시스템 우수 기업',
+                specTable: [
+                    { label: '확인서번호', value: '제 R180801-01794 호' },
+                    { label: '유효기간', value: '2024.09.14 ~ 2027.09.13' },
+                    { label: '발급기관', value: '중소벤처기업부' }
+                ]
+            }
+        };
+
+        // 모달 열기 함수
+        function openPdfModal() {
+            const modal = document.getElementById('pdf-viewer-modal');
+            const container = document.getElementById('pdf-modal-container');
+            
+            modal.classList.remove('hidden');
+            // transition 효과 구현을 위한 delay
+            setTimeout(() => {
+                container.classList.add('active');
+            }, 20);
+
+            // 초기 KC인증 탭 활성화
+            switchPdfTab('kc');
+        }
+
+        // 모달 닫기 함수
+        function closePdfModal() {
+            const modal = document.getElementById('pdf-viewer-modal');
+            const container = document.getElementById('pdf-modal-container');
+            
+            container.classList.remove('active');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // 탭 전환 함수
+        function switchPdfTab(tabKey) {
+            const data = tabData[tabKey];
+            if (!data) return;
+
+            // 모든 탭 버튼 비활성화 및 활성화 지정
+            const tabs = ['kc', 'iso', 'mainbiz'];
+            tabs.forEach(key => {
+                const btn = document.getElementById(`tab-${key}`);
+                if (btn) {
+                    if (key === tabKey) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                }
+            });
+
+            // Iframe 영역 페이드 아웃
+            const iframeContainer = document.getElementById('iframe-container');
+            if (iframeContainer) {
+                iframeContainer.classList.add('fade');
+            }
+
+            setTimeout(() => {
+                // Spec 텍스트 매핑 변경
+                const metaTitle = document.getElementById('meta-title');
+                const metaDesc = document.getElementById('meta-desc');
+                if (metaTitle) metaTitle.textContent = data.title;
+                if (metaDesc) metaDesc.textContent = data.desc;
+
+                // 상세 사양 테이블 동적 구축
+                const tbody = document.getElementById('meta-table-body');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    data.specTable.forEach(row => {
+                        const tr = document.createElement('tr');
+                        
+                        const tdLabel = document.createElement('td');
+                        tdLabel.className = 'lbl';
+                        tdLabel.textContent = row.label;
+
+                        const tdValue = document.createElement('td');
+                        tdValue.className = 'val';
+                        tdValue.textContent = row.value;
+
+                        tr.appendChild(tdLabel);
+                        tr.appendChild(tdValue);
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                // 다운로드 파일 경로 바인딩
+                const downloadBtn = document.getElementById('download-btn');
+                if (downloadBtn) downloadBtn.setAttribute('href', data.pdfPath);
+
+                // iframe URL 변경
+                const pdfIframe = document.getElementById('pdf-iframe');
+                if (pdfIframe) pdfIframe.setAttribute('src', `${data.pdfPath}#toolbar=0&navpanes=0`);
+
+                // 페이드 인
+                setTimeout(() => {
+                    if (iframeContainer) {
+                        iframeContainer.classList.remove('fade');
+                    }
+                }, 50);
+
+            }, 150);
+        }
+
+        // GSAP 기반 핵심 지표 카운팅 수치 구동
         window.addEventListener('load', () => {
             gsap.registerPlugin(ScrollTrigger);
 
             const statNumbers = document.querySelectorAll('.stats-section .stat-number');
             if (statNumbers.length > 0) {
-                const totalStats = statNumbers.length;
-                let completedStats = 0;
-                const statItems = [];
-
                 statNumbers.forEach(stat => {
                     const valEl = stat.querySelector('.num-val');
                     const type = stat.getAttribute('data-type');
                     const target = parseFloat(stat.getAttribute('data-target'));
                     const start = stat.getAttribute('data-start') ? parseFloat(stat.getAttribute('data-start')) : 0;
                     const statItem = stat.closest('.stat-item');
-                    if (statItem) statItems.push(statItem);
                     
                     const obj = { progress: 0 };
                     
@@ -1211,16 +1669,9 @@
                             }
                             
                             if (statItem) {
-                                statItem.classList.add('flash-active');
-                            }
-
-                            completedStats++;
-                            if (completedStats === totalStats) {
-                                statItems.forEach(item => {
-                                    item.style.borderColor = '#00F0FF';
-                                    item.style.boxShadow = '0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 20px rgba(0, 240, 255, 0.2)';
-                                    item.style.transform = 'translateY(-5px)';
-                                });
+                                // 기존 회색 보더 클래스를 지우고, 네온 블루 테두리/발광 추가
+                                statItem.classList.remove('border-white/10');
+                                statItem.classList.add('completed-glow');
                             }
                         }
                     });
@@ -1313,5 +1764,93 @@
             });
         });
     </script>
+
+    <!-- ==========================================================================
+       [인라인 PDF 뷰어 세부 탭 라우팅 명세 모달]
+       ========================================================================== -->
+    <div id="pdf-viewer-modal" class="hidden">
+        <!-- Backdrop blur background -->
+        <div class="pdf-modal-backdrop" onclick="closePdfModal()"></div>
+        
+        <!-- Central Modal container -->
+        <div class="pdf-modal-container" id="pdf-modal-container">
+            
+            <!-- Close Button (X) -->
+            <button class="pdf-modal-close-btn" style="position: absolute; top: 1.25rem; right: 1.5rem; z-index: 50;" onclick="closePdfModal()" aria-label="닫기">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="pdf-modal-header">
+                <div>
+                    <h3 class="pdf-modal-title">
+                        <span class="indicator-dot"></span>
+                        BAETECK 통합 품질 보증 사양서 뷰어
+                    </h3>
+                    <p class="pdf-modal-subtitle">국가 공인 자격 면허 및 글로벌 규격 인증서 원본 통합 조회</p>
+                </div>
+            </div>
+
+            <!-- 3단 탭 메뉴 Selector -->
+            <div class="pdf-modal-tabs">
+                <button onclick="switchPdfTab('kc')" id="tab-kc" class="pdf-tab-btn active">
+                    KC 위생안전인증
+                </button>
+                <button onclick="switchPdfTab('iso')" id="tab-iso" class="pdf-tab-btn">
+                    ISO 9001 인증
+                </button>
+                <button onclick="switchPdfTab('mainbiz')" id="tab-mainbiz" class="pdf-tab-btn">
+                    MAIN-BIZ 확인서
+                </button>
+            </div>
+
+            <!-- Modal Content Frame -->
+            <div class="pdf-modal-content-layout">
+                
+                <!-- Left Column: Spec Sheet Table Detail -->
+                <div class="pdf-modal-meta-col">
+                    <div>
+                        <span class="pdf-meta-label">SPECIFICATION DETAIL</span>
+                        <h4 id="meta-title" class="pdf-meta-title">
+                            수도용 위생안전인증 (KC)
+                        </h4>
+                        <p id="meta-desc" class="pdf-meta-desc">
+                            한국물기술인증원 공인 수도용 위생안전기준 적합 제품 인증
+                        </p>
+
+                        <!-- Specifications table mapping info -->
+                        <div class="pdf-spec-table-container">
+                            <table class="pdf-spec-table">
+                                <tbody id="meta-table-body">
+                                    <!-- Dynamic rows from script -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- High Neon Glow Hover Download Button -->
+                    <div>
+                        <a id="download-btn" href="./인증서3.pdf" download class="pdf-download-btn">
+                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            📥 개별 다운로드
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column: PDF Embed Iframe with transitions -->
+                <div class="pdf-modal-viewer-col">
+                    <div class="pdf-iframe-container" id="iframe-container">
+                        <!-- PDF Embed Frame -->
+                        <iframe id="pdf-iframe" src="./인증서3.pdf#toolbar=0&navpanes=0" class="w-full h-full" style="width:100%; height:100%; border: none;"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>
