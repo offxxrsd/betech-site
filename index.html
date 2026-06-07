@@ -71,7 +71,19 @@
             padding: 100px 0 60px 0;
         }
 
-        /* 135deg 선형 그라데이션과 배경 이미지를 가진 언더레이어 */
+        /* 1. 첫 번째 영상 (배경): 전체 화면 맨 뒷배경 물결 비디오 스타일 */
+        .hero-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1; /* 가장 밑바닥 */
+            pointer-events: none; /* 클릭/드래그 차단으로 콘텐츠 조작 방해 금지 */
+        }
+
+        /* 배경 영상 바로 위 어두운 딥 네이비 반투명 틴트 오버레이 마스크 (가독성 확보) */
         .hero-section::before {
             content: '';
             position: absolute;
@@ -79,16 +91,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(10, 25, 44, 0.95) 0%, rgba(11, 40, 80, 0.8) 100%), url('./water_hero_bg.png');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
+            background: linear-gradient(135deg, rgba(10, 25, 44, 0.85) 0%, rgba(10, 25, 44, 0.65) 100%);
+            z-index: 2; /* 배경 비디오보다 위 */
         }
 
-        /* 메인 콘텐츠와 비디오를 담을 그리드 컨테이너 */
+        /* 메인 콘텐츠와 비디오를 담을 그리드 컨테이너 (배경 물결/틴트보다 상위 배치) */
         .hero-grid-container {
             position: relative;
-            z-index: 2;
+            z-index: 3; /* 배경 비디오(1) 및 틴트(2)보다 위로 띄워 인터랙션 보장 */
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
@@ -122,7 +132,7 @@
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 163, 224, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15); /* 반투명 글래스모피즘 테두리 업그레이드 */
             aspect-ratio: 16 / 10; /* 시각적 균형을 이루는 영상 비율 */
             background-color: #0b1c30;
         }
@@ -154,10 +164,78 @@
             padding: 0;
         }
 
+        .hero-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.82rem; /* 자간 확장 및 크기 축소 */
+            font-weight: 300; /* 세련되고 가벼운 느낌 */
+            letter-spacing: 0.15em;
+            color: var(--color-secondary, #00a3e0);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
         #hero-title {
             font-size: 2.75rem !important;
-            line-height: 1.25 !important;
+            line-height: 1.38 !important; /* 행간 미세 조정하여 가독성 확보 */
             margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7) !important; /* 화이트 대신 은은한 회백색 처리 */
+            margin-bottom: 2.2rem;
+            font-weight: 300;
+        }
+
+        /* 행동 유도 버튼(CTA) 전용 스타일링 */
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-actions .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .hero-actions .btn-primary {
+            background: linear-gradient(135deg, var(--color-secondary, #00a3e0) 0%, var(--color-accent, #00e5ff) 100%);
+            color: #ffffff !important;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 163, 224, 0.3);
+        }
+
+        .hero-actions .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
+            color: #ffffff !important;
+        }
+
+        /* 고스트 버튼 스타일: 테두리만 부각시키고 반투명 */
+        .hero-actions .btn-outline {
+            background-color: transparent !important;
+            color: rgba(255, 255, 255, 0.85) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-actions .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.6) !important;
+            color: #ffffff !important;
+            transform: translateY(-2px);
         }
 
         /* 모바일 및 태블릿 반응형 미디어 쿼리 */
@@ -495,6 +573,11 @@
     <main>
         <!-- Hero Section (메인 비주얼 영역) -->
         <section class="hero-section" aria-labelledby="hero-title">
+            <!-- 1. 첫 번째 영상 (배경): 전체 화면 맨 뒷배경에 깔리는 잔잔한 물결 영상 -->
+            <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
+                <source src="./water.mp4" type="video/mp4">
+            </video>
+
             <div class="hero-grid-container">
                 <!-- 좌측 영역: 메인 카피 및 액션 버튼 -->
                 <div class="hero-left-column">
@@ -980,6 +1063,7 @@
          GSAP & ScrollTrigger 사회공헌(CSR) 애니메이션 스크립트
          ========================================================================== -->
     <script>
+        // Race Condition 방지: 만화 카드 이미지 등 모든 리소스가 완전히 렌더링된 후 ScrollTrigger 등록
         window.addEventListener('load', () => {
             gsap.registerPlugin(ScrollTrigger);
 
@@ -987,26 +1071,25 @@
             const waterStream = document.querySelector('.water-stream');
             
             if (track && waterStream) {
-                // 가로로 이동해야 할 스크롤 총량 계산 (트랙 가로폭 - 뷰포트 가로폭 + 10% 여유 패딩)
+                // 정확한 가로 이동 거리 계산 공식: 전체 만화 트랙 너비에서 뷰포트 너비를 차감
                 const getScrollAmount = () => {
-                    const trackWidth = track.scrollWidth;
-                    const viewportWidth = window.innerWidth;
-                    return -(trackWidth - viewportWidth + (viewportWidth * 0.1));
+                    return track.scrollWidth - window.innerWidth;
                 };
 
                 // GSAP 스크롤 트리거 정의
                 gsap.to(track, {
-                    x: getScrollAmount,
+                    x: () => -getScrollAmount(), // 왼쪽 방향으로 이동해야 하므로 음수값 매핑
                     ease: "none",
                     scrollTrigger: {
                         trigger: "#csr-pipeline-section",
-                        pin: true,           // 섹션 화면 고정
-                        scrub: 1,            // 1초 관성 스크롤 제어로 매우 유연한 가속감 부여
-                        start: "top top",    // 뷰포트 탑에 닿을 때 고정
-                        end: () => "+=" + (window.innerHeight * 3), // 총 400vh 거리 확보를 위해 300vh 가변 스케일
-                        invalidateOnRefresh: true, // 브라우저 창 크기 리사이징 시 수치 자동 보정
+                        pin: true,                  // 스크롤 핀 고정 활성화
+                        scrub: 1,                   // 1초 관성 스크롤 제어로 부드러운 스크러빙
+                        start: "top top",           // 뷰포트 상단에 도달할 때 시작
+                        // 핵심 동기화: 세로로 스크롤해야 하는 범위를 가로로 이동해야 하는 총 거리와 1:1 일치시킴
+                        end: () => "+=" + getScrollAmount(), 
+                        invalidateOnRefresh: true,  // 브라우저 윈도우 리사이즈 시 수치 강제 재계산
                         onUpdate: (self) => {
-                            // 스크롤 프로그레스(0.0 ~ 1.0)와 물줄기 높이(0% ~ 100%)를 정확히 1:1 바인딩
+                            // 스크롤 진행 프로그레스(0.0 ~ 1.0)와 우측 물줄기 높이(0% ~ 100%) 바인딩
                             gsap.to(waterStream, {
                                 height: `${self.progress * 100}%`,
                                 duration: 0.1,
@@ -1020,6 +1103,9 @@
                 window.addEventListener('resize', () => {
                     ScrollTrigger.refresh();
                 });
+
+                // 이미지 로드 완료 시점에 최하단에서 완벽한 동기화를 위해 강제 리프레시 실행
+                ScrollTrigger.refresh();
             }
         });
     </script>
