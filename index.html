@@ -447,18 +447,22 @@
            사회공헌 (CSR) 캠페인 섹션 전용 스타일시트
            ========================================================================== */
         #csr-pipeline-section {
-            width: 100%;
-            height: 400vh; /* 스크롤 높이 400vh 확보하여 Sticky 스크롤 트리거 공간 형성 */
+            width: 100vw;
+            height: 100vh; /* ScrollTrigger pin-spacer가 높이를 관리하므로 100vh로 고정 */
             background-color: #ffffff;
             position: relative;
+            overflow: hidden;
+            overscroll-behavior: contain;
+            transform: scale(1) !important; /* 화면 확대/스케일 버그 방지 */
         }
 
         .sticky-wrapper {
             position: sticky;
             top: 0;
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             overflow: hidden;
+            overscroll-behavior: contain;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -690,11 +694,6 @@
            ========================================================================== */
         #blueprint-archive-section {
             background-color: #030914;
-            background-image: 
-                radial-gradient(circle, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
-                linear-gradient(to right, rgba(0, 240, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
-            background-size: 40px 40px, 20px 20px, 20px 20px;
             padding: 7rem 0;
             position: relative;
             overflow: hidden;
@@ -715,28 +714,69 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        .blueprint-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 3rem;
+        /* 
+          [통합 키오스크 패널 래퍼 스타일]
+          max-w-7xl, rounded-2xl, overflow-hidden, shadow-2xl, border-2 border-cyan-500/25 bg-[#061022]/90
+        */
+        .blueprint-kiosk-panel {
             max-width: 1200px;
             margin: 3rem auto 0 auto;
-            padding: 0 1.5rem;
-            align-items: stretch;
-        }
-
-        .blueprint-card {
-            border: 2px solid rgba(0, 240, 255, 0.15);
-            background-color: rgba(6, 16, 34, 0.8);
+            border: 2px solid rgba(0, 240, 255, 0.25);
+            background-color: rgba(6, 16, 34, 0.9);
             backdrop-filter: blur(10px);
             border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 0 50px rgba(0, 240, 255, 0.03);
+            box-shadow: 0 20px 80px rgba(0, 240, 255, 0.06);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 청사진 모눈종이 격자 오버레이 */
+        .blueprint-mesh-grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0.08;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.2) 1px, transparent 1px);
+            background-size: 15px 15px;
+            z-index: 1;
+        }
+
+        .blueprint-grid-kiosk {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: stretch;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* 2-Column 경계 세로 분리선 */
+        .blueprint-col {
+            padding: 2.5rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            overflow: hidden;
             position: relative;
+        }
+
+        .blueprint-left-col {
+            border-right: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .blueprint-right-col {
+            background-color: rgba(4, 12, 26, 0.4);
+        }
+
+        /* 모바일/태블릿 반응형 분리선 조정 */
+        @media (max-width: 1024px) {
+            .blueprint-grid-kiosk {
+                grid-template-columns: 1fr;
+            }
+            .blueprint-left-col {
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+            }
         }
 
         .blueprint-card-header {
@@ -1055,6 +1095,10 @@
             transform: scale(1.08);
         }
 
+        .blueprint-cert-card:hover .blueprint-cert-img {
+            transform: scale(1.05);
+        }
+
         .blueprint-cert-scan-bg svg {
             width: 32px;
             height: 32px;
@@ -1344,41 +1388,7 @@
             </div>
         </section>
 
-        <!-- Stats Section (수치로 보는 신뢰성 - 디지토닉 계기판 테마) -->
-        <section class="stats-section" aria-label="기업 지표 요약">
-            <div class="section-container">
-                <div class="stats-grid">
-                    <!-- 100% 지표 -->
-                    <div class="stat-item">
-                        <div class="stat-number" data-type="normal" data-target="100">
-                            <span class="num-val">100</span><span class="num-suffix">%</span>
-                        </div>
-                        <div class="stat-label">자체 설계 및 국내 제작</div>
-                    </div>
-                    <!-- 24/7 지표 -->
-                    <div class="stat-item">
-                        <div class="stat-number" data-type="normal" data-target="24">
-                            <span class="num-val">24</span><span class="num-suffix">/7</span>
-                        </div>
-                        <div class="stat-label">신속 수리 및 기술 대응</div>
-                    </div>
-                    <!-- 0.01% 지표 (극한의 정밀도 카운트다운) -->
-                    <div class="stat-item">
-                        <div class="stat-number" data-type="precision" data-start="99.99" data-target="0.01">
-                            <span class="num-val">0.01</span><span class="num-suffix">%</span>
-                        </div>
-                        <div class="stat-label">미세 유량 정밀 오차 보증</div>
-                    </div>
-                    <!-- 100+ 지표 -->
-                    <div class="stat-item">
-                        <div class="stat-number" data-type="normal" data-target="100">
-                            <span class="num-val">100</span><span class="num-suffix">+</span>
-                        </div>
-                        <div class="stat-label">국내 수처리 설비 시공 레퍼런스</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
 
         <!-- ==========================================================================
              사회공헌 (CSR) 캠페인 섹션 (Scroll-driven Horizontal Slider)
@@ -1463,6 +1473,9 @@
         <!-- ==========================================================================
              디지털 도면 아카이브 (Blueprint Slide UI) - 신규 프리미엄 인증서 쇼케이스
              ========================================================================== -->
+        <!-- ==========================================================================
+             디지털 도면 아카이브 (Blueprint Slide UI) - 신규 프리미엄 인증서 쇼케이스
+             ========================================================================== -->
         <section id="blueprint-archive-section" aria-labelledby="blueprint-section-title">
             <div class="section-container">
                 <!-- 섹션 헤더 -->
@@ -1472,107 +1485,113 @@
                     <p class="section-desc">비에이텍의 고정밀 수처리 설비 청사진과 국가 공인 품질인증서의 기술적 융합 쇼케이스</p>
                 </div>
                 
-                <div class="blueprint-grid">
-                    <!-- 좌측 컬럼: CAD 도면 영역 -->
-                    <div class="blueprint-card blueprint-left">
-                        <div class="blueprint-card-header">
-                            <span>SYSTEM DRAWING: BAETECK-SPP-01</span>
-                            <span>SCALE: 1:12</span>
-                        </div>
-                        <div class="blueprint-svg-container">
-                            <svg viewBox="0 0 400 500" class="blueprint-svg">
-                                <!-- Outer Dimension Marks -->
-                                <line x1="20" y1="30" x2="380" y2="30" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="4,4" />
-                                <line x1="20" y1="470" x2="380" y2="470" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="4,4" />
-                                <line x1="30" y1="20" x2="30" y2="480" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="4,4" />
-                                <line x1="370" y1="20" x2="370" y2="480" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="4,4" />
-
-                                <!-- Submersible Pump CAD Outlines -->
-                                <!-- Motor Housing -->
-                                <rect x="130" y="80" width="140" height="180" rx="6" fill="rgba(6,25,50,0.4)" stroke="rgba(0,240,255,0.25)" stroke-width="1.5" class="cad-element" id="cad-motor" />
-                                <line x1="160" y1="80" x2="160" y2="260" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="2,2" />
-                                <line x1="240" y1="80" x2="240" y2="260" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="2,2" />
-                                
-                                <!-- Cooling Fins (Hatching effect) -->
-                                <line x1="130" y1="100" x2="270" y2="100" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                <line x1="130" y1="118" x2="270" y2="118" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                <line x1="130" y1="136" x2="270" y2="136" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                <line x1="130" y1="154" x2="270" y2="154" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                <line x1="130" y1="172" x2="270" y2="172" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                <line x1="130" y1="190" x2="270" y2="190" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                <line x1="130" y1="208" x2="270" y2="208" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                <line x1="130" y1="226" x2="270" y2="226" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                <line x1="130" y1="244" x2="270" y2="244" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-
-                                <!-- Pump Casing & Suction Bowl -->
-                                <path d="M120 260 L280 260 L260 370 L140 370 Z" fill="rgba(6,25,50,0.5)" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" class="cad-element" id="cad-casing" />
-                                
-                                <!-- Internal Impeller Schematics -->
-                                <circle cx="200" cy="315" r="45" fill="none" stroke="rgba(0,240,255,0.2)" stroke-width="1" stroke-dasharray="4,2" />
-                                <path d="M170 315 A 30 30 0 0 1 230 315" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-1" />
-                                <path d="M180 300 A 30 30 0 0 1 220 330" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-2" />
-                                <path d="M180 330 A 30 30 0 0 1 220 300" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-3" />
-                                
-                                <!-- Shaft Centerline -->
-                                <line x1="200" y1="50" x2="200" y2="450" stroke="#00F0FF" stroke-width="1.2" stroke-dasharray="12,3,3,3" />
-
-                                <!-- Discharge Flange Connection -->
-                                <path d="M260 310 L330 310 L330 340 L260 340" fill="rgba(6,25,50,0.6)" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" class="cad-element" id="cad-discharge" />
-                                <rect x="330" y="295" width="15" height="70" fill="rgba(0,240,255,0.1)" stroke="rgba(0,240,255,0.4)" stroke-width="1.5" />
-                                <line x1="337.5" y1="295" x2="337.5" y2="365" stroke="rgba(0,240,255,0.3)" stroke-width="1" stroke-dasharray="4,4" />
-
-                                <!-- Top Handle / Lifting Eye -->
-                                <circle cx="200" cy="65" r="15" fill="none" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" />
-                                <circle cx="200" cy="65" r="6" fill="none" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" />
-
-                                <!-- Base Support Frame -->
-                                <path d="M130 370 L110 440 L290 440 L270 370" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" />
-                                <rect x="90" y="440" width="220" height="15" rx="3" fill="rgba(6,25,50,0.6)" stroke="rgba(0,240,255,0.4)" stroke-width="1.5" class="cad-element" id="cad-base" />
-
-                                <!-- Interactive Highlight Shapes (Controlled by active hotspots) -->
-                                <circle cx="200" cy="315" r="70" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="5,5" id="highlight-pump" class="cad-element" />
-                                <rect x="115" y="55" width="170" height="325" rx="12" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="6,6" id="highlight-booster" class="cad-element" />
-                                <rect x="80" y="430" width="240" height="35" rx="6" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="6,6" id="highlight-factory" class="cad-element" />
-                            </svg>
-
-                            <!-- Floating Tooltip Hotspots -->
-                            <!-- Hotspot 1: Pump Components -->
-                            <button class="blueprint-hotspot" style="top: 61%; left: 50%;" data-part="PUMP_COMPONENTS" aria-label="펌프류 핵심 부품 핫스팟">
-                                <span class="hotspot-pulse">
-                                    <span class="hotspot-ring"></span>
-                                    <span class="hotspot-dot">01</span>
-                                </span>
-                                <div class="hotspot-tooltip">펌프 핵심 부품 (케이싱/임펠러/주축)</div>
-                            </button>
-
-                            <!-- Hotspot 2: Booster Assembly -->
-                            <button class="blueprint-hotspot" style="top: 28%; left: 50%;" data-part="BOOSTER_SYSTEM" aria-label="부스터 펌프 시스템 핫스팟">
-                                <span class="hotspot-pulse">
-                                    <span class="hotspot-ring"></span>
-                                    <span class="hotspot-dot">02</span>
-                                </span>
-                                <div class="hotspot-tooltip">부스터 조립체 & 제어반</div>
-                            </button>
-
-                            <!-- Hotspot 3: Factory / Infra -->
-                            <button class="blueprint-hotspot" style="top: 88%; left: 50%;" data-part="FACTORY_SYSTEM" aria-label="공장 시스템 인프라 핫스팟">
-                                <span class="hotspot-pulse">
-                                    <span class="hotspot-ring"></span>
-                                    <span class="hotspot-dot">03</span>
-                                </span>
-                                <div class="hotspot-tooltip">경영혁신 & 공장 시스템</div>
-                            </button>
-                        </div>
-                        <div class="blueprint-card-footer">
-                            <span>* 도면의 핵심 핫스팟 마커 [01~03]를 클릭하여 인증 규격을 확인하십시오.</span>
-                            <button id="blueprint-reset-btn" class="blueprint-btn-reset" style="display: none;">[ RESET ]</button>
-                        </div>
-                    </div>
+                <!-- 
+                  [통합 키오스크 패널 래퍼]
+                  max-w-7xl, rounded-2xl, overflow-hidden, shadow-2xl, border-2 border-cyan-500/25 bg-[#061022]/90 backdrop-blur-md 적용
+                -->
+                <div class="blueprint-kiosk-panel">
+                    <!-- 청사진 모눈 격자 오버레이 -->
+                    <div class="blueprint-mesh-grid"></div>
                     
-                    <!-- 우측 컬럼: 명세 및 인증서 쇼케이스 -->
-                    <div class="blueprint-card blueprint-right">
-                        <div id="blueprint-detail-content" class="blueprint-detail-wrapper">
-                            <!-- JS를 통해 동적으로 내용이 로딩되는 영역 -->
+                    <div class="blueprint-grid-kiosk">
+                        <!-- 좌측 컬럼: CAD 도면 영역 -->
+                        <div class="blueprint-col blueprint-left-col">
+                            <div class="blueprint-card-header">
+                                <span>SYSTEM DRAWING: BAETECK-SPP-01</span>
+                                <span>SCALE: 1:12</span>
+                            </div>
+                            <div class="blueprint-svg-container">
+                                <svg viewBox="0 0 400 500" class="blueprint-svg">
+                                    <!-- Outer Dimension Marks -->
+                                    <line x1="20" y1="30" x2="380" y2="30" stroke="rgba(0,240,255,0.12)" stroke-width="1" stroke-dasharray="4,4" />
+                                    <line x1="20" y1="470" x2="380" y2="470" stroke="rgba(0,240,255,0.12)" stroke-width="1" stroke-dasharray="4,4" />
+                                    <line x1="30" y1="20" x2="30" y2="480" stroke="rgba(0,240,255,0.12)" stroke-width="1" stroke-dasharray="4,4" />
+                                    <line x1="370" y1="20" x2="370" y2="480" stroke="rgba(0,240,255,0.12)" stroke-width="1" stroke-dasharray="4,4" />
+
+                                    <!-- Submersible Pump CAD Outlines -->
+                                    <!-- Motor Housing -->
+                                    <rect x="130" y="80" width="140" height="180" rx="6" fill="rgba(6,25,50,0.4)" stroke="rgba(0,240,255,0.25)" stroke-width="1.5" class="cad-element" id="cad-motor" />
+                                    <line x1="160" y1="80" x2="160" y2="260" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="2,2" />
+                                    <line x1="240" y1="80" x2="240" y2="260" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="2,2" />
+                                    
+                                    <!-- Cooling Fins (Hatching effect) -->
+                                    <line x1="130" y1="100" x2="270" y2="100" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+                                    <line x1="130" y1="118" x2="270" y2="118" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+                                    <line x1="130" y1="136" x2="270" y2="136" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+                                    <line x1="130" y1="154" x2="270" y2="154" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+                                    <line x1="130" y1="172" x2="270" y2="172" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+                                    <line x1="130" y1="190" x2="270" y2="190" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+                                    <line x1="130" y1="208" x2="270" y2="208" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+                                    <line x1="130" y1="226" x2="270" y2="226" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+                                    <line x1="130" y1="244" x2="270" y2="244" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
+
+                                    <!-- Pump Casing & Suction Bowl -->
+                                    <path d="M120 260 L280 260 L260 370 L140 370 Z" fill="rgba(6,25,50,0.5)" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" class="cad-element" id="cad-casing" />
+                                    
+                                    <!-- Internal Impeller Schematics -->
+                                    <circle cx="200" cy="315" r="45" fill="none" stroke="rgba(0,240,255,0.2)" stroke-width="1" stroke-dasharray="4,2" />
+                                    <path d="M170 315 A 30 30 0 0 1 230 315" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-1" />
+                                    <path d="M180 300 A 30 30 0 0 1 220 330" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-2" />
+                                    <path d="M180 330 A 30 30 0 0 1 220 300" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-3" />
+                                    
+                                    <!-- Shaft Centerline -->
+                                    <line x1="200" y1="50" x2="200" y2="450" stroke="#00F0FF" stroke-width="1.2" stroke-dasharray="12,3,3,3" />
+
+                                    <!-- Discharge Flange Connection -->
+                                    <path d="M260 310 L330 310 L330 340 L260 340" fill="rgba(6,25,50,0.6)" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" class="cad-element" id="cad-discharge" />
+                                    <rect x="330" y="295" width="15" height="70" fill="rgba(0,240,255,0.1)" stroke="rgba(0,240,255,0.4)" stroke-width="1.5" />
+                                    <line x1="337.5" y1="295" x2="337.5" y2="365" stroke="rgba(0,240,255,0.3)" stroke-width="1" stroke-dasharray="4,4" />
+
+                                    <!-- Top Handle / Lifting Eye -->
+                                    <circle cx="200" cy="65" r="15" fill="none" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" />
+                                    <circle cx="200" cy="65" r="6" fill="none" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" />
+
+                                    <!-- Base Support Frame -->
+                                    <path d="M130 370 L110 440 L290 440 L270 370" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" />
+                                    <rect x="90" y="440" width="220" height="15" rx="3" fill="rgba(6,25,50,0.6)" stroke="rgba(0,240,255,0.4)" stroke-width="1.5" class="cad-element" id="cad-base" />
+
+                                    <!-- Interactive Highlight Shapes -->
+                                    <circle cx="200" cy="315" r="70" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="5,5" id="highlight-pump" class="cad-element" />
+                                    <rect x="115" y="55" width="170" height="325" rx="12" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="6,6" id="highlight-booster" class="cad-element" />
+                                    <rect x="80" y="430" width="240" height="35" rx="6" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="6,6" id="highlight-factory" class="cad-element" />
+                                </svg>
+
+                                <!-- Floating Tooltip Hotspots -->
+                                <button class="blueprint-hotspot" style="top: 61%; left: 50%;" data-part="PUMP_COMPONENTS" aria-label="펌프류 핵심 부품 핫스팟">
+                                    <span class="hotspot-pulse">
+                                        <span class="hotspot-ring"></span>
+                                        <span class="hotspot-dot">01</span>
+                                    </span>
+                                    <div class="hotspot-tooltip">펌프 핵심 부품 (케이싱/임펠러/주축)</div>
+                                </button>
+
+                                <button class="blueprint-hotspot" style="top: 28%; left: 50%;" data-part="BOOSTER_SYSTEM" aria-label="부스터 펌프 시스템 핫스팟">
+                                    <span class="hotspot-pulse">
+                                        <span class="hotspot-ring"></span>
+                                        <span class="hotspot-dot">02</span>
+                                    </span>
+                                    <div class="hotspot-tooltip">부스터 조립체 & 제어반</div>
+                                </button>
+
+                                <button class="blueprint-hotspot" style="top: 88%; left: 50%;" data-part="FACTORY_SYSTEM" aria-label="공장 시스템 인프라 핫스팟">
+                                    <span class="hotspot-pulse">
+                                        <span class="hotspot-ring"></span>
+                                        <span class="hotspot-dot">03</span>
+                                    </span>
+                                    <div class="hotspot-tooltip">경영혁신 & 공장 시스템</div>
+                                </button>
+                            </div>
+                            <div class="blueprint-card-footer">
+                                <span>* 도면 위의 노란색 마커 [01~03]를 클릭하면 상세 스펙과 원본 인증서 스캔본이 출력됩니다.</span>
+                                <button id="blueprint-reset-btn" class="blueprint-btn-reset" style="display: none;">[ RESET ]</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 우측 컬럼: 명세 및 인증서 쇼케이스 -->
+                        <div class="blueprint-col blueprint-right-col">
+                            <div id="blueprint-detail-content" class="blueprint-detail-wrapper">
+                                <!-- JS를 통해 동적으로 내용이 로딩되는 영역 -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1887,6 +1906,7 @@
                     frame: 1,
                     ease: "none",
                     scrollTrigger: {
+                        id: "csr-scroll",
                         trigger: "#csr-pipeline-section",
                         pin: true,                  // 스크롤 핀 고정 활성화
                         scrub: 1,                   // 1초 관성 스크롤 제어로 부드러운 스크러빙
@@ -1912,66 +1932,60 @@
                     }
                 });
 
+                // [신규] 스크롤 체이닝 차단 및 만화 끝단 스무스 스냅 제어 휠 핸들러
+                let isTransitioning = false;
+                let wheelAccumulator = 0;
+
+                window.addEventListener('wheel', (e) => {
+                    const scrollTriggerInstance = ScrollTrigger.getById("csr-scroll");
+                    if (!scrollTriggerInstance) return;
+
+                    const progress = scrollTriggerInstance.progress;
+
+                    // 마지막 카드 도달 상태 (progress가 거의 1)
+                    if (progress >= 0.98) {
+                        const currentScroll = window.scrollY;
+                        const triggerEnd = scrollTriggerInstance.end;
+
+                        // 스크롤이 트리거 영역 마지막 지점 부근이고 사용자가 휠 다운할 때
+                        if (e.deltaY > 0 && currentScroll < triggerEnd + 50) {
+                            const nextSection = document.querySelector('#blueprint-archive-section');
+                            if (nextSection && !isTransitioning) {
+                                e.preventDefault(); // 버블링 및 다음 섹션 강제 스크롤 차단
+                                wheelAccumulator += e.deltaY;
+
+                                // 사용자가 '한 번 더 확실하게' 아래로 굴렸을 때 (누적 120 이상)
+                                if (wheelAccumulator > 120) {
+                                    isTransitioning = true;
+                                    wheelAccumulator = 0;
+
+                                    const nextTop = nextSection.getBoundingClientRect().top + window.pageYOffset;
+                                    window.scrollTo({
+                                        top: nextTop,
+                                        behavior: 'smooth'
+                                    });
+
+                                    // 트랜지션 완료 동안 추가 휠 무시
+                                    setTimeout(() => {
+                                        isTransitioning = false;
+                                    }, 1000);
+                                }
+                            }
+                        } else {
+                            wheelAccumulator = 0;
+                        }
+                    } else {
+                        wheelAccumulator = 0;
+                    }
+                }, { passive: false });
+
                 // 브라우저 윈도우 크기 변화에 대응한 ScrollTrigger 강제 리프레시
                 window.addEventListener('resize', () => {
                     ScrollTrigger.refresh();
                 });
             }
 
-            // 2. 핵심 지표 섹션 (Stats Section) 디지털 타코메터 애니메이션 (디지토닉 계기판 효과)
-            const statNumbers = document.querySelectorAll('.stat-number');
-            if (statNumbers.length > 0) {
-                statNumbers.forEach(stat => {
-                    const valEl = stat.querySelector('.num-val');
-                    const type = stat.getAttribute('data-type');
-                    const target = parseFloat(stat.getAttribute('data-target'));
-                    const start = stat.getAttribute('data-start') ? parseFloat(stat.getAttribute('data-start')) : 0;
-                    const statItem = stat.closest('.stat-item');
-                    
-                    const obj = { progress: 0 };
-                    
-                    gsap.to(obj, {
-                        progress: 1,
-                        duration: 1.5, // 1.5초 동안 구동
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: ".stats-section",
-                            start: "top 85%", // 화면의 85% 지점에 닿으면 시작
-                            once: true // 단 한 번만 실행
-                        },
-                        onUpdate: () => {
-                            const p = obj.progress;
-                            
-                            if (p < 1) {
-                                if (type === 'precision') {
-                                    // 99.99%에서 0.01%로 카운트다운하며 노이즈 난수 발생
-                                    const currentVal = start - (start - target) * p;
-                                    const noise = (Math.random() - 0.5) * 8 * (1 - p); // 시간이 갈수록 흔들림 감소
-                                    const displayVal = Math.max(target, currentVal + noise);
-                                    valEl.textContent = displayVal.toFixed(3);
-                                } else {
-                                    // 일반 지표 (100%, 24/7, 100+) 타다닥거리며 고속 난수 렌더링
-                                    const currentVal = target * p;
-                                    const noise = (Math.random() - 0.5) * 15 * (1 - p);
-                                    const displayVal = Math.max(0, currentVal + noise);
-                                    valEl.textContent = displayVal.toFixed(3);
-                                }
-                            }
-                        },
-                        onComplete: () => {
-                            // 모션 완료 후 최종 목표 수치로 락(Lock) 및 소수점 제거
-                            if (type === 'precision') {
-                                valEl.textContent = target.toFixed(2); // 0.01로 정밀 락
-                                if (statItem) {
-                                    statItem.classList.add('flash-active'); // 아쿠아 블루 네온 플래시 효과 발동
-                                }
-                            } else {
-                                valEl.textContent = Math.round(target); // 100, 24, 100으로 정밀 락
-                            }
-                        }
-                    });
-                });
-            }
+
 
             // ==========================================================================
             // [신규 기능] 디지털 도면 아카이브 (Blueprint Slide UI) 인터랙션 로직
@@ -1991,32 +2005,32 @@
                     downloadUrl: "./인증서2.pdf",
                     downloadLabel: "통합 품질 인증 사양서 다운로드",
                     certs: [
-                        { name: "KC 인증", class: "kc-card" },
-                        { name: "ISO 9001", class: "iso-card" },
-                        { name: "MAIN-BIZ", class: "mainbiz-card" }
+                        { name: "KC 인증서", imagePath: "./images/kc_cert_thumb.png", class: "kc-card" },
+                        { name: "ISO 9001", imagePath: "./images/iso_cert_thumb.png", class: "iso-card" },
+                        { name: "MAIN-BIZ", imagePath: "./images/mainbiz_cert_thumb.png", class: "mainbiz-card" }
                     ]
                 },
                 PUMP_COMPONENTS: {
-                    title: "펌프류 핵심 부품 (케이싱 / 임펠러 / 주축 / 상부커버)",
+                    title: "펌프 핵심 부품 (케이싱 / 임펠러 / 주축 / 상부커버)",
                     subtitle: "고정밀 가공 처리를 통한 내식성 및 기계적 내구성 극대화 설계",
                     specTable: [
-                        { label: "제품 분류", value: "지상용 수직형 다단 펌프류 부품 (BA5, BA10, BA20 / BA32, BA45, BA64, BA90 시리즈)" },
+                        { label: "분류", value: "지상용 수직형 다단 펌프류 부품 (BA5, BA10, BA20 / BA32, BA45, BA64, BA90 시리즈)" },
                         { label: "재질 사양", value: "케이싱, 임펠러, 주축, 상부커버, 드레인플러그, 락너트 일체 고품질 스테인리스(STS) 채택" },
-                        { label: "냉·온수 여부", value: "냉수 전용 (수도용 화학적 안전성 완벽 보장)" }
+                        { label: "냉·온수 여부", value: "냉수 전용" }
                     ],
-                    certTitle: "수도용 위생안전기준 인증서 (KC 인증)",
+                    certTitle: "수도용 위생안전기준 인증서 (KC인증)",
                     certMeta: "인증번호 : KCW-2025-0163 / 최초인증일 : 2025-09-19 / 정기검사 신청기한 : 2027-09-18 / 인증기관 : 한국물기술인증원",
                     downloadUrl: "./인증서3.pdf",
-                    downloadLabel: "KC 인증서 고화질 PDF 다운로드",
+                    downloadLabel: "KC인증서 고화질 PDF 다운로드",
                     certs: [
-                        { name: "위생안전기준 인증서", class: "kc-card" }
+                        { name: "KC 위생안전기준 인증서", imagePath: "./images/kc_cert.png", class: "kc-card" }
                     ]
                 },
                 BOOSTER_SYSTEM: {
                     title: "부스터 펌프 시스템 조립체 및 전체 제어반",
                     subtitle: "복수 펌프의 실시간 압력 피드백 병렬 운전을 통한 에너지 세이빙 실현",
                     specTable: [
-                        { label: "제조 분류", value: "배관유체조절시스템장비 및 펌프 제조 범위" },
+                        { label: "분류", value: "배관유체조절시스템장비 및 펌프 제조 범위" },
                         { label: "직접생산 확인", value: "부스터펌프시스템, 벌류트(다단·단단·양흡입·편흡입), 정량, 수중, 오수, 슬러지, 심정용, 전진공동 펌프 일체" },
                         { label: "적용 제외 항", value: "ISO 9001:2015 규격 8.3항(설계 및 개발) 적용 제외 명시" }
                     ],
@@ -2025,24 +2039,23 @@
                     downloadUrl: "./인증서2.pdf",
                     downloadLabel: "ISO 9001 원본 PDF 다운로드",
                     certs: [
-                        { name: "ISO 9001 인증서", class: "iso-card" }
+                        { name: "ISO 9001 품질인증서", imagePath: "./images/iso_cert.png", class: "iso-card" }
                     ]
                 },
                 FACTORY_SYSTEM: {
-                    title: "공장 시스템 및 인프라 (경영 혁신 기업)",
-                    subtitle: "스마트 팩토리 도입과 혁신 경영 프로세스를 통한 고품질 대량 생산 체계 확립",
+                    title: "경영 혁신 및 시스템 인프라 (공장 등록 현황)",
+                    subtitle: "스마트 팩토리 도입과 경영 혁신 프로세스를 통한 고품질 대량 생산 체계 확립",
                     specTable: [
-                        { label: "인프라 분류", value: "경영혁신형 중소기업 (MAIN-BIZ) 및 공장 등록 현황" },
+                        { label: "분류", value: "경영혁신형 중소기업 (MAIN-BIZ) 및 공장 등록 현황" },
                         { label: "기업 자격", value: "중소벤처기업부 선정 경영혁신형 중소기업 / 한국펌프공업협동조합 정식 조합원 (제151호)" },
                         { label: "공장 정보", value: "강원특별자치도 춘천시 퇴계공단2길 64 (액체 펌프 제조업 외 4종 등록 완료)" }
                     ],
-                    certTitle: "MAIN-BIZ 확인서 & 한국펌프공업협동조합 조합원증",
-                    certMeta: "확인서 번호 : 제 R180801-01794 호 / 유효기간 : 2024. 09. 14 ~ 2027.09.13 / 발급기관 : 중소벤처기업부 장관",
+                    certTitle: "경영혁신형 중소기업(MAIN-BIZ) 확인서",
+                    certMeta: "확인서 번호 : 제 R180801-01794 호 / 유효기간 : 2024. 09. 14 ~ 2027.09.13 / 발급기관 : 중소벤기업부 장관",
                     downloadUrl: "./인증서1.pdf",
                     downloadLabel: "MAIN-BIZ 확인서 PDF 다운로드",
                     certs: [
-                        { name: "MAIN-BIZ 확인서", class: "mainbiz-card" },
-                        { name: "조합원증", class: "association-card" }
+                        { name: "MAIN-BIZ 확인서 스캔본", imagePath: "./images/mainbiz_cert.png", class: "mainbiz-card" }
                     ]
                 }
             };
@@ -2068,21 +2081,43 @@
                 setTimeout(() => {
                     // Build spec table rows HTML
                     const tableRows = data.specTable.map(row => `
-                        <tr>
-                            <td class="label-cell">${row.label}</td>
-                            <td>${row.value}</td>
+                        <tr style="border-b border-cyan-500/20 bg-[#040d1c]/50 last:border-0 hover:bg-[#081730]/50 transition-colors">
+                            <td class="label-cell" style="padding: 0.75rem 1rem; font-size: 0.75rem; font-weight: bold; font-family: sans-serif; color: #22d3ee; border-right: 1px solid rgba(6, 182, 212, 0.2); background-color: rgba(6, 18, 38, 0.4); text-transform: uppercase; width: 120px; text-align: left; letter-spacing: 0.05em;">${row.label}</td>
+                            <td style="padding: 0.75rem 1rem; font-size: 0.8rem; color: #f0f9ff; line-height: 1.6; font-family: sans-serif;">${row.value}</td>
                         </tr>
                     `).join('');
 
                     // Build cert cards HTML
                     const certCards = data.certs.map(cert => `
-                        <div class="blueprint-cert-card ${cert.class}">
+                        <div class="blueprint-cert-card ${cert.class}" style="aspect-ratio: 3/4; border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 8px; background-color: #030914; position: relative; overflow: hidden; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 0.15rem;">
+                            <!-- Laser Scanning Line on hover -->
                             <div class="blueprint-cert-laser"></div>
-                            <div class="blueprint-cert-scan-bg">
-                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11.571V9a4 4 0 00-8 0v2.571c0 2.425.69 4.755 2.01 6.734l.054.09m6.417-3.83a9.013 9.013 0 012.753 6.571M12 11a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>${cert.name}</span>
+
+                            <!-- Outer Scan Label -->
+                            <div style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 0.5rem; z-index: 20; pointer-events: none; background: linear-gradient(to top, rgba(6,16,34,0.9), transparent);">
+                                <span style="font-size: 8px; font-family: monospace; color: rgba(0, 240, 255, 0.85); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">${cert.name}</span>
+                                <span style="font-size: 6px; font-family: monospace; color: rgba(0, 240, 255, 0.4); letter-spacing: 0.1em; text-align: right;">HIGH-RES VIEW</span>
+                            </div>
+
+                            <!-- Image Viewer Frame: Object-contain style, maintaining ratio -->
+                            <div style="width: 100%; height: 100%; padding: 0.3rem; display: flex; align-items: center; justify-content: center; background-color: #040d1a;">
+                                <div style="width: 100%; height: 100%; position: relative; overflow: hidden; border: 1px dashed rgba(0, 240, 255, 0.25); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                    <img 
+                                        src="${cert.imagePath}" 
+                                        alt="${cert.name} 원본 스캔본"
+                                        style="width: 100%; height: 100%; object-fit: contain; image-rendering: -webkit-optimize-contrast; transition: transform 0.5s ease;"
+                                        class="blueprint-cert-img"
+                                        onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                                    />
+                                    <!-- Fallback View Box (Schematic dummy style) -->
+                                    <div class="fallback-viewer-box hidden" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #030914, #061838); padding: 0.5rem; text-align: center; border-radius: 4px;">
+                                        <svg style="width: 24px; height: 24px; color: rgba(0, 240, 255, 0.35); margin-bottom: 4px; stroke-width: 1px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11.571V9a4 4 0 00-8 0v2.571c0 2.425.69 4.755 2.01 6.734l.054.09m6.417-3.83a9.013 9.013 0 012.753 6.571M12 11a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span style="font-size: 8px; font-weight: 700; color: rgba(0, 240, 255, 0.65); text-transform: uppercase; line-height: 1.2;">${cert.name}</span>
+                                        <span style="font-size: 6px; font-family: monospace; color: rgba(0, 240, 255, 0.3); margin-top: 2px;">BAETECK QUALITY ID</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     `).join('');
@@ -2096,8 +2131,8 @@
                                 <p class="blueprint-detail-desc">${data.subtitle}</p>
                             </div>
 
-                            <div class="blueprint-table-container">
-                                <table class="blueprint-table">
+                            <div class="blueprint-table-container" style="border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; overflow: hidden; margin: 1.5rem 0;">
+                                <table class="blueprint-table" style="width: 100%; border-collapse: collapse;">
                                     <tbody>
                                         ${tableRows}
                                     </tbody>

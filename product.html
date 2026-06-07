@@ -401,6 +401,168 @@
             background-color: var(--color-secondary);
         }
 
+        /* ==========================================================================
+           수치로 보는 신뢰성 (Stats Section) 디지털 계기판 테마 스타일
+           ========================================================================== */
+        .stats-section {
+            background-color: #050e1c; /* B2B 프리미엄 딥 다크 블루 */
+            padding: 7rem 0;
+            position: relative;
+            border-top: 1px solid rgba(0, 229, 255, 0.15);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+            overflow: hidden;
+            margin-top: 6rem;
+            margin-bottom: 2rem;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, rgba(0, 229, 255, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .stat-item {
+            background: rgba(10, 25, 44, 0.65); /* 은은한 딥 네이비 디지털 패널 */
+            border: 1.5px solid rgba(0, 240, 255, 0.15);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 229, 255, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .stat-item:hover {
+            border-color: rgba(0, 229, 255, 0.35);
+            box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.05), 
+                        0 20px 40px rgba(0, 0, 0, 0.4), 
+                        0 0 30px rgba(0, 163, 224, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            transition: all 0.3s ease;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-number .num-val {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-number .num-suffix {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+            margin-left: 0.1rem;
+        }
+
+        .stat-item:hover .stat-number {
+            color: var(--color-accent, #00e5ff);
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
+        }
+
+        .stat-item:hover .num-suffix {
+            color: rgba(0, 229, 255, 0.8);
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+            margin-top: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .stat-item:hover .stat-label {
+            color: #ffffff;
+        }
+
+        /* 3개 상자 완료 시 아쿠아 블루 네온 플래시 효과 */
+        .stat-item.flash-active {
+            animation: tachometerFlash 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes tachometerFlash {
+            0% {
+                background-color: rgba(0, 229, 255, 0.25);
+                box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.4), 0 0 40px rgba(0, 229, 255, 0.3);
+                border-color: #00e5ff;
+            }
+            30% {
+                background-color: rgba(0, 229, 255, 0.05);
+                box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.1), 0 0 20px rgba(0, 229, 255, 0.15);
+                border-color: rgba(0, 229, 255, 0.6);
+            }
+            60% {
+                background-color: rgba(0, 229, 255, 0.15);
+                box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.2), 0 0 30px rgba(0, 229, 255, 0.2);
+                border-color: #00e5ff;
+            }
+            100% {
+                background-color: rgba(10, 25, 44, 0.75);
+                box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3);
+                border-color: rgba(0, 229, 255, 0.45);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-section {
+                padding: 4rem 0;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .stat-item {
+                padding: 2.2rem 1.5rem;
+            }
+            .stat-number {
+                font-size: 2.8rem;
+            }
+        }
+
         /* 고유한 반응형 테크니컬 표 스타일 */
         .modal-table-wrapper {
             width: 100%;
@@ -914,6 +1076,35 @@
         </div>
     </div>
 
+    <!-- Stats Section (수치로 보는 신뢰성 - 디지토닉 계기판 테마) -->
+    <section class="stats-section" aria-label="기업 지표 요약">
+        <div class="section-container">
+            <div class="stats-grid">
+                <!-- 220여개 지표 -->
+                <div class="stat-item">
+                    <div class="stat-number" data-type="normal" data-target="220">
+                        <span class="num-val">0</span><span class="num-suffix">여개</span>
+                    </div>
+                    <div class="stat-label">자체 설계 및 국내 제작 제품군</div>
+                </div>
+                <!-- 1600여회 지표 -->
+                <div class="stat-item">
+                    <div class="stat-number" data-type="normal" data-target="1600">
+                        <span class="num-val">0</span><span class="num-suffix">여회</span>
+                    </div>
+                    <div class="stat-label">수처리 현장 기술 대응 및 수리</div>
+                </div>
+                <!-- 0.01만 지표 (극한의 정밀도 카운트다운) -->
+                <div class="stat-item">
+                    <div class="stat-number" data-type="precision" data-start="99.99" data-target="0.01">
+                        <span class="num-val">99.990</span><span class="num-suffix">만</span>
+                    </div>
+                    <div class="stat-label">누적 출하 정밀 정량 펌프</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
     <footer class="main-footer">
         <div class="footer-container">
@@ -955,8 +1146,88 @@
         </div>
     </footer>
 
+    <!-- GSAP & ScrollTrigger CDN (인터랙티브 모션 제어) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
     <script src="./script.js"></script>
+
+    <!-- 핵심 지표 섹션 (Stats Section) 디지털 타코메터 및 발광 애니메이션 스크립트 -->
+    <script>
+        window.addEventListener('load', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const statNumbers = document.querySelectorAll('.stats-section .stat-number');
+            if (statNumbers.length > 0) {
+                const totalStats = statNumbers.length;
+                let completedStats = 0;
+                const statItems = [];
+
+                statNumbers.forEach(stat => {
+                    const valEl = stat.querySelector('.num-val');
+                    const type = stat.getAttribute('data-type');
+                    const target = parseFloat(stat.getAttribute('data-target'));
+                    const start = stat.getAttribute('data-start') ? parseFloat(stat.getAttribute('data-start')) : 0;
+                    const statItem = stat.closest('.stat-item');
+                    if (statItem) statItems.push(statItem);
+                    
+                    const obj = { progress: 0 };
+                    
+                    gsap.to(obj, {
+                        progress: 1,
+                        duration: 1.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: ".stats-section",
+                            start: "top 85%",
+                            once: true
+                        },
+                        onUpdate: () => {
+                            const p = obj.progress;
+                            
+                            if (p < 1) {
+                                if (type === 'precision') {
+                                    const currentVal = start - (start - target) * p;
+                                    const noise = (Math.random() - 0.5) * 8 * (1 - p);
+                                    const displayVal = Math.max(target, currentVal + noise);
+                                    valEl.textContent = displayVal.toFixed(3);
+                                } else {
+                                    const currentVal = target * p;
+                                    const noise = (Math.random() - 0.5) * 15 * (1 - p);
+                                    const displayVal = Math.max(0, currentVal + noise);
+                                    if (target > 500) {
+                                        valEl.textContent = Math.round(displayVal);
+                                    } else {
+                                        valEl.textContent = displayVal.toFixed(1);
+                                    }
+                                }
+                            }
+                        },
+                        onComplete: () => {
+                            if (type === 'precision') {
+                                valEl.textContent = target.toFixed(2);
+                            } else {
+                                valEl.textContent = Math.round(target);
+                            }
+                            
+                            if (statItem) {
+                                statItem.classList.add('flash-active');
+                            }
+
+                            completedStats++;
+                            if (completedStats === totalStats) {
+                                statItems.forEach(item => {
+                                    item.style.borderColor = '#00F0FF';
+                                    item.style.boxShadow = '0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 20px rgba(0, 240, 255, 0.2)';
+                                    item.style.transform = 'translateY(-5px)';
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 
     <!-- 모달 활성화 및 배경 스크롤 제어를 위한 상세 스크립트 -->
     <script>
