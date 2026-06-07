@@ -137,24 +137,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ----------------------------------------------------
-    // 5. [보유장비] 하위 호환성용 쿼리스트링 감지 및 자동 펼침
+    // 5. [보유장비] 하위 호환성용 쿼리스트링 및 해시 감지 자동 펼침
     // ----------------------------------------------------
     const equipmentSection = document.getElementById('equipment-spec-section');
     if (equipmentSection) {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('show') === 'equipment') {
-            equipmentSection.classList.remove('hidden');
-            equipmentSection.classList.add('active');
+        const checkEquipmentTrigger = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isQueryTrigger = urlParams.get('show') === 'equipment';
+            const isHashTrigger = window.location.hash === '#equipment-spec-section';
             
-            window.addEventListener('load', () => {
+            if (isQueryTrigger || isHashTrigger) {
+                equipmentSection.classList.remove('hidden');
+                equipmentSection.classList.add('active');
+                
                 setTimeout(() => {
                     equipmentSection.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
                 }, 300);
+            }
+        };
+
+        // 로드 및 해시 변경 시 트리거 검사
+        window.addEventListener('load', checkEquipmentTrigger);
+        window.addEventListener('hashchange', checkEquipmentTrigger);
+        
+        // GNB 보유장비 링크 클릭 시 즉각 감지 (동일 페이지 내부 이동 처리)
+        document.querySelectorAll('a[href*="#equipment-spec-section"]').forEach(link => {
+            link.addEventListener('click', () => {
+                equipmentSection.classList.remove('hidden');
+                equipmentSection.classList.add('active');
+                setTimeout(() => {
+                    equipmentSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 100);
             });
-        }
+        });
     }
 
     // ----------------------------------------------------
