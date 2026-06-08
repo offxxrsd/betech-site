@@ -392,6 +392,7 @@ input, button, select, textarea {
 .blue-grad-text {
     background: linear-gradient(120deg, var(--color-accent) 0%, #00BFFF 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
 }
