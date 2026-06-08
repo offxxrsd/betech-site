@@ -6,16 +6,16 @@
     <title>(주)비에이텍 - 보유장비 소개</title>
     
     <!-- SEO 및 메타 태그 정의 -->
-    <meta name="description" content="(주)비에이텍의 핵심 보유 장비 명세를 안내합니다. 지상 거치형 대용량 원심펌프 시스템, WILO 입형 다단 원심펌프 시스템, 대형 원심펌프 멀티 병렬 라인업 등 고정밀 물 공학 엔지니어링 설비 사양을 상세히 제공합니다.">
+    <meta name="description" content="(주)비에이텍의 핵심 보유 장비 명세를 안내합니다. 표준 산업용 횡형 원심 펌프 및 고압 가압용 입형 다단 원심 펌프 등 고정밀 물 공학 엔지니어링 설비 사양을 상세히 제공합니다.">
     <meta name="keywords" content="비에이텍, 원심펌프, 입형다단펌프, 병렬펌프, 펌프 사양, 기술 명세, 춘천 펌프공장, 비에이텍 보유장비">
     <meta property="og:type" content="website">
     <meta property="og:title" content="(주)비에이텍 - 보유장비 소개">
     <meta property="og:description" content="최상의 기계적 내구성과 고정밀 유체 제어. 비에이텍의 핵심 보유 설비 라인업을 소개합니다.">
     <meta property="og:image" content="./water_hero_bg.png">
     
-    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <!-- 웹 폰트 (Pretendard & Montserrat) 연동 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- 외부 공통 스타일시트 연동 -->
     <link rel="stylesheet" href="./style.css">
@@ -38,70 +38,380 @@
             border-bottom-color: rgba(0, 229, 255, 0.3);
         }
 
-        /* 서브페이지 전용 히어로 배너 (기존 페이지들과 완벽한 동기화) */
-        .subpage-hero {
+        /* 1. 히어로 섹션 스타일 */
+        .equipment-hero {
+            background-color: #F8F9FA;
+            padding: 10rem 0 6rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--color-border);
             position: relative;
-            width: 100%;
-            height: 45vh;
-            min-height: 320px;
-            display: flex;
-            align-items: center;
-            background-size: cover;
-            background-position: center;
-            color: #ffffff;
-            padding-top: 80px;
             overflow: hidden;
         }
-        .subpage-hero::before {
+        /* 은은한 메쉬 그라데이션 장식 */
+        .equipment-hero::after {
             content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 163, 224, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .equipment-hero-content {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        .equipment-hero-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.25em;
+            color: var(--color-secondary);
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+        }
+        .equipment-hero-title {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            line-height: 1.35;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.025em;
+        }
+        .equipment-hero-desc {
+            font-size: 1.15rem;
+            color: var(--color-text-muted);
+            line-height: 1.75;
+            font-weight: 400;
+        }
+
+        /* 2. 필터 탭 스타일 */
+        .filter-section {
+            background-color: var(--color-bg-white);
+            padding: 4.5rem 0 2rem 0;
+        }
+        .filter-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+        }
+        .filter-btn {
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+            padding: 0.85rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+        .filter-btn:hover {
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+            transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(10, 28, 58, 0.15);
+        }
+
+        /* 3. 그리드 카드 리스트 */
+        .grid-section {
+            background-color: var(--color-bg-light);
+            padding: 0 0 8rem 0;
+        }
+        .equipment-grid {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        .equipment-card {
+            background-color: var(--color-bg-white);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .equipment-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .equipment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg), 0 10px 20px -5px rgba(0, 163, 224, 0.1);
+            border-color: rgba(0, 163, 224, 0.2);
+        }
+        .card-img-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background-color: #0b1c30;
+        }
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .equipment-card:hover .card-img {
+            transform: scale(1.06);
+        }
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(10, 28, 58, 0.85);
+            color: var(--color-accent);
+            padding: 0.45rem 0.95rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+        .card-body {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 1.25rem;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+        .equipment-card:hover .card-title {
+            color: var(--color-secondary);
+        }
+        .card-app, .card-feature {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+        .card-app strong, .card-feature strong {
+            color: var(--color-primary);
+            display: block;
+            margin-bottom: 0.35rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .card-app p {
+            color: var(--color-text-muted);
+        }
+        .card-feature p {
+            color: var(--color-text-main);
+        }
+        .card-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+        .btn-view-spec {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-view-spec:hover {
+            background-color: var(--color-primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(10, 28, 58, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* 4. 모달 팝업 스타일 */
+        .spec-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2000;
+            display: none;
+        }
+        .modal-backdrop {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(10, 25, 44, 0.9) 0%, rgba(11, 40, 80, 0.75) 100%);
-            z-index: 1;
+            background: rgba(10, 25, 44, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
-        .subpage-hero-content {
-            width: 100%;
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 1.5rem;
+        .modal-dialog {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -45%) scale(0.95);
+            width: 90%;
+            max-width: 500px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .spec-modal.show .modal-backdrop {
+            opacity: 1;
+        }
+        .spec-modal.show .modal-dialog {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .modal-header {
+            padding: 1.75rem 2rem;
+            background-color: #0A1C3A;
+            color: #ffffff;
             position: relative;
-            z-index: 10;
         }
-        .subpage-hero-tag {
-            font-family: 'Montserrat', sans-serif;
+        .modal-header-tag {
+            font-size: 0.7rem;
             font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
             color: var(--color-accent);
-            margin-bottom: 0.75rem;
-            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
         }
-        .subpage-hero h1 {
-            font-size: 2.75rem;
-            font-weight: 850;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
+        .modal-header-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.4;
+            padding-right: 2rem;
         }
-        .subpage-hero p {
-            font-size: 1.15rem;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.85);
-            max-width: 650px;
-            line-height: 1.6;
+        .btn-modal-close {
+            position: absolute;
+            top: 1.75rem;
+            right: 2rem;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.75rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            line-height: 1;
+            padding: 0;
+        }
+        .btn-modal-close:hover {
+            color: #ffffff;
+        }
+        .modal-body {
+            padding: 2rem;
+        }
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .spec-table tr {
+            border-bottom: 1px solid var(--color-border);
+        }
+        .spec-table tr:last-child {
+            border-bottom: none;
+        }
+        .spec-table th {
+            text-align: left;
+            padding: 1rem 0;
+            font-weight: 700;
+            color: var(--color-primary);
+            width: 45%;
+            font-size: 0.95rem;
+        }
+        .spec-table td {
+            padding: 1rem 0;
+            color: var(--color-text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .modal-footer {
+            padding: 0 2rem 2rem 2rem;
+        }
+        .btn-modal-ok {
+            width: 100%;
+            background-color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+            color: #ffffff;
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn-modal-ok:hover {
+            background-color: var(--color-primary-light);
+            border-color: var(--color-primary-light);
+            box-shadow: 0 4px 12px rgba(10, 28, 58, 0.15);
         }
 
-        /* 보유장비 목록 본문 스타일 조율 */
-        .equipment-list-section {
-            background-color: var(--color-bg-light);
-            padding: 7rem 0;
+        /* 반응형 스타일 조정 */
+        @media (max-width: 1024px) {
+            .equipment-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            .equipment-hero-title {
+                font-size: 2.2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .equipment-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .equipment-hero {
+                padding: 8rem 0 4rem 0;
+            }
+            .equipment-hero-title {
+                font-size: 1.8rem;
+            }
+            .equipment-hero-desc {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
-<body>
+<body class="page-loaded">
 
     <!-- GNB (Global Navigation Bar) 헤더 영역 -->
     <header class="main-header" id="header">
@@ -118,7 +428,7 @@
                     <li><a href="./intro.html">기업소개</a></li>
                     <li><a href="./achievements.html">주요업력</a></li>
                     <li><a href="product.html">제품소개</a></li>
-                    <li><a href="./index.html#equipment-spec-section">보유장비</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
                     <li><a href="./map.html">찾아오시는 길</a></li>
                     <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
                 </ul>
@@ -138,7 +448,7 @@
                 <li><a href="./intro.html">기업소개</a></li>
                 <li><a href="./achievements.html">주요업력</a></li>
                 <li><a href="product.html">제품소개</a></li>
-                <li><a href="./index.html#equipment-spec-section">보유장비</a></li>
+                <li><a href="./equipment.html">보유장비</a></li>
                 <li><a href="./map.html">찾아오시는 길</a></li>
                 <li><a href="./inquiry.html">고객문의</a></li>
             </ul>
@@ -146,215 +456,141 @@
     </header>
 
     <main>
-        <!-- 서브페이지 히어로 배너 (물빛 테마 일관성 유지) -->
-        <section class="subpage-hero" style="background-image: url('./water_hero_bg.png');" aria-labelledby="sub-hero-title">
-            <div class="subpage-hero-content">
-                <div class="subpage-hero-tag">EQUIPMENT PORTFOLIO</div>
-                <h1 id="sub-hero-title">보유장비 소개</h1>
-                <p>최상의 기계적 내구성과 고정밀 유체 제어를 만족하는 비에이텍 핵심 산업용 설비 라인업의 상세 스펙을 소개합니다.</p>
+        <!-- 상단 히어로 섹션 -->
+        <section class="equipment-hero" aria-labelledby="hero-title">
+            <div class="equipment-hero-content">
+                <div class="equipment-hero-tag">Equipment Portfolio</div>
+                <h1 id="hero-title" class="equipment-hero-title">최상의 공정 효율을 보장하는<br>고성능 펌프 및 설비 라인업</h1>
+                <p class="equipment-hero-desc">당사가 보유한 첨단 산업용 설비와 엄격한 유지보수 시스템을 통해 신뢰할 수 있는 기술력을 증명합니다.</p>
             </div>
         </section>
 
-        <!-- 보유장비 리스트 본문 섹션 -->
-        <section class="equipment-list-section">
-            <div class="section-container">
-                <div class="section-header text-center">
-                    <span class="section-tag">EQUIPMENT PORTFOLIO</span>
-                    <h2>비에이텍 핵심 보유 장비 명세</h2>
-                    <p class="section-desc">가혹한 산업 플랜트 환경과 물 공학 시스템에서 독보적인 신뢰도를 자랑하는 기계식 핵심 라인업입니다.</p>
-                </div>
+        <!-- 카테고리 필터 탭 섹션 -->
+        <section class="filter-section">
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">전체보기</button>
+                <button class="filter-btn" data-filter="horizontal">횡형 원심 펌프</button>
+                <button class="filter-btn" data-filter="vertical">입형 다단 펌프</button>
+            </div>
+        </section>
 
-                <div class="equipment-portfolio-container">
-                    
-                    <!-- 장비 1 블록 (fade-up 상속) -->
-                    <a href="./equipment_detail.html?id=1&name=%EC%A7%80%EC%83%81%20%EA%B1%B0%EC%B9%98%ED%98%95%20%EB%8C%80%EC%9A%A9%EB%9F%89%20%EC%9B%90%EC%8B%AC%ED%8E%8C%ED%94%84%20%EC%8B%9C%EC%8A%A4%ED%85%9C" class="equipment-block-link">
-                        <article class="equipment-block fade-up">
-                            <div class="equipment-grid">
-                                <!-- 좌측: 제품 사진 -->
-                                <div class="equipment-photo-column">
-                                    <div class="equipment-frame">
-                                        <img src="./equipment_photo1.webp" alt="지상 거치형 대용량 원심펌프 시스템" class="eq-display-img" loading="lazy">
-                                        <div class="eq-badge">대용량 산업용</div>
-                                    </div>
-                                </div>
-                                <!-- 우측: 제품 설명 -->
-                                <div class="equipment-desc-column">
-                                    <span class="eq-category">CENTRIFUGAL PUMPS</span>
-                                    <h3 class="eq-title-ko">지상 거치형 대용량 원심펌프 시스템</h3>
-                                    <h4 class="eq-title-en">Ground-Mounted High-Capacity Centrifugal Pump System</h4>
-                                    <p class="eq-summary">“강력한 내구성과 동력 전달 효율을 극대화한 산업용 대유량 이송의 표준”</p>
-                                    
-                                    <div class="eq-bullets-box">
-                                        <h5>주요 기술적 장점</h5>
-                                        <ul>
-                                            <li>모터와 펌프 헤드 간의 축 정렬(Shaft Alignment) 공차를 극소화하여 동력 전달 효율을 극대화하였습니다.</li>
-                                            <li>회전 부위에 고인장 강도의 노란 안전 커버(Coupling Guard)를 장착하여 중대재해처벌법 대비 규격을 완벽하게 충족하였습니다.</li>
-                                            <li>저진동 탄소강 주강 베이스 프레임 설계를 채택하여 연속 고속 운전 시 소음을 탁월하게 억제합니다.</li>
-                                            <li>흡입 및 토출 하우징의 신속 개폐 구조로 설계되어 임펠러 진단과 신속한 사후관리를 보장합니다.</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div class="eq-apps-box">
-                                        <h5>주요 적용 분야 (Applications)</h5>
-                                        <p>하·폐수 처리장 대용량 원수 이송 라인, 플랜트 공업 용수 공급 계통, 대규모 농업 용수 관개 시설</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 하단: 기술 사양 표 -->
-                            <div class="eq-spec-table-box">
-                                <table class="eq-spec-table">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="4">KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>토출 유량 (Capacity)</th>
-                                            <td>50 ~ 800 m³/hr</td>
-                                            <th>전동기 동력 (Motor Power)</th>
-                                            <td>15 ~ 110 kW (IE3 프리미엄 고효율 모터)</td>
-                                        </tr>
-                                        <tr>
-                                            <th>총 양정 (Total Head)</th>
-                                            <td>10 ~ 120 m</td>
-                                            <th>주요 재질 (Materials)</th>
-                                            <td>주철 (GC200) / 스테인리스 주강 (SSC13)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </article>
-                    </a>
+        <!-- 장비 그리드 카드 리스트 섹션 -->
+        <section class="grid-section">
+            <div class="equipment-grid">
+                
+                <!-- 카드 1: 횡형 펌프 1호기 -->
+                <article class="equipment-card" data-category="horizontal">
+                    <div class="card-img-container">
+                        <img src="./equipment_photo1.jpg" alt="표준 산업용 횡형 원심 펌프 (A라인)" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/0b1c30/ffffff?text=Image+Load+Failed';">
+                        <div class="card-badge">횡형 원심 펌프</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">표준 산업용 횡형 원심 펌프 (A라인)</h3>
+                        <div class="card-app">
+                            <strong>주요 용도</strong>
+                            <p>건축 설비 냉난방 순환, 대용량 용수 이송, 플랜트 공정수 공급</p>
+                        </div>
+                        <div class="card-feature">
+                            <strong>핵심 특징</strong>
+                            <p>고효율 전동기 탑재로 에너지 절감, 정밀한 축 정렬(Alignment)로 진동·소음 최소화, 안전 커버 및 메카니컬 실(Mechanical Seal) 적용으로 누수 방지</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-view-spec" data-id="1">
+                                <span>상세 스펙 보기</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
 
-                    <!-- 장비 2 블록 (fade-up 상속) -->
-                    <a href="./equipment_detail.html?id=2&name=WILO%20%EC%9E%85%ED%98%95%20%EB%8B%A4%EB%8B%A8%20%EC%9B%90%EC%8B%AC%ED%8E%8C%ED%94%84%20%EC%8B%9C%EC%8A%A4%ED%85%9C" class="equipment-block-link">
-                        <article class="equipment-block fade-up">
-                            <div class="equipment-grid">
-                                <!-- 좌측: 제품 사진 -->
-                                <div class="equipment-photo-column">
-                                    <div class="equipment-frame">
-                                        <img src="./equipment_photo2.webp" alt="WILO 입형 다단 원심펌프 시스템" class="eq-display-img" loading="lazy">
-                                        <div class="eq-badge eq-badge-aqua">고압 & 초절전</div>
-                                    </div>
-                                </div>
-                                <!-- 우측: 제품 설명 -->
-                                <div class="equipment-desc-column">
-                                    <span class="eq-category">MULTISTAGE VERTICAL PUMPS</span>
-                                    <h3 class="eq-title-ko">WILO 입형 다단 원심펌프 시스템</h3>
-                                    <h4 class="eq-title-en">WILO Vertical Multistage Centrifugal Pump System</h4>
-                                    <p class="eq-summary">“초절전 수직 적층 실린더 구조로 설치 공간 최소화와 초고압 토출 성능을 동시 실현”</p>
-                                    
-                                    <div class="eq-bullets-box">
-                                        <h5>주요 기술적 장점</h5>
-                                        <ul>
-                                            <li>상단에 신뢰성 높은 고효율 WILO 녹색 전동기를 탑재하여 전력 소모를 최소화하고 공정 안정성을 확보했습니다.</li>
-                                            <li>접액부 전체에 SUS304 / SUS316L 정밀 스테인리스강 실린더를 적용하여 화학적 내부식성과 내압성이 매우 탁월합니다.</li>
-                                            <li>수직형(Vertical) 컴팩트 공간 절약 레이아웃을 통해 가압 스키드(Skid) 모듈의 설치 면적을 혁신적으로 절감했습니다.</li>
-                                            <li>카트리지 타입 고성능 메카니컬 씰(Mechanical Seal) 장착으로 약품 유체 누출율 0%와 신속 씰 교체를 보증합니다.</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div class="eq-apps-box">
-                                        <h5>주요 적용 분야 (Applications)</h5>
-                                        <p>용수 가압 및 상수 급수 시스템, 산업용 보일러 고압 급수 계통, 소방 가압 가설 설비, 고정밀 수처리 약품 주입 스키드</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 하단: 기술 사양 표 -->
-                            <div class="eq-spec-table-box">
-                                <table class="eq-spec-table">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="4">KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>토출 유량 (Capacity)</th>
-                                            <td>1.0 ~ 55 m³/hr</td>
-                                            <th>허용 사용 압력 (Max. Pressure)</th>
-                                            <td>25 bar (2.5 MPa) 고부하용</td>
-                                        </tr>
-                                        <tr>
-                                            <th>최고 양정 (Max. Head)</th>
-                                            <td>20 ~ 240 m</td>
-                                            <th>허용 온도 범위 (Liquid Temp.)</th>
-                                            <td>-15°C ~ +120°C 고압 액상 지원</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </article>
-                    </a>
+                <!-- 카드 2: 입형 다단 펌프 -->
+                <article class="equipment-card" data-category="vertical">
+                    <div class="card-img-container">
+                        <img src="./equipment_photo2.jpg" alt="고압 가압용 입형 다단 원심 펌프 라인" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/0b1c30/ffffff?text=Image+Load+Failed';">
+                        <div class="card-badge">입형 다단 펌프</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">고압 가압용 입형 다단 원심 펌프 라인</h3>
+                        <div class="card-app">
+                            <strong>주요 용도</strong>
+                            <p>고층 빌딩 급수 가압 시스템, 소방 스프링클러 고압 살수, 수처리 설비</p>
+                        </div>
+                        <div class="card-feature">
+                            <strong>핵심 특징</strong>
+                            <p>수직형 컴팩트 구조로 공간 활용도 극대화, 다단(Multistage) 임펠러 적층으로 고압 급수 가능, 접액부 전체 고품질 스테인리스 스틸(STS) 재질로 위생성 확보</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-view-spec" data-id="2">
+                                <span>상세 스펙 보기</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
 
-                    <!-- 장비 3 블록 (fade-up 상속) -->
-                    <a href="./equipment_detail.html?id=3&name=%EB%8C%80%ED%98%95%20%EC%9B%90%EC%8B%AC%ED%8E%8C%ED%94%84%20%EB%A9%80%ED%8B%B0%20%EB%B3%91%EB%A0%AC%20%EB%9D%BC%EC%9D%B8%EC%97%85" class="equipment-block-link">
-                        <article class="equipment-block fade-up">
-                            <div class="equipment-grid">
-                                <!-- 좌측: 제품 사진 -->
-                                <div class="equipment-photo-column">
-                                    <div class="equipment-frame">
-                                        <img src="./equipment_photo3.webp" alt="대형 원심펌프 멀티 병렬 라인업" class="eq-display-img" loading="lazy">
-                                        <div class="eq-badge eq-badge-blue">플랜트 대규모 공정</div>
-                                    </div>
-                                </div>
-                                <!-- 우측: 제품 설명 -->
-                                <div class="equipment-desc-column">
-                                    <span class="eq-category">PARALLEL SYSTEM ENGINEERING</span>
-                                    <h3 class="eq-title-ko">대형 원심펌프 멀티 병렬 라인업</h3>
-                                    <h4 class="eq-title-en">Multi-Parallel Heavy-Duty Centrifugal Pump Lineup</h4>
-                                    <p class="eq-summary">“연속 운전 신뢰성을 위해 다중 밸런싱 병렬 제어 공학을 적용한 고유량 이송 센터”</p>
-                                    
-                                    <div class="eq-bullets-box">
-                                        <h5>주요 기술적 장점</h5>
-                                        <ul>
-                                            <li>강도 해석을 필한 베이스 프레임 상에 다수의 대형 원심 펌프를 병렬로 배치하여 최적의 부하 분산 및 교대 운전이 가능합니다.</li>
-                                            <li>인버터(VFD) 자동 제어 판넬을 적용하여 공정 유량 수용량 변화에 맞춰 회전 주파수를 스마트하게 자동 가변 제어합니다.</li>
-                                            <li>흡입 및 토출 플랜지 조인트에 방진 설계를 채택하여 기계 기동 시 발생하는 파손용 수격(Water Hammering) 압력을 예방합니다.</li>
-                                            <li>임펠러의 3D 정밀 컴퓨터 밸런싱을 거쳐 조립하여 가혹한 고압 가동 시에도 캐비테이션(공동 현상) 발생을 억제합니다.</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div class="eq-apps-box">
-                                        <h5>주요 적용 분야 (Applications)</h5>
-                                        <p>광역 배수 가압장 및 종합 취수원, 대규모 제철 및 석유화학 플랜트 순환 냉각수 공급 계통, 신도시 수처리 가압 스테이션</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 하단: 기술 사양 표 -->
-                            <div class="eq-spec-table-box">
-                                <table class="eq-spec-table">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="4">KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>시스템 구성 (Configuration)</th>
-                                            <td>2대 ~ 4대 멀티 병렬 가동 및 제어</td>
-                                            <th>제어 인터페이스 (Control Method)</th>
-                                            <td>인버터 통합형 VFD (Modbus / Profibus 이더넷 판넬)</td>
-                                        </tr>
-                                        <tr>
-                                            <th>합산 최대 유량 (Total Flow)</th>
-                                            <td>Max. 3,200 m³/hr</td>
-                                            <th>전동기 규격 (Motor Standard)</th>
-                                            <td>삼상 고유도 전동기 (IE3 / IE4 프리미엄 모터)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </article>
-                    </a>
+                <!-- 카드 3: 횡형 펌프 2호기 -->
+                <article class="equipment-card" data-category="horizontal">
+                    <div class="card-img-container">
+                        <img src="./equipment_photo3.jpg" alt="표준 산업용 횡형 원심 펌프 (B라인)" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/0b1c30/ffffff?text=Image+Load+Failed';">
+                        <div class="card-badge">횡형 원심 펌프</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">표준 산업용 횡형 원심 펌프 (B라인)</h3>
+                        <div class="card-app">
+                            <strong>주요 용도</strong>
+                            <p>공장 용수 공급 및 순환, 소방 설비 보조 펌프 라인</p>
+                        </div>
+                        <div class="card-feature">
+                            <strong>핵심 특징</strong>
+                            <p>듀얼 펌프 병렬 운전 시스템 최적화, 내구성이 뛰어난 주물 케이싱 적용으로 장기 운전 안정성 보장</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-view-spec" data-id="3">
+                                <span>상세 스펙 보기</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
 
-                </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <!-- 상세 스펙 모달 팝업 구조 -->
+    <div class="spec-modal" id="specModal" aria-hidden="true" role="dialog">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-header-tag" id="modalCategory">카테고리</div>
+                <h3 class="modal-header-title" id="modalTitle">장비 상세 스펙</h3>
+                <button class="btn-modal-close" id="modalCloseBtn" aria-label="닫기">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="spec-table">
+                    <tbody>
+                        <tr>
+                            <th>총 양정 (Total Head)</th>
+                            <td id="specHead">-</td>
+                        </tr>
+                        <tr>
+                            <th>토출 유량 (Capacity)</th>
+                            <td id="specCapacity">-</td>
+                        </tr>
+                        <tr>
+                            <th>전동기 동력 (Motor Power)</th>
+                            <td id="specPower">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-ok" id="modalOkBtn">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer 영역 -->
     <footer class="main-footer">
         <div class="footer-container">
             <div class="footer-brand">
@@ -378,7 +614,7 @@
                     <li><a href="./intro.html">기업소개</a></li>
                     <li><a href="./achievements.html">주요업력</a></li>
                     <li><a href="product.html">제품소개</a></li>
-                    <li><a href="./index.html#equipment-spec-section">보유장비</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
                     <li><a href="./map.html">찾아오시는 길</a></li>
                     <li><a href="./inquiry.html">고객문의</a></li>
                 </ul>
@@ -395,7 +631,126 @@
         </div>
     </footer>
 
-    <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
-    <script src="./script.js"></script>
+    <!-- 인터랙션 스크립트 -->
+    <script>
+        // 장비 스펙 로컬 데이터 저장소
+        const EQUIPMENT_SPECS = {
+            "1": {
+                name: "표준 산업용 횡형 원심 펌프 (A라인)",
+                category: "횡형 원심 펌프",
+                head: "50m",
+                capacity: "120 m³/hr",
+                power: "15 kW (IE3 프리미엄 고효율 모터)"
+            },
+            "2": {
+                name: "고압 가압용 입형 다단 원심 펌프 라인",
+                category: "입형 다단 펌프",
+                head: "120m",
+                capacity: "45 m³/hr",
+                power: "22 kW (STS 고내식성 스핀들 탑재)"
+            },
+            "3": {
+                name: "표준 산업용 횡형 원심 펌프 (B라인)",
+                category: "횡형 원심 펌프",
+                head: "55m",
+                capacity: "110 m³/hr",
+                power: "18 kW (병렬 듀얼 기동 맞춤 제어)"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. GNB 모바일 토글 버튼 처리
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+                    mobileToggle.setAttribute('aria-expanded', !expanded);
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+
+            // 2. 카테고리 필터링 제어 로직
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.equipment-card');
+
+            // 초기 모든 카드 렌더링 페이드인
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.display = 'flex';
+                    // 강제 리플로우
+                    card.offsetHeight;
+                    card.classList.add('visible');
+                }, index * 100);
+            });
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 탭 액티브 상태 변경
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    cards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+                        
+                        if (filterValue === 'all' || cardCategory === filterValue) {
+                            card.style.display = 'flex';
+                            card.offsetHeight;
+                            card.classList.add('visible');
+                        } else {
+                            card.classList.remove('visible');
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // 3. 바닐라 JS 모달 핸들링
+            const modal = document.getElementById('specModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalCategory = document.getElementById('modalCategory');
+            const specHead = document.getElementById('specHead');
+            const specCapacity = document.getElementById('specCapacity');
+            const specPower = document.getElementById('specPower');
+
+            document.querySelectorAll('.btn-view-spec').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const id = btn.getAttribute('data-id');
+                    const data = EQUIPMENT_SPECS[id];
+                    
+                    if (data) {
+                        modalTitle.innerText = data.name;
+                        modalCategory.innerText = data.category;
+                        specHead.innerText = data.head;
+                        specCapacity.innerText = data.capacity;
+                        specPower.innerText = data.power;
+
+                        modal.style.display = 'block';
+                        modal.offsetHeight; // reflow
+                        modal.classList.add('show');
+                        modal.setAttribute('aria-hidden', 'false');
+                        document.body.style.overflow = 'hidden'; // 배경 스크롤 차단
+                    }
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = ''; // 배경 스크롤 복원
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 400);
+            };
+
+            document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+            document.getElementById('modalOkBtn').addEventListener('click', closeModal);
+            document.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+        });
+    </script>
 </body>
 </html>
