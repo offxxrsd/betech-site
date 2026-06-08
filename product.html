@@ -401,167 +401,7 @@
             background-color: var(--color-secondary);
         }
 
-        /* ==========================================================================
-           수치로 보는 신뢰성 (Stats Section) 디지털 계기판 테마 스타일
-           ========================================================================== */
-        .stats-section {
-            background-color: #050e1c; /* B2B 프리미엄 딥 다크 블루 */
-            padding: 7rem 0;
-            position: relative;
-            border-top: 1px solid rgba(0, 229, 255, 0.15);
-            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
-            overflow: hidden;
-            margin-top: 6rem;
-            margin-bottom: 2rem;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, rgba(0, 229, 255, 0.08) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .stat-item {
-            background: rgba(10, 25, 44, 0.65); /* 은은한 딥 네이비 디지털 패널 */
-            border: 1.5px solid rgba(0, 240, 255, 0.15);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .stat-item::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 229, 255, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .stat-item:hover {
-            border-color: rgba(0, 229, 255, 0.35);
-            box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.05), 
-                        0 20px 40px rgba(0, 0, 0, 0.4), 
-                        0 0 30px rgba(0, 163, 224, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
-            font-size: 3.2rem;
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.2;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            transition: all 0.3s ease;
-            letter-spacing: -0.02em;
-        }
-
-        .stat-number .num-val {
-            font-variant-numeric: tabular-nums;
-        }
-
-        .stat-number .num-suffix {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 600;
-            margin-left: 0.1rem;
-        }
-
-        .stat-item:hover .stat-number {
-            color: var(--color-accent, #00e5ff);
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
-        }
-
-        .stat-item:hover .num-suffix {
-            color: rgba(0, 229, 255, 0.8);
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 500;
-            line-height: 1.4;
-            letter-spacing: -0.01em;
-            margin-top: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .stat-item:hover .stat-label {
-            color: #ffffff;
-        }
-
-        /* 3개 상자 완료 시 아쿠아 블루 네온 플래시 효과 */
-        .stat-item.flash-active {
-            animation: tachometerFlash 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        @keyframes tachometerFlash {
-            0% {
-                background-color: rgba(0, 229, 255, 0.25);
-                box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.4), 0 0 40px rgba(0, 229, 255, 0.3);
-                border-color: #00e5ff;
-            }
-            30% {
-                background-color: rgba(0, 229, 255, 0.05);
-                box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.1), 0 0 20px rgba(0, 229, 255, 0.15);
-                border-color: rgba(0, 229, 255, 0.6);
-            }
-            60% {
-                background-color: rgba(0, 229, 255, 0.15);
-                box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.2), 0 0 30px rgba(0, 229, 255, 0.2);
-                border-color: #00e5ff;
-            }
-            100% {
-                background-color: rgba(10, 25, 44, 0.75);
-                box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3);
-                border-color: rgba(0, 229, 255, 0.45);
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .stats-section {
-                padding: 4rem 0;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .stat-item {
-                padding: 2.2rem 1.5rem;
-            }
-            .stat-number {
-                font-size: 2.8rem;
-            }
-        }
+        
 
 
 
@@ -1440,20 +1280,7 @@
             </div>
         </section>
 
-        <!-- CTA Section (수리 및 견적 문의) -->
-        <section class="cta-banner-section" aria-labelledby="cta-banner-title">
-            <div class="section-container text-center">
-                <h2 id="cta-banner-title">정밀 펌프 선정에 도움이 필요하십니까?</h2>
-                <p>현장의 유체 조건, 필요 압력, 화학 반응도에 맞추어 최적의 설계 도면과 견적 서비스를 제공합니다.</p>
-                <div class="cta-btns">
-                    <a href="tel:033-248-1111" class="btn btn-primary-light">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        033-248-1111
-                    </a>
-                    <a href="./inquiry.html" class="btn btn-outline-white">맞춤 견적 및 온라인 상담</a>
-                </div>
-            </div>
-        </section>
+        
     </main>
 
     <!-- ==========================================================================
@@ -1801,34 +1628,18 @@
         </div>
     </section>
 
-    <!-- Stats Section (수치로 보는 신뢰성 - 디지토닉 계기판 테마) -->
-    <section class="stats-section" aria-label="기업 지표 요약">
-        <div class="section-container" style="display: flex; flex-direction: column; align-items: center;">
-            <div class="stats-grid" style="margin-bottom: 3.5rem; width: 100%;">
-                <!-- 220여개 지표 -->
-                <div class="stat-item">
-                    <div class="stat-number" data-type="normal" data-target="220">
-                        <span class="num-val">0</span><span class="num-suffix">여개</span>
-                    </div>
-                    <div class="stat-label">자체 설계 및 국내 제작 제품군</div>
-                </div>
-                <!-- 1600여회 지표 -->
-                <div class="stat-item">
-                    <div class="stat-number" data-type="normal" data-target="1600">
-                        <span class="num-val">0</span><span class="num-suffix">여회</span>
-                    </div>
-                    <div class="stat-label">수처리 현장 기술 대응 및 수리</div>
-                </div>
-                <!-- 0.01만 지표 (극한의 정밀도 카운트다운) -->
-                <div class="stat-item">
-                    <div class="stat-number" data-type="precision" data-start="99.99" data-target="0.01">
-                        <span class="num-val">99.990</span><span class="num-suffix">만</span>
-                    </div>
-                    <div class="stat-label">누적 출하 정밀 정량 펌프</div>
-                </div>
+    <!-- CTA Section (수리 및 견적 문의) -->
+    <section class="cta-banner-section" aria-labelledby="cta-banner-title">
+        <div class="section-container text-center">
+            <h2 id="cta-banner-title">정밀 펌프 선정에 도움이 필요하십니까?</h2>
+            <p>현장의 유체 조건, 필요 압력, 화학 반응도에 맞추어 최적의 설계 도면과 견적 서비스를 제공합니다.</p>
+            <div class="cta-btns">
+                <a href="tel:033-248-1111" class="btn btn-primary-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    033-248-1111
+                </a>
+                <a href="./inquiry.html" class="btn btn-outline-white">맞춤 견적 및 온라인 상담</a>
             </div>
-
-
         </div>
     </section>
 
@@ -1879,73 +1690,7 @@
     <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
     <script src="./script.js"></script>
 
-    <!-- 핵심 지표 섹션 (Stats Section) 디지털 타코메터 및 발광 애니메이션 스크립트 + 통합 PDF 뷰어 연동 -->
-    <script>
-
-
-        // GSAP 기반 핵심 지표 카운팅 수치 구동
-        window.addEventListener('load', () => {
-            gsap.registerPlugin(ScrollTrigger);
-
-            const statNumbers = document.querySelectorAll('.stats-section .stat-number');
-            if (statNumbers.length > 0) {
-                statNumbers.forEach(stat => {
-                    const valEl = stat.querySelector('.num-val');
-                    const type = stat.getAttribute('data-type');
-                    const target = parseFloat(stat.getAttribute('data-target'));
-                    const start = stat.getAttribute('data-start') ? parseFloat(stat.getAttribute('data-start')) : 0;
-                    const statItem = stat.closest('.stat-item');
-                    
-                    const obj = { progress: 0 };
-                    
-                    gsap.to(obj, {
-                        progress: 1,
-                        duration: 1.8,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: ".stats-section",
-                            start: "top 85%",
-                            once: true
-                        },
-                        onUpdate: () => {
-                            const p = obj.progress;
-                            
-                            if (p < 1) {
-                                if (type === 'precision') {
-                                    const currentVal = start - (start - target) * p;
-                                    const noise = (Math.random() - 0.5) * 8 * (1 - p);
-                                    const displayVal = Math.max(target, currentVal + noise);
-                                    valEl.textContent = displayVal.toFixed(3);
-                                } else {
-                                    const currentVal = target * p;
-                                    const noise = (Math.random() - 0.5) * 15 * (1 - p);
-                                    const displayVal = Math.max(0, currentVal + noise);
-                                    if (target > 500) {
-                                        valEl.textContent = Math.round(displayVal);
-                                    } else {
-                                        valEl.textContent = displayVal.toFixed(1);
-                                    }
-                                }
-                            }
-                        },
-                        onComplete: () => {
-                            if (type === 'precision') {
-                                valEl.textContent = target.toFixed(2);
-                            } else {
-                                valEl.textContent = Math.round(target);
-                            }
-                            
-                            if (statItem) {
-                                // 기존 회색 보더 클래스를 지우고, 네온 블루 테두리/발광 추가
-                                statItem.classList.remove('border-white/10');
-                                statItem.classList.add('completed-glow');
-                            }
-                        }
-                    });
-                });
-            }
-        });
-    </script>
+    
 
     <!-- 모달 활성화 및 배경 스크롤 제어를 위한 상세 스크립트 -->
     <script>

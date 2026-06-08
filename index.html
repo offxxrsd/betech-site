@@ -281,167 +281,7 @@
             }
         }
 
-        /* ==========================================================================
-           수치로 보는 신뢰성 (Stats Section) 디지털 계기판 테마 스타일
-           ========================================================================== */
-        .stats-section {
-            background-color: #050e1c; /* B2B 프리미엄 딥 다크 블루 */
-            padding: 7rem 0;
-            position: relative;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, rgba(0, 229, 255, 0.08) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .stat-item {
-            background: rgba(10, 25, 44, 0.65); /* 은은한 딥 네이비 디지털 패널 */
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .stat-item::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 229, 255, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .stat-item:hover {
-            border-color: rgba(0, 229, 255, 0.35);
-            box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.05), 
-                        0 20px 40px rgba(0, 0, 0, 0.4), 
-                        0 0 30px rgba(0, 163, 224, 0.1);
-            transform: translateY(-5px);
-        }
-
-        /* 디지털 타코메터 숫자 텍스트 - 글폭 고정을 위해 모노스페이스 적용 */
-        .stat-number {
-            font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            transition: all 0.3s ease;
-            letter-spacing: -0.02em;
-        }
-
-        .stat-number .num-val {
-            font-variant-numeric: tabular-nums; /* 숫자의 좌우폭을 완전히 고정 */
-        }
-
-        .stat-number .num-suffix {
-            font-size: 1.6rem;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 600;
-            margin-left: 0.1rem;
-        }
-
-        .stat-item:hover .stat-number {
-            color: var(--color-accent, #00e5ff);
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
-        }
-
-        .stat-item:hover .num-suffix {
-            color: rgba(0, 229, 255, 0.8);
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 500;
-            line-height: 1.4;
-            letter-spacing: -0.01em;
-            margin-top: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .stat-item:hover .stat-label {
-            color: #ffffff;
-        }
-
-        /* 0.01% 오차 보증 안착 시 청량한 네온 플래시 효과 */
-        .stat-item.flash-active {
-            animation: tachometerFlash 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        @keyframes tachometerFlash {
-            0% {
-                background-color: rgba(0, 229, 255, 0.25);
-                box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.4), 0 0 40px rgba(0, 229, 255, 0.3);
-                border-color: #00e5ff;
-            }
-            30% {
-                background-color: rgba(0, 229, 255, 0.05);
-                box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.1), 0 0 20px rgba(0, 229, 255, 0.15);
-                border-color: rgba(0, 229, 255, 0.6);
-            }
-            60% {
-                background-color: rgba(0, 229, 255, 0.15);
-                box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.2), 0 0 30px rgba(0, 229, 255, 0.2);
-                border-color: #00e5ff;
-            }
-            100% {
-                background-color: rgba(10, 25, 44, 0.75);
-                box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3);
-                border-color: rgba(0, 229, 255, 0.4);
-            }
-        }
-
-        /* 반응형 스타일링 */
-        @media (max-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-            .stat-number {
-                font-size: 2.4rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1.2rem;
-            }
-            .stats-section {
-                padding: 5rem 0;
-            }
-            .stat-item {
-                padding: 2.2rem 1.5rem;
-            }
-        }
+        
 
         /* ==========================================================================
            사회공헌 (CSR) 캠페인 섹션 전용 스타일시트
@@ -588,6 +428,13 @@
             border: 1px solid rgba(0, 240, 255, 0.05);
         }
 
+        .csr-page-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         /* Front faces face the reader on the right side */
         .csr-page-front {
             z-index: 2;
@@ -650,49 +497,7 @@
             background-color: #0b172a;
         }
 
-        /* 파이프라인 수직 가이드 컴포넌트 */
-        .pipe-guide-wrapper {
-            position: absolute;
-            right: 5%;
-            top: 25%;
-            height: 50vh;
-            width: 12px;
-            background-color: #0a192c;
-            border-radius: 6px;
-            z-index: 10;
-            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            border: 1px solid rgba(0, 240, 255, 0.1);
-        }
 
-        /* 크리스탈 블루 물줄기 */
-        .water-stream {
-            width: 100%;
-            height: 0%; /* 스크롤 비율에 맞춰 0% -> 100% 가변 */
-            background: linear-gradient(180deg, #00e5ff 0%, #00a3e0 100%);
-            border-radius: 6px;
-            will-change: height; /* 하드웨어 가속 적용 */
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
-            position: relative;
-        }
-
-        /* 화살표 가이드(▼) */
-        .pipe-arrow {
-            position: absolute;
-            bottom: -25px;
-            font-size: 1.1rem;
-            color: #00a3e0;
-            animation: arrowBounce 1.5s infinite ease-in-out;
-            user-select: none;
-        }
-
-        @keyframes arrowBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(5px); }
-        }
 
         /* Responsive scaling */
         @media (max-width: 960px) {
@@ -946,11 +751,7 @@
                     </button>
                 </div>
 
-                <!-- Right side water pipeline guide progress indicator -->
-                <div class="pipe-guide-wrapper max-md:hidden">
-                    <div class="water-stream" id="csr-water-stream"></div>
-                    <span class="pipe-arrow">▼</span>
-                </div>
+
             </div>
         </section>
 
@@ -1176,7 +977,7 @@
             const btnPrev = document.getElementById('csr-btn-prev');
             const btnNext = document.getElementById('csr-btn-next');
             const indicator = document.getElementById('csr-page-indicator');
-            const waterStream = document.getElementById('csr-water-stream');
+
 
             function updateBookState() {
                 // 1. Rotation and active flags
@@ -1223,11 +1024,7 @@
                     indicator.textContent = `${currentStep} / ${totalSteps}`;
                 }
 
-                // 5. Update Water Stream Progress (0% to 100%)
-                if (waterStream) {
-                    const progress = (currentStep - 1) / (totalSteps - 1);
-                    waterStream.style.height = `${progress * 100}%`;
-                }
+
 
                 // Disabled state on prev button
                 if (btnPrev) {

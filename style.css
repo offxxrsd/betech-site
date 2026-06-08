@@ -557,52 +557,7 @@ input, button, select, textarea {
     color: #b91c1c;
 }
 
-/* 8. Stats Section (인포그래픽 요약) */
-.stats-section {
-    background-color: var(--color-primary);
-    color: #ffffff;
-    padding: 5rem 0;
-    position: relative;
-    background-image: linear-gradient(180deg, #0A1C3A 0%, #061226 100%);
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3rem;
-    text-align: center;
-}
-
-.stat-item {
-    position: relative;
-}
-
-/* 디바이더 라인 */
-.stat-item:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: -1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.15);
-}
-
-.stat-number {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--color-accent);
-    line-height: 1.1;
-    margin-bottom: 0.75rem;
-}
-
-.stat-label {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.75);
-    font-weight: 500;
-}
+/* 8. Stats Section (Removed) */
 
 /* 9. CTA Banner Section (하단 견적 유도) */
 .cta-banner-section {
@@ -856,14 +811,7 @@ input, button, select, textarea {
         grid-column: span 2;
     }
     
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
     
-    .stat-item:nth-child(2)::after {
-        display: none;
-    }
     
     .footer-container {
         grid-template-columns: 1fr 1fr;
@@ -975,19 +923,7 @@ input, button, select, textarea {
         grid-column: span 1;
     }
     
-    /* Stats */
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
     
-    .stat-item::after {
-        display: none !important;
-    }
-    
-    .stat-number {
-        font-size: 2.5rem;
-    }
     
     /* Footer */
     .footer-container {
