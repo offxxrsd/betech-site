@@ -35,12 +35,14 @@
             width: 900px;
             height: 560px; /* 고정 높이 */
             perspective: 1500px; /* 원근감 */
+            -webkit-perspective: 1500px; /* 원근감 (Safari) */
             background: #091528;
             border-radius: 12px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 
                         inset 0 0 40px rgba(0, 240, 255, 0.05);
             border: 1px solid rgba(0, 240, 255, 0.1);
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
         }
 
         /* 책 중앙 축 (Spine) */
@@ -67,8 +69,11 @@
             top: 0;
             left: 50%; /* 오른쪽 영역에 기본 적재 */
             transform-origin: left center;
+            -webkit-transform-origin: left center;
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
             transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+            -webkit-transition: -webkit-transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 1;
             cursor: pointer;
         }
@@ -85,6 +90,7 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden; /* 배면 숨김 처리 */
+            -webkit-backface-visibility: hidden; /* 배면 숨김 (Safari) */
             background-color: #0d1e36;
             overflow: hidden;
             display: flex;
@@ -385,16 +391,7 @@
                 });
             }
 
-            // [2. 기능 정의] 마우스 휠 및 트랙패드 터치 감도 반응 배제 (스크롤 에러 완전 차단)
-            if (bookContainer) {
-                bookContainer.addEventListener('wheel', (e) => {
-                    e.preventDefault();
-                }, { passive: false });
 
-                bookContainer.addEventListener('touchmove', (e) => {
-                    e.preventDefault();
-                }, { passive: false });
-            }
 
             // 스와이프 및 드래그 제스처 추가 (양방향 터치/드래그 지원)
             const viewport = document.querySelector('.csr-book-viewport');

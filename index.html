@@ -287,23 +287,25 @@
            사회공헌 (CSR) 캠페인 섹션 전용 스타일시트
            ========================================================================== */
         #csr-pipeline-section {
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            min-height: 100vh;
+            height: auto;
             background-color: #030914; /* Deep dark background matching the book */
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             transform: scale(1) !important;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 100px 0 60px 0;
         }
 
         .sticky-wrapper {
             position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+            width: 100%;
+            height: auto;
+            overflow: visible;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -315,11 +317,8 @@
             width: 100%;
             max-width: 1200px;
             padding: 0 1.5rem;
-            margin-bottom: 1.5rem;
-            position: absolute;
-            top: 6%;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-bottom: 2rem;
+            position: relative;
             text-align: center;
             z-index: 50;
             display: flex;
@@ -372,13 +371,16 @@
             width: 900px;
             height: 560px; /* 고정 높이 */
             perspective: 1500px; /* 원근감 */
+            -webkit-perspective: 1500px; /* 원근감 (Safari) */
             background: #091528;
             border-radius: 12px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 
                         inset 0 0 40px rgba(0, 240, 255, 0.05);
             border: 1px solid rgba(0, 240, 255, 0.1);
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
             transition: transform 0.5s ease;
+            -webkit-transition: -webkit-transform 0.5s ease;
         }
 
         /* Spine in the center of the book */
@@ -404,8 +406,11 @@
             top: 0;
             left: 50%; /* Positioned on the right side initially */
             transform-origin: left center;
+            -webkit-transform-origin: left center;
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
             transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+            -webkit-transition: -webkit-transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 1;
             cursor: pointer;
         }
@@ -420,6 +425,7 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden; /* 배면 숨김 (Safari) */
             background-color: #0d1e36;
             overflow: hidden;
             display: flex;
@@ -684,7 +690,7 @@
                 </div>
 
                 <!-- 3D Book Viewport -->
-                <div class="csr-book-viewport select-none mt-[12vh]">
+                <div class="csr-book-viewport select-none my-4">
                     <div class="csr-book-container" id="book-container">
                         <!-- Central spine divider -->
                         <div class="csr-book-spine"></div>
@@ -952,7 +958,7 @@
     <!-- GSAP CSR script -->
     <script>
         // Race Condition 방지: 만화 카드 이미지 등 모든 리소스가 완전히 렌더링된 후 ScrollTrigger 등록
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             // 1. 사회공헌(CSR) 3D 플립 북 인터랙션
             let currentStep = 1;
             const totalSteps = 5;
@@ -1092,18 +1098,9 @@
                 });
             }
 
-            // 스크롤 및 마우스 휠 전파 방지 (트랙패드/휠 오작동 차단)
+            // 스와이프 및 드래그 제스처 추가 (양방향 터치/드래그 지원)
             const viewport = document.querySelector('.csr-book-viewport');
             if (viewport) {
-                viewport.addEventListener('wheel', (e) => {
-                    e.preventDefault();
-                }, { passive: false });
-                
-                viewport.addEventListener('touchmove', (e) => {
-                    e.preventDefault();
-                }, { passive: false });
-
-                // 스와이프 및 드래그 제스처 추가 (양방향 터치/드래그 지원)
                 let touchStartX = 0;
                 let touchEndX = 0;
 
