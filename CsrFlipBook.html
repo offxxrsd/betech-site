@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)비에이텍 - CSR 캠페인 3D Flip Book</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #030914;
+            overflow-x: hidden;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        /* 3D Book Viewport Wrapper */
+        .csr-book-viewport {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 3rem 0;
+            user-select: none;
+        }
+
+        /* [1. 핵심 오류 디버깅 요구사항]
+           - 전체 컴포넌트를 감싸는 '.csr-book-container'에 확실한 고정 높이(height)와
+             'position: relative', 'perspective: 1500px'를 부여함. */
+        .csr-book-container {
+            position: relative;
+            width: 900px;
+            height: 560px; /* 고정 높이 */
+            perspective: 1500px; /* 원근감 */
+            background: #091528;
+            border-radius: 12px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 
+                        inset 0 0 40px rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transform-style: preserve-3d;
+        }
+
+        /* 책 중앙 축 (Spine) */
+        .csr-book-spine {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(255,255,255,0.08) 50%, rgba(0,0,0,0.55) 100%);
+            border-left: 1px solid rgba(255, 255, 255, 0.04);
+            border-right: 1px solid rgba(255, 255, 255, 0.04);
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        /* [1. 핵심 오류 디버깅 요구사항]
+           - 개별 페이지('.csr-page')가 서로 겹쳐서 제자리에 위치할 수 있도록 'position: absolute' 처리. */
+        .csr-page {
+            position: absolute;
+            width: 450px;
+            height: 100%;
+            top: 0;
+            left: 50%; /* 오른쪽 영역에 기본 적재 */
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        /* Flipped 상태: Y축 기준 180도 회전하여 왼쪽 영역으로 넘어감 */
+        .csr-page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        /* [1. 핵심 오류 디버깅 요구사항]
+           - 'backface-visibility: hidden'을 적용하여 뒤집혔을 때 텍스트가 겹쳐 나오는 버그 차단. */
+        .csr-page-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* 배면 숨김 처리 */
+            background-color: #0d1e36;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 3px 0 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.05);
+        }
+
+        /* 책의 전면 (오른쪽에 보일 때) */
+        .csr-page-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* 책의 배면 (뒤집혀서 왼쪽에 보일 때) */
+        .csr-page-back {
+            transform: rotateY(180deg);
+            border-radius: 8px 0 0 8px;
+            box-shadow: inset -3px 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 비틀림 호버 효과 (사용자 인터랙션 단서 제공) */
+        .csr-page:not(.flipped):hover {
+            transform: rotateY(-10deg);
+        }
+
+        .csr-page.flipped:hover {
+            transform: rotateY(-170deg);
+        }
+
+        /* 활성화된 콘텐츠 영역 테두리 하이라이팅 */
+        .csr-content-active {
+            position: relative;
+        }
+        .csr-content-active::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2px solid rgba(0, 229, 255, 0.5);
+            box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.15);
+            pointer-events: none;
+            border-radius: inherit;
+            z-index: 10;
+        }
+
+        /* 고정 좌우측 속지 페이지 스타일 */
+        .csr-static-page {
+            position: absolute;
+            width: 450px;
+            height: 100%;
+            top: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 3px 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .csr-static-left {
+            left: 0;
+            border-radius: 8px 0 0 8px;
+            background-color: #0b172a;
+        }
+
+        .csr-static-right {
+            right: 0;
+            border-radius: 0 8px 8px 0;
+            background-color: #0b172a;
+        }
+
+        /* 반응형 모바일 최적화 스케일 제어 */
+        @media (max-width: 960px) {
+            .csr-book-viewport {
+                transform: scale(0.85);
+            }
+        }
+        @media (max-width: 768px) {
+            .csr-book-viewport {
+                transform: scale(0.65);
+            }
+        }
+        @media (max-width: 520px) {
+            .csr-book-viewport {
+                transform: scale(0.48);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen py-12 flex flex-col justify-center items-center">
+
+    <!-- 상단 타이틀 영역 -->
+    <div class="w-full max-w-4xl px-6 mb-6 text-center">
+        <span class="text-xs font-bold font-mono text-[#00a3e0] tracking-[0.2em] mb-2 uppercase block">
+            CSR CAMPAIGN
+        </span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-snug">
+            물이 채우는 온기, <span class="bg-gradient-to-r from-[#00a3e0] to-[#00e5ff] bg-clip-text text-transparent">비에이텍이 그리는 깨끗한 미래</span>
+        </h2>
+    </div>
+
+    <!-- 3D Book Viewport -->
+    <div class="csr-book-viewport">
+        <!-- [1. 핵심 오류 디버깅 요구사항] 컴포넌트 컨테이너 -->
+        <div class="csr-book-container" id="book-container">
+            <!-- 중앙 책등 (Spine) -->
+            <div class="csr-book-spine"></div>
+
+            <!-- 왼쪽 고정 페이지 (표지 안쪽) -->
+            <div class="csr-static-page csr-static-left"></div>
+
+            <!-- 오른쪽 고정 페이지 (뒤표지 안쪽) -->
+            <div class="csr-static-page csr-static-right"></div>
+
+            <!-- 물리 페이지 리스트 (Step 01 ~ 05 매핑) -->
+            <!-- 1페이지 (앞면: Step 01 / 뒷면: Step 02) -->
+            <div class="csr-page" id="csr-page1">
+                <!-- 앞면: Step 01. 프롤로그 -->
+                <div class="csr-page-face csr-page-front" id="content-step1">
+                    <img src="./comic1.png" alt="Step 01" class="w-full h-full object-cover">
+                </div>
+                <!-- 뒷면: Step 02. 문제제기 -->
+                <div class="csr-page-face csr-page-back" id="content-step2">
+                    <img src="./comic2.png" alt="Step 02" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <!-- 2페이지 (앞면: Step 03 / 뒷면: Step 04) -->
+            <div class="csr-page" id="csr-page2">
+                <!-- 앞면: Step 03. 행동실천 -->
+                <div class="csr-page-face csr-page-front" id="content-step3">
+                    <img src="./comic3.png" alt="Step 03" class="w-full h-full object-cover">
+                </div>
+                <!-- 뒷면: Step 04. 데이터화 -->
+                <div class="csr-page-face csr-page-back" id="content-step4">
+                    <img src="./comic4.png" alt="Step 04" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <!-- 3페이지 (앞면: Step 05 / 뒷면: 피날레 엔딩) -->
+            <div class="csr-page" id="csr-page3">
+                <!-- 앞면: Step 05. 피날레 -->
+                <div class="csr-page-face csr-page-front" id="content-step5">
+                    <img src="./comic5.png" alt="Step 05" class="w-full h-full object-cover">
+                </div>
+                <!-- 뒷면: 엔딩 속지 -->
+                <div class="csr-page-face csr-page-back"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 하단 내비게이션 영역 -->
+    <div class="flex items-center justify-center gap-6 mt-6 select-none z-50">
+        <!-- Prev Button -->
+        <button id="csr-btn-prev" class="w-12 h-12 rounded-full border border-white/15 text-white bg-slate-900/50 hover:bg-white hover:text-[#061022] hover:border-white transition-all duration-300 flex items-center justify-center font-extrabold" aria-label="이전 페이지">
+            ❮
+        </button>
+
+        <!-- Dynamic Indicator -->
+        <div id="csr-page-indicator" class="font-mono text-sm font-bold text-cyan-400 bg-slate-900/80 px-4 py-2 rounded-lg border border-cyan-500/20 shadow-[0_0_10px_rgba(0,240,255,0.05)]">
+            1 / 5
+        </div>
+
+        <!-- Next Button -->
+        <button id="csr-btn-next" class="w-12 h-12 rounded-full border border-white/15 text-white bg-slate-900/50 hover:bg-white hover:text-[#061022] hover:border-white transition-all duration-300 flex items-center justify-center font-extrabold" aria-label="다음 페이지">
+            ❯
+        </button>
+    </div>
+
+    <!-- Vanilla Javascript 컨트롤러 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentStep = 1;
+            const totalSteps = 5;
+
+            const pages = [
+                document.getElementById('csr-page1'),
+                document.getElementById('csr-page2'),
+                document.getElementById('csr-page3')
+            ];
+
+            const stepContents = {
+                1: document.getElementById('content-step1'),
+                2: document.getElementById('content-step2'),
+                3: document.getElementById('content-step3'),
+                4: document.getElementById('content-step4'),
+                5: document.getElementById('content-step5')
+            };
+
+            const btnPrev = document.getElementById('csr-btn-prev');
+            const btnNext = document.getElementById('csr-btn-next');
+            const indicator = document.getElementById('csr-page-indicator');
+            const bookContainer = document.getElementById('book-container');
+
+            function updateBookState() {
+                // 1. flipped 클래스 토글 (페이지 꺾임 구현)
+                if (currentStep === 1) {
+                    pages[0].classList.remove('flipped');
+                    pages[1].classList.remove('flipped');
+                    pages[2].classList.remove('flipped');
+                } else if (currentStep === 2 || currentStep === 3) {
+                    pages[0].classList.add('flipped');
+                    pages[1].classList.remove('flipped');
+                    pages[2].classList.remove('flipped');
+                } else if (currentStep === 4 || currentStep === 5) {
+                    pages[0].classList.add('flipped');
+                    pages[1].classList.add('flipped');
+                    pages[2].classList.remove('flipped');
+                }
+
+                // 2. 동적 Z-Index 관리 (페이지 겹침 및 물리 렌더링 입체감 보장)
+                pages.forEach((page, index) => {
+                    if (page) {
+                        const isFlipped = page.classList.contains('flipped');
+                        if (isFlipped) {
+                            page.style.zIndex = index + 1; // 뒤집힌 페이지들은 갈수록 z-index가 높아짐
+                        } else {
+                            page.style.zIndex = pages.length - index; // 안뒤집힌 페이지들은 첫 페이지가 가장 큼
+                        }
+                    }
+                });
+
+                // 3. 현재 진행 단계 테두리 하이라이팅 (.csr-content-active)
+                Object.keys(stepContents).forEach(step => {
+                    const el = stepContents[step];
+                    if (el) {
+                        if (parseInt(step) === currentStep) {
+                            el.classList.add('csr-content-active');
+                        } else {
+                            el.classList.remove('csr-content-active');
+                        }
+                    }
+                });
+
+                // 4. 인디케이터 갱신
+                if (indicator) {
+                    indicator.textContent = `${currentStep} / ${totalSteps}`;
+                }
+
+                // 이전 버튼 가시성 및 클릭 제어
+                if (btnPrev) {
+                    if (currentStep === 1) {
+                        btnPrev.classList.add('opacity-40', 'cursor-not-allowed');
+                        btnPrev.style.pointerEvents = 'none';
+                    } else {
+                        btnPrev.classList.remove('opacity-40', 'cursor-not-allowed');
+                        btnPrev.style.pointerEvents = 'auto';
+                    }
+                }
+
+                // 다음 버튼이 완료 시 아이콘(📥)으로 전환됨
+                if (btnNext) {
+                    if (currentStep === totalSteps) {
+                        btnNext.innerHTML = '📥';
+                        btnNext.setAttribute('aria-label', '캠페인 완료');
+                        btnNext.classList.add('border-cyan-400', 'text-cyan-400', 'shadow-[0_0_12px_rgba(0,240,255,0.4)]');
+                    } else {
+                        btnNext.innerHTML = '❯';
+                        btnNext.setAttribute('aria-label', '다음 페이지');
+                        btnNext.classList.remove('border-cyan-400', 'text-cyan-400', 'shadow-[0_0_12px_rgba(0,240,255,0.4)]');
+                    }
+                }
+            }
+
+            function nextStep() {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateBookState();
+                } else {
+                    alert('캠페인의 마지막 페이지입니다. 실제 웹서비스에서는 다음 섹션으로 이동합니다.');
+                }
+            }
+
+            function prevStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateBookState();
+                }
+            }
+
+            // [2. 기능 정의] 활성화된 카드 본문 클릭 시 다음 장으로 이동
+            document.querySelectorAll('.csr-page-face').forEach(face => {
+                face.addEventListener('click', (e) => {
+                    // 내부 링크나 버튼 클릭 시에는 페이지 넘김 방지
+                    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+                    nextStep();
+                });
+            });
+
+            // [2. 기능 정의] 마우스 휠 및 트랙패드 터치 감도 반응 배제 (스크롤 에러 완전 차단)
+            if (bookContainer) {
+                bookContainer.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                }, { passive: false });
+
+                bookContainer.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                }, { passive: false });
+            }
+
+            // 버튼 클릭 이벤트 바인딩
+            if (btnPrev) btnPrev.addEventListener('click', prevStep);
+            if (btnNext) btnNext.addEventListener('click', nextStep);
+
+            // 엔딩 페이지의 링크 동작 처리
+            const endingLink = document.getElementById('ending-link');
+            if (endingLink) {
+                endingLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('실제 웹서비스에서 하단 도면 아카이브 섹션으로 이동합니다.');
+                });
+            }
+
+            // 초기 렌더링 상태 주입
+            updateBookState();
+        });
+    </script>
+</body>
+</html>
