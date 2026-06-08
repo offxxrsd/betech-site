@@ -71,19 +71,7 @@
             padding: 100px 0 60px 0;
         }
 
-        /* 1. 첫 번째 영상 (배경): 전체 화면 맨 뒷배경 물결 비디오 스타일 */
-        .hero-bg-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1; /* 가장 밑바닥 */
-            pointer-events: none; /* 클릭/드래그 차단으로 콘텐츠 조작 방해 금지 */
-        }
-
-        /* 배경 영상 바로 위 어두운 딥 네이비 반투명 틴트 오버레이 마스크 (가독성 확보) */
+        /* 135deg 선형 그라데이션과 배경 이미지를 가진 언더레이어 */
         .hero-section::before {
             content: '';
             position: absolute;
@@ -91,14 +79,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(10, 25, 44, 0.85) 0%, rgba(10, 25, 44, 0.65) 100%);
-            z-index: 2; /* 배경 비디오보다 위 */
+            background: linear-gradient(135deg, rgba(10, 25, 44, 0.95) 0%, rgba(11, 40, 80, 0.8) 100%), url('./water_hero_bg.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
         }
 
-        /* 메인 콘텐츠와 비디오를 담을 그리드 컨테이너 (배경 물결/틴트보다 상위 배치) */
+        /* 메인 콘텐츠와 비디오를 담을 그리드 컨테이너 */
         .hero-grid-container {
             position: relative;
-            z-index: 3; /* 배경 비디오(1) 및 틴트(2)보다 위로 띄워 인터랙션 보장 */
+            z-index: 2;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
@@ -132,7 +122,7 @@
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 163, 224, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.15); /* 반투명 글래스모피즘 테두리 업그레이드 */
+            border: 1px solid rgba(255, 255, 255, 0.08);
             aspect-ratio: 16 / 10; /* 시각적 균형을 이루는 영상 비율 */
             background-color: #0b1c30;
         }
@@ -164,78 +154,10 @@
             padding: 0;
         }
 
-        .hero-tag {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.82rem; /* 자간 확장 및 크기 축소 */
-            font-weight: 300; /* 세련되고 가벼운 느낌 */
-            letter-spacing: 0.15em;
-            color: var(--color-secondary, #00a3e0);
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-
         #hero-title {
             font-size: 2.75rem !important;
-            line-height: 1.38 !important; /* 행간 미세 조정하여 가독성 확보 */
+            line-height: 1.25 !important;
             margin-bottom: 1.5rem;
-        }
-
-        .hero-subtitle {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.7) !important; /* 화이트 대신 은은한 회백색 처리 */
-            margin-bottom: 2.2rem;
-            font-weight: 300;
-        }
-
-        /* 행동 유도 버튼(CTA) 전용 스타일링 */
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .hero-actions .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.85rem 1.8rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 30px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            cursor: pointer;
-            text-decoration: none;
-            line-height: 1;
-        }
-
-        .hero-actions .btn-primary {
-            background: linear-gradient(135deg, var(--color-secondary, #00a3e0) 0%, var(--color-accent, #00e5ff) 100%);
-            color: #ffffff !important;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0, 163, 224, 0.3);
-        }
-
-        .hero-actions .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
-            color: #ffffff !important;
-        }
-
-        /* 고스트 버튼 스타일: 테두리만 부각시키고 반투명 */
-        .hero-actions .btn-outline {
-            background-color: transparent !important;
-            color: rgba(255, 255, 255, 0.85) !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            backdrop-filter: blur(4px);
-        }
-
-        .hero-actions .btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.08) !important;
-            border-color: rgba(255, 255, 255, 0.6) !important;
-            color: #ffffff !important;
-            transform: translateY(-2px);
         }
 
         /* 모바일 및 태블릿 반응형 미디어 쿼리 */
@@ -282,186 +204,19 @@
         }
 
         /* ==========================================================================
-           수치로 보는 신뢰성 (Stats Section) 디지털 계기판 테마 스타일
-           ========================================================================== */
-        .stats-section {
-            background-color: #050e1c; /* B2B 프리미엄 딥 다크 블루 */
-            padding: 7rem 0;
-            position: relative;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, rgba(0, 229, 255, 0.08) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .stat-item {
-            background: rgba(10, 25, 44, 0.65); /* 은은한 딥 네이비 디지털 패널 */
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .stat-item::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 229, 255, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .stat-item:hover {
-            border-color: rgba(0, 229, 255, 0.35);
-            box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.05), 
-                        0 20px 40px rgba(0, 0, 0, 0.4), 
-                        0 0 30px rgba(0, 163, 224, 0.1);
-            transform: translateY(-5px);
-        }
-
-        /* 디지털 타코메터 숫자 텍스트 - 글폭 고정을 위해 모노스페이스 적용 */
-        .stat-number {
-            font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            transition: all 0.3s ease;
-            letter-spacing: -0.02em;
-        }
-
-        .stat-number .num-val {
-            font-variant-numeric: tabular-nums; /* 숫자의 좌우폭을 완전히 고정 */
-        }
-
-        .stat-number .num-suffix {
-            font-size: 1.6rem;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 600;
-            margin-left: 0.1rem;
-        }
-
-        .stat-item:hover .stat-number {
-            color: var(--color-accent, #00e5ff);
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
-        }
-
-        .stat-item:hover .num-suffix {
-            color: rgba(0, 229, 255, 0.8);
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 500;
-            line-height: 1.4;
-            letter-spacing: -0.01em;
-            margin-top: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .stat-item:hover .stat-label {
-            color: #ffffff;
-        }
-
-        /* 0.01% 오차 보증 안착 시 청량한 네온 플래시 효과 */
-        .stat-item.flash-active {
-            animation: tachometerFlash 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        @keyframes tachometerFlash {
-            0% {
-                background-color: rgba(0, 229, 255, 0.25);
-                box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.4), 0 0 40px rgba(0, 229, 255, 0.3);
-                border-color: #00e5ff;
-            }
-            30% {
-                background-color: rgba(0, 229, 255, 0.05);
-                box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.1), 0 0 20px rgba(0, 229, 255, 0.15);
-                border-color: rgba(0, 229, 255, 0.6);
-            }
-            60% {
-                background-color: rgba(0, 229, 255, 0.15);
-                box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.2), 0 0 30px rgba(0, 229, 255, 0.2);
-                border-color: #00e5ff;
-            }
-            100% {
-                background-color: rgba(10, 25, 44, 0.75);
-                box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3);
-                border-color: rgba(0, 229, 255, 0.4);
-            }
-        }
-
-        /* 반응형 스타일링 */
-        @media (max-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-            .stat-number {
-                font-size: 2.4rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1.2rem;
-            }
-            .stats-section {
-                padding: 5rem 0;
-            }
-            .stat-item {
-                padding: 2.2rem 1.5rem;
-            }
-        }
-
-        /* ==========================================================================
            사회공헌 (CSR) 캠페인 섹션 전용 스타일시트
            ========================================================================== */
         #csr-pipeline-section {
-            width: 100vw;
-            height: 100vh;
-            background-color: #030914; /* Deep dark background matching the book */
+            width: 100%;
+            height: 400vh; /* 스크롤 높이 400vh 확보하여 Sticky 스크롤 트리거 공간 형성 */
+            background-color: #ffffff;
             position: relative;
-            overflow: hidden;
-            transform: scale(1) !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
 
         .sticky-wrapper {
-            position: relative;
-            width: 100vw;
+            position: sticky;
+            top: 0;
+            width: 100%;
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -475,179 +230,160 @@
             width: 100%;
             max-width: 1200px;
             padding: 0 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             position: absolute;
-            top: 6%;
+            top: 8%;
             left: 50%;
             transform: translateX(-50%);
-            text-align: center;
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            z-index: 5;
         }
 
         .csr-tag {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
             font-weight: 700;
-            color: #00a3e0;
+            color: var(--color-secondary, #00a3e0);
             letter-spacing: 0.2em;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
-            text-align: center;
         }
 
         .csr-title {
-            font-size: 2rem;
-            color: #ffffff;
+            font-size: 2.2rem;
+            color: #0b1c30;
             font-weight: 850;
             letter-spacing: -0.025em;
             margin: 0;
             line-height: 1.25;
-            text-align: center;
         }
 
         .csr-title span {
-            color: #00e5ff;
+            color: var(--color-accent, #00e5ff);
             background: linear-gradient(120deg, #00a3e0 0%, #00e5ff 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* 3D Book Container and Perspective */
-        .csr-book-viewport {
-            perspective: 2000px;
+        /* 가로 슬라이드 트랙 */
+        .cartoon-viewport {
+            width: 100%;
+            padding: 0 10%;
+            overflow: visible;
             display: flex;
-            justify-content: center;
             align-items: center;
-            width: 100%;
-            padding: 2rem 0;
-            z-index: 20;
+            margin-top: 5vh;
         }
 
-        .csr-book-container {
-            position: relative;
-            width: 900px;
-            height: 560px; /* 고정 높이 */
-            perspective: 1500px; /* 원근감 */
-            background: #091528;
-            border-radius: 12px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 
-                        inset 0 0 40px rgba(0, 240, 255, 0.05);
-            border: 1px solid rgba(0, 240, 255, 0.1);
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease;
+        .cartoon-track {
+            display: flex;
+            align-items: center;
+            will-change: transform; /* 하드웨어 가속 강제 (60fps 보장) */
         }
 
-        /* Spine in the center of the book */
-        .csr-book-spine {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0.5) 100%);
-            border-left: 1px solid rgba(255, 255, 255, 0.03);
-            border-right: 1px solid rgba(255, 255, 255, 0.03);
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        /* Physical Book Page structure */
-        .csr-page {
-            position: absolute;
-            width: 450px;
-            height: 100%;
-            top: 0;
-            left: 50%; /* Positioned on the right side initially */
-            transform-origin: left center;
-            transform-style: preserve-3d;
-            transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 1;
-            cursor: pointer;
-        }
-
-        /* Flipped state: page swings to the left side */
-        .csr-page.flipped {
-            transform: rotateY(-180deg);
-        }
-
-        .csr-page-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            background-color: #0d1e36;
+        /* 만화 카드 스타일 */
+        .cartoon-card {
+            flex-shrink: 0;
+            width: 42vw;
+            height: 42vw;
+            max-width: 420px;
+            max-height: 420px;
+            background-color: #f8fafc;
+            border: 1px solid rgba(11, 28, 48, 0.06);
+            border-radius: 24px;
+            margin-right: 4rem;
+            box-shadow: 0 15px 35px rgba(11, 28, 48, 0.04);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: inset 3px 0 20px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(0, 240, 255, 0.05);
-        }
-
-        /* Front faces face the reader on the right side */
-        .csr-page-front {
-            z-index: 2;
-            transform: rotateY(0deg);
-            border-radius: 0 8px 8px 0;
-        }
-
-        /* Back faces face the reader on the left side after flipping */
-        .csr-page-back {
-            transform: rotateY(180deg);
-            border-radius: 8px 0 0 8px;
-            box-shadow: inset -3px 0 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Hover page curl visual cue */
-        .csr-page:not(.flipped):hover {
-            transform: rotateY(-8deg);
-        }
-
-        .csr-page.flipped:hover {
-            transform: rotateY(-172deg);
-        }
-
-        /* Active highlight for focused text/page side */
-        .csr-content-active {
             position: relative;
-        }
-        .csr-content-active::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border: 2px solid rgba(0, 229, 255, 0.5);
-            box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.15);
-            pointer-events: none;
-            border-radius: inherit;
-            z-index: 10;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Static pages inside the book */
-        .csr-static-page {
-            position: absolute;
-            width: 450px;
-            height: 100%;
-            top: 0;
-            overflow: hidden;
+        .cartoon-card:hover {
+            border-color: rgba(0, 163, 224, 0.2);
+            box-shadow: 0 20px 45px rgba(0, 163, 224, 0.08);
+        }
+
+        /* 엔딩 카드 특화 스타일 */
+        .cartoon-card.ending-card {
+            background: linear-gradient(135deg, #0a192c 0%, #0b2850 100%);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
             display: flex;
             flex-direction: column;
-            box-shadow: inset 3px 0 20px rgba(0, 0, 0, 0.2);
+            justify-content: space-between;
+            padding: 3rem 2.5rem;
         }
-        
-        .csr-static-left {
+
+        .ending-card-top h4 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--color-accent, #00e5ff);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .ending-card-top p {
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+            font-weight: 350;
+        }
+
+        .ending-card-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+        }
+
+        .ending-info {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 450;
+            line-height: 1.5;
+        }
+
+        .ending-info strong {
+            color: #ffffff;
+            font-size: 1rem;
+            display: block;
+            margin-top: 0.3rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* 이미지 로드 실패/부재 시 렌더링될 백업 플레이스홀더 캡션 */
+        .card-placeholder-text {
+            position: absolute;
+            bottom: 0;
             left: 0;
-            border-radius: 8px 0 0 8px;
-            background-color: #0b172a;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid rgba(11, 28, 48, 0.06);
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.02);
+            z-index: 2;
         }
 
-        .csr-static-right {
-            right: 0;
-            border-radius: 0 8px 8px 0;
-            background-color: #0b172a;
+        .card-step {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--color-secondary, #00a3e0);
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+            display: block;
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            color: #334155;
+            font-weight: 500;
+            line-height: 1.4;
+            margin: 0;
         }
 
         /* 파이프라인 수직 가이드 컴포넌트 */
@@ -657,15 +393,14 @@
             top: 25%;
             height: 50vh;
             width: 12px;
-            background-color: #0a192c;
+            background-color: #E0E0E0; /* 연한 회색 */
             border-radius: 6px;
             z-index: 10;
-            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            border: 1px solid rgba(0, 240, 255, 0.1);
         }
 
         /* 크리스탈 블루 물줄기 */
@@ -684,7 +419,7 @@
             position: absolute;
             bottom: -25px;
             font-size: 1.1rem;
-            color: #00a3e0;
+            color: var(--color-secondary, #00a3e0);
             animation: arrowBounce 1.5s infinite ease-in-out;
             user-select: none;
         }
@@ -694,572 +429,19 @@
             50% { transform: translateY(5px); }
         }
 
-        /* Responsive scaling */
-        @media (max-width: 960px) {
-            .csr-book-viewport {
-                transform: scale(0.8);
-            }
-        }
-        @media (max-width: 768px) {
-            .csr-book-viewport {
-                transform: scale(0.6);
-            }
-            .csr-header {
-                top: 3%;
-            }
-        }
-        @media (max-width: 500px) {
-            .csr-book-viewport {
-                transform: scale(0.45);
-            }
-        }
-
-        /* ==========================================================================
-           디지털 도면 아카이브 (Blueprint Slide UI) 스타일
-           ========================================================================== */
-        #blueprint-archive-section {
-            background-color: #030914;
-            padding: 7rem 0;
-            position: relative;
-            overflow: hidden;
-            border-top: 1px solid rgba(0, 240, 255, 0.1);
-            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
-        }
-
-        #blueprint-archive-section .section-header .section-tag {
-            color: #00F0FF;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-        }
-
-        #blueprint-archive-section .section-header h2 {
-            color: #ffffff;
-        }
-
-        #blueprint-archive-section .section-header p {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* 
-          [통합 키오스크 패널 래퍼 스타일]
-          max-w-7xl, rounded-2xl, overflow-hidden, shadow-2xl, border-2 border-cyan-500/25 bg-[#061022]/90
-        */
-        .blueprint-kiosk-panel {
-            max-width: 1200px;
-            margin: 3rem auto 0 auto;
-            border: 2px solid rgba(0, 240, 255, 0.25);
-            background-color: rgba(6, 16, 34, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            box-shadow: 0 20px 80px rgba(0, 240, 255, 0.06);
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* 청사진 모눈종이 격자 오버레이 */
-        .blueprint-mesh-grid {
-            position: absolute;
-            inset: 0;
-            opacity: 0.08;
-            pointer-events: none;
-            background-image: 
-                linear-gradient(rgba(0, 240, 255, 0.2) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.2) 1px, transparent 1px);
-            background-size: 15px 15px;
-            z-index: 1;
-        }
-
-        .blueprint-grid-kiosk {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            align-items: stretch;
-            position: relative;
-            z-index: 5;
-        }
-
-        /* 2-Column 경계 세로 분리선 */
-        .blueprint-col {
-            padding: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        .blueprint-left-col {
-            border-right: 1px solid rgba(0, 240, 255, 0.2);
-        }
-
-        .blueprint-right-col {
-            background-color: rgba(4, 12, 26, 0.4);
-        }
-
-        /* 모바일/태블릿 반응형 분리선 조정 */
+        /* 반응형 스케일 다운 및 모바일 최적화 */
         @media (max-width: 1024px) {
-            .blueprint-grid-kiosk {
-                grid-template-columns: 1fr;
-            }
-            .blueprint-left-col {
-                border-right: none;
-                border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-            }
-        }
-
-        .blueprint-card-header {
-            border-bottom: 1px solid rgba(0, 240, 255, 0.15);
-            padding-bottom: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.75rem;
-            color: rgba(0, 240, 255, 0.6);
-            letter-spacing: 0.15em;
-        }
-
-        .blueprint-card-footer {
-            border-top: 1px solid rgba(0, 240, 255, 0.15);
-            padding-top: 1rem;
-            margin-top: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.4);
-            line-height: 1.4;
-        }
-
-        .blueprint-btn-reset {
-            background: none;
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            color: #00F0FF;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-family: monospace;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .blueprint-btn-reset:hover {
-            background-color: rgba(0, 240, 255, 0.1);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-        }
-
-        .blueprint-svg-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            min-height: 420px;
-        }
-
-        .blueprint-svg {
-            width: 100%;
-            max-width: 320px;
-            height: auto;
-            transition: transform 0.5s ease;
-        }
-
-        .blueprint-svg:hover {
-            transform: scale(1.02);
-        }
-
-        /* Hotspots */
-        .blueprint-hotspot {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-        }
-
-        .hotspot-pulse {
-            display: flex;
-            width: 28px;
-            height: 28px;
-            position: relative;
-        }
-
-        .hotspot-ring {
-            animation: hotspot-ping 1.5s cubic-bezier(0.12, 0, 0, 1) infinite;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background-color: #00F0FF;
-            opacity: 0.75;
-        }
-
-        .hotspot-dot {
-            position: relative;
-            display: inline-flex;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            background-color: #061022;
-            border: 2px solid #00F0FF;
-            color: #00F0FF;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: 700;
-            font-family: monospace;
-            transition: all 0.3s ease;
-        }
-
-        .blueprint-hotspot.active .hotspot-dot {
-            background-color: #00F0FF;
-            color: #030914;
-        }
-
-        .hotspot-tooltip {
-            position: absolute;
-            left: 36px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(3, 9, 20, 0.95);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            border-radius: 6px;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #ffffff;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-        }
-
-        .blueprint-hotspot:hover .hotspot-tooltip {
-            opacity: 1;
-        }
-
-        @keyframes hotspot-ping {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            100% { transform: scale(2.2); opacity: 0; }
-        }
-
-        /* SVG CAD Lines & Highlights */
-        .cad-element {
-            transition: stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease, fill 0.3s ease;
-        }
-
-        /* Detail Area styling */
-        .blueprint-detail-wrapper {
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .blueprint-detail-wrapper.fade-out {
-            opacity: 0;
-            transform: translateY(-15px);
-        }
-
-        .blueprint-detail-wrapper.fade-in-active {
-            animation: bpSlideIn 0.4s ease-out forwards;
-        }
-
-        @keyframes bpSlideIn {
-            0% { opacity: 0; transform: translateY(15px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .spec-sheet-tag {
-            font-size: 0.75rem;
-            font-weight: 700;
-            font-family: monospace;
-            color: #00F0FF;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .blueprint-detail-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-top: 0.25rem;
-            letter-spacing: -0.02em;
-        }
-
-        .blueprint-detail-desc {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 0.5rem;
-            line-height: 1.5;
-        }
-
-        .blueprint-table-container {
-            margin: 2rem 0;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(0, 240, 255, 0.1);
-        }
-
-        .blueprint-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .blueprint-table tr {
-            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
-            background-color: rgba(4, 13, 28, 0.4);
-            transition: background-color 0.3s ease;
-        }
-
-        .blueprint-table tr:last-child {
-            border-bottom: none;
-        }
-
-        .blueprint-table tr:hover {
-            background-color: rgba(8, 23, 48, 0.4);
-        }
-
-        .blueprint-table td {
-            padding: 0.9rem 1.2rem;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.9);
-            border: none;
-        }
-
-        .blueprint-table td.label-cell {
-            font-weight: 700;
-            font-family: monospace;
-            color: rgba(0, 240, 255, 0.8);
-            width: 130px;
-            border-right: 1px solid rgba(0, 240, 255, 0.1);
-            background-color: rgba(6, 18, 38, 0.4);
-            text-transform: uppercase;
-        }
-
-        /* Certificate showcase */
-        .blueprint-cert-header {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .blueprint-cert-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .blueprint-cert-grid.single-cert {
-            grid-template-columns: 1fr;
-            max-width: 150px;
-        }
-
-        .blueprint-cert-card {
-            aspect-ratio: 3/4;
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 8px;
-            background-color: #030914;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-        }
-
-        .blueprint-cert-card::before {
-            content: 'ORIGINAL SCAN';
-            position: absolute;
-            right: 8px;
-            bottom: 8px;
-            font-size: 7px;
-            font-family: monospace;
-            color: rgba(0, 240, 255, 0.3);
-            letter-spacing: 0.1em;
-            z-index: 10;
-        }
-
-        .blueprint-cert-card::after {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            font-size: 9px;
-            font-family: monospace;
-            color: rgba(0, 240, 255, 0.6);
-            text-transform: uppercase;
-            z-index: 10;
-        }
-
-        .blueprint-cert-card.kc-card::after { content: 'KC CERT'; }
-        .blueprint-cert-card.iso-card::after { content: 'ISO 9001'; }
-        .blueprint-cert-card.mainbiz-card::after { content: 'MAIN-BIZ'; }
-        .blueprint-cert-card.association-card::after { content: 'ASSOCIATION'; }
-
-        .blueprint-cert-scan-bg {
-            width: 100%;
-            height: 100%;
-            border: 1px dashed rgba(0, 240, 255, 0.15);
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #040d1a;
-            transition: transform 0.4s ease;
-        }
-
-        .blueprint-cert-card:hover .blueprint-cert-scan-bg {
-            transform: scale(1.08);
-        }
-
-        .blueprint-cert-card:hover .blueprint-cert-img {
-            transform: scale(1.05);
-        }
-
-        .blueprint-cert-scan-bg svg {
-            width: 32px;
-            height: 32px;
-            color: rgba(0, 240, 255, 0.25);
-            margin-bottom: 0.25rem;
-            stroke-width: 1px;
-        }
-
-        .blueprint-cert-scan-bg span {
-            font-size: 9px;
-            font-weight: 700;
-            color: rgba(0, 240, 255, 0.4);
-            text-align: center;
-            line-height: 1.2;
-            text-transform: uppercase;
-        }
-
-        /* Scanning laser beam overlay on hover */
-        .blueprint-cert-laser {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #00F0FF;
-            box-shadow: 0 0 8px #00F0FF;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 15;
-            transition: opacity 0.3s ease;
-        }
-
-        .blueprint-cert-card:hover .blueprint-cert-laser {
-            opacity: 1;
-            animation: bp-scan-laser 2s linear infinite;
-        }
-
-        @keyframes bp-scan-laser {
-            0% { top: 0%; }
-            50% { top: 100%; }
-            100% { top: 0%; }
-        }
-
-        .blueprint-cert-meta {
-            font-size: 0.75rem;
-            font-family: monospace;
-            color: rgba(0, 240, 255, 0.7);
-            background-color: rgba(3, 9, 20, 0.6);
-            border: 1px solid rgba(0, 240, 255, 0.1);
-            border-radius: 6px;
-            padding: 0.75rem;
-            line-height: 1.5;
-        }
-
-        /* Liquid button styling */
-        .blueprint-btn-download {
-            position: relative;
-            width: 100%;
-            height: 48px;
-            border-radius: 8px;
-            border: 2px solid #00F0FF;
-            background: none;
-            overflow: hidden;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-            text-decoration: none;
-        }
-
-        .blueprint-btn-download:hover {
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
-        }
-
-        .blueprint-btn-liquid {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #00F0FF;
-            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 1;
-        }
-
-        .blueprint-btn-download:hover .blueprint-btn-liquid {
-            transform: translateY(-100%);
-        }
-
-        .blueprint-btn-content {
-            position: relative;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: #00F0FF;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            font-family: 'Montserrat', sans-serif;
-            transition: color 0.3s ease;
-        }
-
-        .blueprint-btn-download:hover .blueprint-btn-content {
-            color: #030914;
-        }
-
-        /* Responsive Media Queries */
-        @media (max-width: 1024px) {
-            .blueprint-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-                max-width: 700px;
-            }
-            .blueprint-svg-container {
-                min-height: 440px;
-            }
+            .csr-title { font-size: 1.85rem; }
+            .cartoon-card { width: 60vw; height: 60vw; }
+            .pipe-guide-wrapper { right: 3%; }
         }
 
         @media (max-width: 768px) {
-            #blueprint-archive-section {
-                padding: 5rem 0;
-            }
-            .blueprint-card {
-                padding: 1.5rem;
-            }
-            .blueprint-detail-title {
-                font-size: 1.25rem;
-            }
-            .blueprint-table td {
-                padding: 0.75rem 1rem;
-            }
+            .csr-title { font-size: 1.5rem; }
+            .csr-header { top: 6%; }
+            .cartoon-card { width: 75vw; height: 75vw; margin-right: 2.5rem; }
+            .pipe-guide-wrapper { display: none; } /* 모바일에서는 수직 물줄기 숨김 처리로 레이아웃 방어 */
+            .cartoon-viewport { padding: 0 5%; }
         }
     </style>
     <!-- GSAP & ScrollTrigger CDN (CSR 스크롤 가로 슬라이더 및 인터랙티브 모션 제어) -->
@@ -1281,9 +463,9 @@
             <nav class="desktop-nav" aria-label="메인 네비게이션">
                 <ul>
                     <li><a href="./intro.html">기업소개</a></li>
-                    <li><a href="./achievements.html">주요업력</a></li>
                     <li><a href="product.html">제품소개</a></li>
-                    <li><a href="./index.html#equipment-spec-section">보유장비</a></li>
+                    <li><a href="#equipment-spec-section">보유장비</a></li>
+                    <li><a href="./achievements.html">주요업적</a></li>
                     <li><a href="./map.html">찾아오시는 길</a></li>
                     <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
                 </ul>
@@ -1301,9 +483,9 @@
         <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
             <ul>
                 <li><a href="./intro.html">기업소개</a></li>
-                <li><a href="./achievements.html">주요업력</a></li>
                 <li><a href="product.html">제품소개</a></li>
-                <li><a href="./index.html#equipment-spec-section">보유장비</a></li>
+                <li><a href="#equipment-spec-section">보유장비</a></li>
+                <li><a href="./achievements.html">주요업적</a></li>
                 <li><a href="./map.html">찾아오시는 길</a></li>
                 <li><a href="./inquiry.html">고객문의</a></li>
             </ul>
@@ -1313,11 +495,6 @@
     <main>
         <!-- Hero Section (메인 비주얼 영역) -->
         <section class="hero-section" aria-labelledby="hero-title">
-            <!-- 1. 첫 번째 영상 (배경): 전체 화면 맨 뒷배경에 깔리는 잔잔한 물결 영상 -->
-            <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
-                <source src="./water.mp4" type="video/mp4">
-            </video>
-
             <div class="hero-grid-container">
                 <!-- 좌측 영역: 메인 카피 및 액션 버튼 -->
                 <div class="hero-left-column">
@@ -1413,221 +590,106 @@
             </div>
         </section>
 
-
-
-        <!-- ==========================================================================
-             사회공헌 (CSR) 캠페인 섹션 (Scroll-driven Horizontal Slider)
-             ========================================================================== -->
-        <section id="csr-pipeline-section" class="flex flex-col justify-center items-center relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(0,240,255,0.02)_0%,transparent_75%)]"></div>
-
-            <div class="sticky-wrapper flex flex-col justify-center items-center w-full">
-                <!-- 상단 타이틀 영역 -->
-                <div class="csr-header">
-                    <div class="csr-tag">CSR CAMPAIGN</div>
-                    <h2 class="csr-title">물이 채우는 온기, <span>비에이텍이 그리는 깨끗한 미래</span></h2>
-                </div>
-
-                <!-- 3D Book Viewport -->
-                <div class="csr-book-viewport select-none mt-[12vh]">
-                    <div class="csr-book-container" id="book-container">
-                        <!-- Central spine divider -->
-                        <div class="csr-book-spine"></div>
-
-                        <!-- Static Left Page (Cover interior) -->
-                        <div class="csr-static-page csr-static-left"></div>
-
-                        <!-- Static Right Page (Back Cover interior) -->
-                        <div class="csr-static-page csr-static-right"></div>
-
-                        <!-- Physical Pages -->
-                        <!-- Page 1 (Front: Step 01 / Back: Step 02) -->
-                        <div class="csr-page" id="csr-page1">
-                            <!-- FRONT: Step 01. 프롤로그 -->
-                            <div class="csr-page-face csr-page-front" id="content-step1">
-                                <img src="./comic1.png" alt="Step 01" class="w-full h-full object-cover">
-                            </div>
-                            <!-- BACK: Step 02. 문제제기 -->
-                            <div class="csr-page-face csr-page-back" id="content-step2">
-                                <img src="./comic2.png" alt="Step 02" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-
-                        <!-- Page 2 (Front: Step 03 / Back: Step 04) -->
-                        <div class="csr-page" id="csr-page2">
-                            <!-- FRONT: Step 03. 행동실천 -->
-                            <div class="csr-page-face csr-page-front" id="content-step3">
-                                <img src="./comic3.png" alt="Step 03" class="w-full h-full object-cover">
-                            </div>
-                            <!-- BACK: Step 04. 데이터화 -->
-                            <div class="csr-page-face csr-page-back" id="content-step4">
-                                <img src="./comic4.png" alt="Step 04" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-
-                        <!-- Page 3 (Front: Step 05 / Back: Closing Page) -->
-                        <div class="csr-page" id="csr-page3">
-                            <!-- FRONT: Step 05. 피날레 -->
-                            <div class="csr-page-face csr-page-front" id="content-step5">
-                                <img src="./comic5.png" alt="Step 05" class="w-full h-full object-cover">
-                            </div>
-                            <!-- BACK: Ending page -->
-                            <div class="csr-page-face csr-page-back"></div>
-                        </div>
-
+        <!-- Stats Section (수치로 보는 신뢰성 - 미니 인포그래픽) -->
+        <section class="stats-section" aria-label="기업 지표 요약">
+            <div class="section-container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">자체 설계 및 국내 제작</div>
                     </div>
-                </div>
-
-                <!-- Bottom Navigation Interface -->
-                <div class="flex items-center justify-center gap-6 mt-8 select-none z-50">
-                    <!-- Prev Button -->
-                    <button id="csr-btn-prev" class="w-12 h-12 rounded-full border border-white/15 text-white bg-slate-900/50 hover:bg-white hover:text-[#061022] hover:border-white transition-all duration-300 flex items-center justify-center font-extrabold" aria-label="이전 페이지">
-                        ❮
-                    </button>
-
-                    <!-- Dynamic Indicator (1 / 5) -->
-                    <div id="csr-page-indicator" class="font-mono text-sm font-bold text-cyan-400 bg-slate-900/80 px-4 py-2 rounded-lg border border-cyan-500/20 shadow-[0_0_10px_rgba(0,240,255,0.05)]">
-                        1 / 5
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">신속 수리 및 기술 대응</div>
                     </div>
-
-                    <!-- Next / Section Trigger Button -->
-                    <button id="csr-btn-next" class="w-12 h-12 rounded-full border border-white/15 text-white bg-slate-900/50 hover:bg-white hover:text-[#061022] hover:border-white transition-all duration-300 flex items-center justify-center font-extrabold" aria-label="다음 페이지">
-                        ❯
-                    </button>
-                </div>
-
-                <!-- Right side water pipeline guide progress indicator -->
-                <div class="pipe-guide-wrapper max-md:hidden">
-                    <div class="water-stream" id="csr-water-stream"></div>
-                    <span class="pipe-arrow">▼</span>
+                    <div class="stat-item">
+                        <div class="stat-number">0.01%</div>
+                        <div class="stat-label">미세 유량 정밀 오차 보증</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">국내 수처리 설비 시공 레퍼런스</div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- ==========================================================================
-             디지털 도면 아카이브 (Blueprint Slide UI) - 신규 프리미엄 인증서 쇼케이스
+             사회공헌 (CSR) 캠페인 섹션 (Scroll-driven Horizontal Slider)
              ========================================================================== -->
-        <!-- ==========================================================================
-             디지털 도면 아카이브 (Blueprint Slide UI) - 신규 프리미엄 인증서 쇼케이스
-             ========================================================================== -->
-        <section id="blueprint-archive-section" aria-labelledby="blueprint-section-title">
-            <div class="section-container">
-                <!-- 섹션 헤더 -->
-                <div class="section-header text-center">
-                    <span class="section-tag">Digital Archive</span>
-                    <h2 id="blueprint-section-title">디지털 도면 아카이브</h2>
-                    <p class="section-desc">비에이텍의 고정밀 수처리 설비 청사진과 국가 공인 품질인증서의 기술적 융합 쇼케이스</p>
+        <section id="csr-pipeline-section">
+            <div class="sticky-wrapper">
+                <!-- 상단 타이틀 영역 -->
+                <div class="csr-header">
+                    <div class="csr-tag">CSR Campaign</div>
+                    <h2 class="csr-title">물이 채우는 온기, <span>비에이텍이 그리는 깨끗한 미래</span></h2>
                 </div>
-                
-                <!-- 
-                  [통합 키오스크 패널 래퍼]
-                  max-w-7xl, rounded-2xl, overflow-hidden, shadow-2xl, border-2 border-cyan-500/25 bg-[#061022]/90 backdrop-blur-md 적용
-                -->
-                <div class="blueprint-kiosk-panel">
-                    <!-- 청사진 모눈 격자 오버레이 -->
-                    <div class="blueprint-mesh-grid"></div>
-                    
-                    <div class="blueprint-grid-kiosk">
-                        <!-- 좌측 컬럼: CAD 도면 영역 -->
-                        <div class="blueprint-col blueprint-left-col">
-                            <div class="blueprint-card-header">
-                                <span>SYSTEM DRAWING: BAETECK-SPP-01</span>
-                                <span>SCALE: 1:12</span>
-                            </div>
-                            <div class="blueprint-svg-container">
-                                <svg viewBox="0 0 400 500" class="blueprint-svg">
-                                    <!-- Outer Dimension Marks -->
-                                    <line x1="20" y1="30" x2="380" y2="30" stroke="rgba(0,240,255,0.12)" stroke-width="1" stroke-dasharray="4,4" />
-                                    <line x1="20" y1="470" x2="380" y2="470" stroke="rgba(0,240,255,0.12)" stroke-width="1" stroke-dasharray="4,4" />
-                                    <line x1="30" y1="20" x2="30" y2="480" stroke="rgba(0,240,255,0.12)" stroke-width="1" stroke-dasharray="4,4" />
-                                    <line x1="370" y1="20" x2="370" y2="480" stroke="rgba(0,240,255,0.12)" stroke-width="1" stroke-dasharray="4,4" />
 
-                                    <!-- Submersible Pump CAD Outlines -->
-                                    <!-- Motor Housing -->
-                                    <rect x="130" y="80" width="140" height="180" rx="6" fill="rgba(6,25,50,0.4)" stroke="rgba(0,240,255,0.25)" stroke-width="1.5" class="cad-element" id="cad-motor" />
-                                    <line x1="160" y1="80" x2="160" y2="260" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="2,2" />
-                                    <line x1="240" y1="80" x2="240" y2="260" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="2,2" />
-                                    
-                                    <!-- Cooling Fins (Hatching effect) -->
-                                    <line x1="130" y1="100" x2="270" y2="100" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                    <line x1="130" y1="118" x2="270" y2="118" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                    <line x1="130" y1="136" x2="270" y2="136" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                    <line x1="130" y1="154" x2="270" y2="154" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                    <line x1="130" y1="172" x2="270" y2="172" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                    <line x1="130" y1="190" x2="270" y2="190" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                    <line x1="130" y1="208" x2="270" y2="208" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                    <line x1="130" y1="226" x2="270" y2="226" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-                                    <line x1="130" y1="244" x2="270" y2="244" stroke="rgba(0,240,255,0.12)" stroke-width="1" />
-
-                                    <!-- Pump Casing & Suction Bowl -->
-                                    <path d="M120 260 L280 260 L260 370 L140 370 Z" fill="rgba(6,25,50,0.5)" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" class="cad-element" id="cad-casing" />
-                                    
-                                    <!-- Internal Impeller Schematics -->
-                                    <circle cx="200" cy="315" r="45" fill="none" stroke="rgba(0,240,255,0.2)" stroke-width="1" stroke-dasharray="4,2" />
-                                    <path d="M170 315 A 30 30 0 0 1 230 315" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-1" />
-                                    <path d="M180 300 A 30 30 0 0 1 220 330" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-2" />
-                                    <path d="M180 330 A 30 30 0 0 1 220 300" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" class="cad-element" id="cad-impeller-3" />
-                                    
-                                    <!-- Shaft Centerline -->
-                                    <line x1="200" y1="50" x2="200" y2="450" stroke="#00F0FF" stroke-width="1.2" stroke-dasharray="12,3,3,3" />
-
-                                    <!-- Discharge Flange Connection -->
-                                    <path d="M260 310 L330 310 L330 340 L260 340" fill="rgba(6,25,50,0.6)" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" class="cad-element" id="cad-discharge" />
-                                    <rect x="330" y="295" width="15" height="70" fill="rgba(0,240,255,0.1)" stroke="rgba(0,240,255,0.4)" stroke-width="1.5" />
-                                    <line x1="337.5" y1="295" x2="337.5" y2="365" stroke="rgba(0,240,255,0.3)" stroke-width="1" stroke-dasharray="4,4" />
-
-                                    <!-- Top Handle / Lifting Eye -->
-                                    <circle cx="200" cy="65" r="15" fill="none" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" />
-                                    <circle cx="200" cy="65" r="6" fill="none" stroke="rgba(0,240,255,0.3)" stroke-width="1.5" />
-
-                                    <!-- Base Support Frame -->
-                                    <path d="M130 370 L110 440 L290 440 L270 370" fill="none" stroke="rgba(0,240,255,0.35)" stroke-width="1.5" />
-                                    <rect x="90" y="440" width="220" height="15" rx="3" fill="rgba(6,25,50,0.6)" stroke="rgba(0,240,255,0.4)" stroke-width="1.5" class="cad-element" id="cad-base" />
-
-                                    <!-- Interactive Highlight Shapes -->
-                                    <circle cx="200" cy="315" r="70" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="5,5" id="highlight-pump" class="cad-element" />
-                                    <rect x="115" y="55" width="170" height="325" rx="12" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="6,6" id="highlight-booster" class="cad-element" />
-                                    <rect x="80" y="430" width="240" height="35" rx="6" fill="none" stroke="rgba(0,240,255,0)" stroke-width="1.5" stroke-dasharray="6,6" id="highlight-factory" class="cad-element" />
-                                </svg>
-
-                                <!-- Floating Tooltip Hotspots -->
-                                <button class="blueprint-hotspot" style="top: 61%; left: 50%;" data-part="PUMP_COMPONENTS" aria-label="펌프류 핵심 부품 핫스팟">
-                                    <span class="hotspot-pulse">
-                                        <span class="hotspot-ring"></span>
-                                        <span class="hotspot-dot">01</span>
-                                    </span>
-                                    <div class="hotspot-tooltip">펌프 핵심 부품 (케이싱/임펠러/주축)</div>
-                                </button>
-
-                                <button class="blueprint-hotspot" style="top: 28%; left: 50%;" data-part="BOOSTER_SYSTEM" aria-label="부스터 펌프 시스템 핫스팟">
-                                    <span class="hotspot-pulse">
-                                        <span class="hotspot-ring"></span>
-                                        <span class="hotspot-dot">02</span>
-                                    </span>
-                                    <div class="hotspot-tooltip">부스터 조립체 & 제어반</div>
-                                </button>
-
-                                <button class="blueprint-hotspot" style="top: 88%; left: 50%;" data-part="FACTORY_SYSTEM" aria-label="공장 시스템 인프라 핫스팟">
-                                    <span class="hotspot-pulse">
-                                        <span class="hotspot-ring"></span>
-                                        <span class="hotspot-dot">03</span>
-                                    </span>
-                                    <div class="hotspot-tooltip">경영혁신 & 공장 시스템</div>
-                                </button>
-                            </div>
-                            <div class="blueprint-card-footer">
-                                <span>* 도면 위의 노란색 마커 [01~03]를 클릭하면 상세 스펙과 원본 인증서 스캔본이 출력됩니다.</span>
-                                <button id="blueprint-reset-btn" class="blueprint-btn-reset" style="display: none;">[ RESET ]</button>
+                <!-- 가로 만화 카드 트랙 -->
+                <div class="cartoon-viewport">
+                    <div class="cartoon-track">
+                        <!-- 1장 카드: comic1.png (프롤로그) -->
+                        <div class="cartoon-card" style="background-image: url('./images/comic1.png');">
+                            <!-- 실제 이미지 경로가 없거나 로드 전일 때 렌더링될 안내 가이드 구조 포함 -->
+                            <div class="card-placeholder-text">
+                                <span class="card-step">Step 01. 프롤로그</span>
+                                <p class="card-desc">물 부족으로 마른 갈증을 겪는 소외 지역의 안타까운 풍경.</p>
                             </div>
                         </div>
-                        
-                        <!-- 우측 컬럼: 명세 및 인증서 쇼케이스 -->
-                        <div class="blueprint-col blueprint-right-col">
-                            <div id="blueprint-detail-content" class="blueprint-detail-wrapper">
-                                <!-- JS를 통해 동적으로 내용이 로딩되는 영역 -->
+
+                        <!-- 2장 카드: comic2.png (문제제기) -->
+                        <div class="cartoon-card" style="background-image: url('./images/comic2.png');">
+                            <div class="card-placeholder-text">
+                                <span class="card-step">Step 02. 문제제기</span>
+                                <p class="card-desc">누구보다 깨끗한 물을 마음껏 마셔야 할 아이들이 식수난으로 고통받는 모습.</p>
+                            </div>
+                        </div>
+
+                        <!-- 3장 카드: comic3.png (행동실천) -->
+                        <div class="cartoon-card" style="background-image: url('./images/comic3.png');">
+                            <div class="card-placeholder-text">
+                                <span class="card-step">Step 03. 행동실천</span>
+                                <p class="card-desc">아이들에게 웃음을 찾아주기 위해 비에이텍 봉사단이 나섭니다.</p>
+                            </div>
+                        </div>
+
+                        <!-- 4장 카드: comic4.png (데이터화) -->
+                        <div class="cartoon-card" style="background-image: url('./images/comic4.png');">
+                            <div class="card-placeholder-text">
+                                <span class="card-step">Step 04. 데이터화</span>
+                                <p class="card-desc">비에이텍의 특허받은 고정밀 정량펌프 기술로 마르지 않는 배관을 설계하고 모니터링합니다.</p>
+                            </div>
+                        </div>
+
+                        <!-- 5장 카드: comic5.png (피날레) -->
+                        <div class="cartoon-card" style="background-image: url('./images/comic5.png');">
+                            <div class="card-placeholder-text">
+                                <span class="card-step">Step 05. 피날레</span>
+                                <p class="card-desc">맑은 물이 콸콸 쏟아져 나와 신나게 뛰어노는 아이들의 환한 미소.</p>
+                            </div>
+                        </div>
+
+                        <!-- 6장 카드: comic6.png (엔딩 및 연락처) -->
+                        <div class="cartoon-card ending-card" style="background-image: url('./images/comic6.png');">
+                            <div class="ending-card-top">
+                                <h4>Water is Life</h4>
+                                <p>비에이텍은 정밀한 물 공학 기술력을 환원하여, 세상 모든 곳에 안전하고 맑은 물줄기가 닿는 그날까지 멈추지 않고 실천해 가겠습니다.</p>
+                            </div>
+                            <div class="ending-card-bottom">
+                                <div class="ending-info">
+                                    (주)비에이텍 BAETECK | 문의: 033-264-9243
+                                    <strong>CSR 사회공헌 문의 센터</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- 우측 수직 파이프라인 가이드 컴포넌트 -->
+                <div class="pipe-guide-wrapper">
+                    <!-- 스크롤 진행에 맞추어 높이(height)가 0%에서 100%로 충만해지는 물줄기 -->
+                    <div class="water-stream"></div>
+                    <span class="pipe-arrow">▼</span>
                 </div>
             </div>
         </section>
@@ -1696,7 +758,95 @@
                                         <tr>
                                             <th>총 양정 (Total Head)</th>
                                             <td>10 ~ 120 m</td>
-                                                               <div class="eq-bullets-box">
+                                            <th>주요 재질 (Materials)</th>
+                                            <td>주철 (GC200) / 스테인리스 주강 (SSC13)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </a>
+
+                    <!-- 장비 2 블록 -->
+                    <a href="./equipment_detail.html?id=2&name=WILO%20%EC%9E%85%ED%98%95%20%EB%8B%A4%EB%8B%A8%20%EC%9B%90%EC%8B%AC%ED%8E%8C%ED%94%84%20%EC%8B%9C%EC%8A%A4%ED%85%9C" class="equipment-block-link">
+                        <article class="equipment-block">
+                            <div class="equipment-grid">
+                                <!-- 좌측: 제품 사진 -->
+                                <div class="equipment-photo-column">
+                                    <div class="equipment-frame">
+                                        <img src="images/equipment_photo2.webp" alt="WILO 입형 다단 원심펌프 시스템" class="eq-display-img" loading="lazy">
+                                        <div class="eq-badge eq-badge-aqua">고압 & 초절전</div>
+                                    </div>
+                                </div>
+                                <!-- 우측: 제품 설명 -->
+                                <div class="equipment-desc-column">
+                                    <span class="eq-category">MULTISTAGE VERTICAL PUMPS</span>
+                                    <h3 class="eq-title-ko">WILO 입형 다단 원심펌프 시스템</h3>
+                                    <h4 class="eq-title-en">WILO Vertical Multistage Centrifugal Pump System</h4>
+                                    <p class="eq-summary">“초절전 수직 적층 실린더 구조로 설치 공간 최소화와 초고압 토출 성능을 동시 실현”</p>
+                                    
+                                    <div class="eq-bullets-box">
+                                        <h5>주요 기술적 장점</h5>
+                                        <ul>
+                                            <li>상단에 신뢰성 높은 고효율 WILO 녹색 전동기를 탑재하여 전력 소모를 최소화하고 공정 안정성을 확보했습니다.</li>
+                                            <li>접액부 전체에 SUS304 / SUS316L 정밀 스테인리스강 실린더를 적용하여 화학적 내부식성과 내압성이 매우 탁월합니다.</li>
+                                            <li>수직형(Vertical) 컴팩트 공간 절약 레이아웃을 통해 가압 스키드(Skid) 모듈의 설치 면적을 혁신적으로 절감했습니다.</li>
+                                            <li>카트리지 타입 고성능 메카니컬 씰(Mechanical Seal) 장착으로 약품 유체 누출율 0%와 신속 씰 교체를 보증합니다.</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="eq-apps-box">
+                                        <h5>주요 적용 분야 (Applications)</h5>
+                                        <p>용수 가압 및 상수 급수 시스템, 산업용 보일러 고압 급수 계통, 소방 가압 가설 설비, 고정밀 수처리 약품 주입 스키드</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 하단: 기술 사양 표 -->
+                            <div class="eq-spec-table-box">
+                                <table class="eq-spec-table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4">KEY TECHNICAL SPECIFICATION (장비 기술 사양 명세)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>토출 유량 (Capacity)</th>
+                                            <td>1.0 ~ 55 m³/hr</td>
+                                            <th>허용 사용 압력 (Max. Pressure)</th>
+                                            <td>25 bar (2.5 MPa) 고부하용</td>
+                                        </tr>
+                                        <tr>
+                                            <th>최고 양정 (Max. Head)</th>
+                                            <td>20 ~ 240 m</td>
+                                            <th>허용 온도 범위 (Liquid Temp.)</th>
+                                            <td>-15°C ~ +120°C 고압 액상 지원</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </a>
+
+                    <!-- 장비 3 블록 -->
+                    <a href="./equipment_detail.html?id=3&name=%EB%8C%80%ED%98%95%20%EC%9B%90%EC%8B%AC%ED%8E%8C%ED%94%84%20%EB%A9%80%ED%8B%B0%20%EB%B3%91%EB%A0%AC%20%EB%9D%BC%EC%9D%B8%EC%97%85" class="equipment-block-link">
+                        <article class="equipment-block">
+                            <div class="equipment-grid">
+                                <!-- 좌측: 제품 사진 -->
+                                <div class="equipment-photo-column">
+                                    <div class="equipment-frame">
+                                        <img src="images/equipment_photo3.webp" alt="대형 원심펌프 멀티 병렬 라인업" class="eq-display-img" loading="lazy">
+                                        <div class="eq-badge eq-badge-blue">플랜트 대규모 공정</div>
+                                    </div>
+                                </div>
+                                <!-- 우측: 제품 설명 -->
+                                <div class="equipment-desc-column">
+                                    <span class="eq-category">PARALLEL SYSTEM ENGINEERING</span>
+                                    <h3 class="eq-title-ko">대형 원심펌프 멀티 병렬 라인업</h3>
+                                    <h4 class="eq-title-en">Multi-Parallel Heavy-Duty Centrifugal Pump Lineup</h4>
+                                    <p class="eq-summary">“연속 운전 신뢰성을 위해 다중 밸런싱 병렬 제어 공학을 적용한 고유량 이송 센터”</p>
+                                    
+                                    <div class="eq-bullets-box">
                                         <h5>주요 기술적 장점</h5>
                                         <ul>
                                             <li>강도 해석을 필한 베이스 프레임 상에 다수의 대형 원심 펌프를 병렬로 배치하여 최적의 부하 분산 및 교대 운전이 가능합니다.</li>
@@ -1767,6 +917,7 @@
                 <div class="footer-company-name">(주)비에이텍</div>
                 <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
             </div>
+            
             <div class="footer-info">
                 <h4>CONTACT INFO</h4>
                 <address>
@@ -1780,9 +931,9 @@
                 <h4>QUICK LINK</h4>
                 <ul>
                     <li><a href="./intro.html">기업소개</a></li>
-                    <li><a href="./achievements.html">주요업력</a></li>
                     <li><a href="product.html">제품소개</a></li>
-                    <li><a href="./index.html#equipment-spec-section">보유장비</a></li>
+                    <li><a href="#equipment-spec-section">보유장비</a></li>
+                    <li><a href="./achievements.html">주요업적</a></li>
                     <li><a href="./map.html">찾아오시는 길</a></li>
                     <li><a href="./inquiry.html">고객문의</a></li>
                 </ul>
@@ -1825,388 +976,51 @@
         });
     </script>
 
-    <!-- GSAP CSR script -->
+    <!-- ==========================================================================
+         GSAP & ScrollTrigger 사회공헌(CSR) 애니메이션 스크립트
+         ========================================================================== -->
     <script>
-        // Race Condition 방지: 만화 카드 이미지 등 모든 리소스가 완전히 렌더링된 후 ScrollTrigger 등록
         window.addEventListener('load', () => {
-            // 1. 사회공헌(CSR) 3D 플립 북 인터랙션
-            let currentStep = 1;
-            const totalSteps = 5;
+            gsap.registerPlugin(ScrollTrigger);
 
-            // Pages mapping (matched with page IDs in markup)
-            const pages = [
-                document.getElementById('csr-page1'),
-                document.getElementById('csr-page2'),
-                document.getElementById('csr-page3')
-            ];
+            const track = document.querySelector('.cartoon-track');
+            const waterStream = document.querySelector('.water-stream');
+            
+            if (track && waterStream) {
+                // 가로로 이동해야 할 스크롤 총량 계산 (트랙 가로폭 - 뷰포트 가로폭 + 10% 여유 패딩)
+                const getScrollAmount = () => {
+                    const trackWidth = track.scrollWidth;
+                    const viewportWidth = window.innerWidth;
+                    return -(trackWidth - viewportWidth + (viewportWidth * 0.1));
+                };
 
-            // Content regions for active highlighting
-            const stepContents = {
-                1: document.getElementById('content-step1'),
-                2: document.getElementById('content-step2'),
-                3: document.getElementById('content-step3'),
-                4: document.getElementById('content-step4'),
-                5: document.getElementById('content-step5')
-            };
-
-            // Navigation elements
-            const btnPrev = document.getElementById('csr-btn-prev');
-            const btnNext = document.getElementById('csr-btn-next');
-            const indicator = document.getElementById('csr-page-indicator');
-            const waterStream = document.getElementById('csr-water-stream');
-
-            function updateBookState() {
-                // 1. Rotation and active flags
-                if (currentStep === 1) {
-                    pages[0].classList.remove('flipped');
-                    pages[1].classList.remove('flipped');
-                    pages[2].classList.remove('flipped');
-                } else if (currentStep === 2 || currentStep === 3) {
-                    pages[0].classList.add('flipped');
-                    pages[1].classList.remove('flipped');
-                    pages[2].classList.remove('flipped');
-                } else if (currentStep === 4 || currentStep === 5) {
-                    pages[0].classList.add('flipped');
-                    pages[1].classList.add('flipped');
-                    pages[2].classList.remove('flipped');
-                }
-
-                // 2. Adjust z-indexes for smooth overlapping
-                pages.forEach((page, index) => {
-                    if (page) {
-                        const isFlipped = page.classList.contains('flipped');
-                        if (isFlipped) {
-                            page.style.zIndex = index + 1; // Flipped page index
-                        } else {
-                            page.style.zIndex = pages.length - index; // Unflipped page index
+                // GSAP 스크롤 트리거 정의
+                gsap.to(track, {
+                    x: getScrollAmount,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "#csr-pipeline-section",
+                        pin: true,           // 섹션 화면 고정
+                        scrub: 1,            // 1초 관성 스크롤 제어로 매우 유연한 가속감 부여
+                        start: "top top",    // 뷰포트 탑에 닿을 때 고정
+                        end: () => "+=" + (window.innerHeight * 3), // 총 400vh 거리 확보를 위해 300vh 가변 스케일
+                        invalidateOnRefresh: true, // 브라우저 창 크기 리사이징 시 수치 자동 보정
+                        onUpdate: (self) => {
+                            // 스크롤 프로그레스(0.0 ~ 1.0)와 물줄기 높이(0% ~ 100%)를 정확히 1:1 바인딩
+                            gsap.to(waterStream, {
+                                height: `${self.progress * 100}%`,
+                                duration: 0.1,
+                                ease: "power1.out"
+                            });
                         }
                     }
                 });
 
-                // 3. Highlight current step content border
-                Object.keys(stepContents).forEach(step => {
-                    const el = stepContents[step];
-                    if (el) {
-                        if (parseInt(step) === currentStep) {
-                            el.classList.add('csr-content-active');
-                        } else {
-                            el.classList.remove('csr-content-active');
-                        }
-                    }
-                });
-
-                // 4. Update Navigation Controls
-                if (indicator) {
-                    indicator.textContent = `${currentStep} / ${totalSteps}`;
-                }
-
-                // 5. Update Water Stream Progress (0% to 100%)
-                if (waterStream) {
-                    const progress = (currentStep - 1) / (totalSteps - 1);
-                    waterStream.style.height = `${progress * 100}%`;
-                }
-
-                // Disabled state on prev button
-                if (btnPrev) {
-                    if (currentStep === 1) {
-                        btnPrev.classList.add('opacity-40', 'cursor-not-allowed');
-                        btnPrev.style.pointerEvents = 'none';
-                    } else {
-                        btnPrev.classList.remove('opacity-40', 'cursor-not-allowed');
-                        btnPrev.style.pointerEvents = 'auto';
-                    }
-                }
-
-                // Next button morphs to scroll trigger on last page
-                if (btnNext) {
-                    if (currentStep === totalSteps) {
-                        btnNext.innerHTML = '📥';
-                        btnNext.setAttribute('aria-label', '완료 및 다음 섹션으로 이동');
-                        btnNext.classList.add('border-cyan-400', 'text-cyan-400', 'shadow-[0_0_12px_rgba(0,240,255,0.4)]');
-                    } else {
-                        btnNext.innerHTML = '❯';
-                        btnNext.setAttribute('aria-label', '다음 페이지');
-                        btnNext.classList.remove('border-cyan-400', 'text-cyan-400', 'shadow-[0_0_12px_rgba(0,240,255,0.4)]');
-                    }
-                }
-            }
-
-            function nextStep() {
-                if (currentStep < totalSteps) {
-                    currentStep++;
-                    updateBookState();
-                } else {
-                    // Step 5 도달 후 클릭 시 다음 섹션으로 부드럽게 이동
-                    const nextSection = document.querySelector('#blueprint-archive-section');
-                    if (nextSection) {
-                        nextSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            }
-
-            function prevStep() {
-                if (currentStep > 1) {
-                    currentStep--;
-                    updateBookState();
-                }
-            }
-
-            // Click action on page faces to flip to next page
-            document.querySelectorAll('.csr-page-face').forEach(face => {
-                face.addEventListener('click', (e) => {
-                    // Prevent trigger if they click links or buttons inside the page
-                    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
-                    nextStep();
-                });
-            });
-
-            // Prevent scroll gesture propagation (blocking trackpad/wheel errors)
-            const viewport = document.querySelector('.csr-book-viewport');
-            if (viewport) {
-                viewport.addEventListener('wheel', (e) => {
-                    e.preventDefault();
-                }, { passive: false });
-                
-                viewport.addEventListener('touchmove', (e) => {
-                    e.preventDefault();
-                }, { passive: false });
-            }
-
-            // Bind buttons
-            if (btnPrev) btnPrev.addEventListener('click', prevStep);
-            if (btnNext) btnNext.addEventListener('click', nextStep);
-
-            // Initial trigger
-            updateBookState();
-
-
-
-            // ==========================================================================
-            // [신규 기능] 디지털 도면 아카이브 (Blueprint Slide UI) 인터랙션 로직
-            // ==========================================================================
-            const blueprintData = {
-                DEFAULT: {
-                    title: "부스터 펌프 시스템 (통합 제어 솔루션)",
-                    subtitle: "고신뢰성 모터 구동 및 고정밀 유체 제어 엔지니어링 패키지",
-                    specTable: [
-                        { label: "시스템 구분", value: "부스터 펌프 시스템 (개별 인버터 병렬 제어)" },
-                        { label: "품질 인증", value: "수도용 위생안전기준 (KC) | 품질경영인증 (ISO 9001) | 경영혁신인증 (MAIN-BIZ)" },
-                        { label: "직접생산 품목", value: "액체 펌프 및 배관 유체 조절 제어 장치 일체" },
-                        { label: "제조사/원산지", value: "(주)비에이텍 / 대한민국 강원특별자치도 춘천" }
-                    ],
-                    certTitle: "비에이텍 핵심 품질 보증 시스템",
-                    certMeta: "국가 공인 기관 및 시스템에서 검증한 고정밀 수처리 기술 자격",
-                    downloadUrl: "./인증서2.pdf",
-                    downloadLabel: "통합 품질 인증 사양서 다운로드",
-                    certs: [
-                        { name: "KC 인증서", imagePath: "./images/kc_cert_thumb.png", class: "kc-card" },
-                        { name: "ISO 9001", imagePath: "./images/iso_cert_thumb.png", class: "iso-card" },
-                        { name: "MAIN-BIZ", imagePath: "./images/mainbiz_cert_thumb.png", class: "mainbiz-card" }
-                    ]
-                },
-                PUMP_COMPONENTS: {
-                    title: "펌프 핵심 부품 (케이싱 / 임펠러 / 주축 / 상부커버)",
-                    subtitle: "고정밀 가공 처리를 통한 내식성 및 기계적 내구성 극대화 설계",
-                    specTable: [
-                        { label: "분류", value: "지상용 수직형 다단 펌프류 부품 (BA5, BA10, BA20 / BA32, BA45, BA64, BA90 시리즈)" },
-                        { label: "재질 사양", value: "케이싱, 임펠러, 주축, 상부커버, 드레인플러그, 락너트 일체 고품질 스테인리스(STS) 채택" },
-                        { label: "냉·온수 여부", value: "냉수 전용" }
-                    ],
-                    certTitle: "수도용 위생안전기준 인증서 (KC인증)",
-                    certMeta: "인증번호 : KCW-2025-0163 / 최초인증일 : 2025-09-19 / 정기검사 신청기한 : 2027-09-18 / 인증기관 : 한국물기술인증원",
-                    downloadUrl: "./인증서3.pdf",
-                    downloadLabel: "KC인증서 고화질 PDF 다운로드",
-                    certs: [
-                        { name: "KC 위생안전기준 인증서", imagePath: "./images/kc_cert.png", class: "kc-card" }
-                    ]
-                },
-                BOOSTER_SYSTEM: {
-                    title: "부스터 펌프 시스템 조립체 및 전체 제어반",
-                    subtitle: "복수 펌프의 실시간 압력 피드백 병렬 운전을 통한 에너지 세이빙 실현",
-                    specTable: [
-                        { label: "분류", value: "배관유체조절시스템장비 및 펌프 제조 범위" },
-                        { label: "직접생산 확인", value: "부스터펌프시스템, 벌류트(다단·단단·양흡입·편흡입), 정량, 수중, 오수, 슬러지, 심정용, 전진공동 펌프 일체" },
-                        { label: "적용 제외 항", value: "ISO 9001:2015 규격 8.3항(설계 및 개발) 적용 제외 명시" }
-                    ],
-                    certTitle: "품질경영시스템 인증서 (ISO 9001:2015)",
-                    certMeta: "인증서 번호 : Q1291124 / 최초 인증일 : 2024년 08월 23일 / 유효기간 : 2027년 08월 22일 / 인증기관 : ICR (International Certification Registrar)",
-                    downloadUrl: "./인증서2.pdf",
-                    downloadLabel: "ISO 9001 원본 PDF 다운로드",
-                    certs: [
-                        { name: "ISO 9001 품질인증서", imagePath: "./images/iso_cert.png", class: "iso-card" }
-                    ]
-                },
-                FACTORY_SYSTEM: {
-                    title: "경영 혁신 및 시스템 인프라 (공장 등록 현황)",
-                    subtitle: "스마트 팩토리 도입과 경영 혁신 프로세스를 통한 고품질 대량 생산 체계 확립",
-                    specTable: [
-                        { label: "분류", value: "경영혁신형 중소기업 (MAIN-BIZ) 및 공장 등록 현황" },
-                        { label: "기업 자격", value: "중소벤처기업부 선정 경영혁신형 중소기업 / 한국펌프공업협동조합 정식 조합원 (제151호)" },
-                        { label: "공장 정보", value: "강원특별자치도 춘천시 퇴계공단2길 64 (액체 펌프 제조업 외 4종 등록 완료)" }
-                    ],
-                    certTitle: "경영혁신형 중소기업(MAIN-BIZ) 확인서",
-                    certMeta: "확인서 번호 : 제 R180801-01794 호 / 유효기간 : 2024. 09. 14 ~ 2027.09.13 / 발급기관 : 중소벤기업부 장관",
-                    downloadUrl: "./인증서1.pdf",
-                    downloadLabel: "MAIN-BIZ 확인서 PDF 다운로드",
-                    certs: [
-                        { name: "MAIN-BIZ 확인서 스캔본", imagePath: "./images/mainbiz_cert.png", class: "mainbiz-card" }
-                    ]
-                }
-            };
-
-            const detailContainer = document.getElementById('blueprint-detail-content');
-            const resetBtn = document.getElementById('blueprint-reset-btn');
-            const hotspots = document.querySelectorAll('.blueprint-hotspot');
-
-            // SVG Highlight Elements
-            const highlightPump = document.getElementById('highlight-pump');
-            const highlightBooster = document.getElementById('highlight-booster');
-            const highlightFactory = document.getElementById('highlight-factory');
-
-            const renderBlueprintDetail = (partKey) => {
-                const data = blueprintData[partKey];
-                if (!data || !detailContainer) return;
-
-                // 1. Fade out current content
-                detailContainer.classList.add('fade-out');
-                detailContainer.classList.remove('fade-in-active');
-
-                // 2. Wait for animation, then swap data and fade in
-                setTimeout(() => {
-                    // Build spec table rows HTML
-                    const tableRows = data.specTable.map(row => `
-                        <tr style="border-b border-cyan-500/20 bg-[#040d1c]/50 last:border-0 hover:bg-[#081730]/50 transition-colors">
-                            <td class="label-cell" style="padding: 0.75rem 1rem; font-size: 0.75rem; font-weight: bold; font-family: sans-serif; color: #22d3ee; border-right: 1px solid rgba(6, 182, 212, 0.2); background-color: rgba(6, 18, 38, 0.4); text-transform: uppercase; width: 120px; text-align: left; letter-spacing: 0.05em;">${row.label}</td>
-                            <td style="padding: 0.75rem 1rem; font-size: 0.8rem; color: #f0f9ff; line-height: 1.6; font-family: sans-serif;">${row.value}</td>
-                        </tr>
-                    `).join('');
-
-                    // Build cert cards HTML
-                    const certCards = data.certs.map(cert => `
-                        <div class="blueprint-cert-card ${cert.class}" style="aspect-ratio: 3/4; border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 8px; background-color: #030914; position: relative; overflow: hidden; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 0.15rem;">
-                            <!-- Laser Scanning Line on hover -->
-                            <div class="blueprint-cert-laser"></div>
-
-                            <!-- Outer Scan Label -->
-                            <div style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 0.5rem; z-index: 20; pointer-events: none; background: linear-gradient(to top, rgba(6,16,34,0.9), transparent);">
-                                <span style="font-size: 8px; font-family: monospace; color: rgba(0, 240, 255, 0.85); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">${cert.name}</span>
-                                <span style="font-size: 6px; font-family: monospace; color: rgba(0, 240, 255, 0.4); letter-spacing: 0.1em; text-align: right;">HIGH-RES VIEW</span>
-                            </div>
-
-                            <!-- Image Viewer Frame: Object-contain style, maintaining ratio -->
-                            <div style="width: 100%; height: 100%; padding: 0.3rem; display: flex; align-items: center; justify-content: center; background-color: #040d1a;">
-                                <div style="width: 100%; height: 100%; position: relative; overflow: hidden; border: 1px dashed rgba(0, 240, 255, 0.25); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                                    <img 
-                                        src="${cert.imagePath}" 
-                                        alt="${cert.name} 원본 스캔본"
-                                        style="width: 100%; height: 100%; object-fit: contain; image-rendering: -webkit-optimize-contrast; transition: transform 0.5s ease;"
-                                        class="blueprint-cert-img"
-                                        onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
-                                    />
-                                    <!-- Fallback View Box (Schematic dummy style) -->
-                                    <div class="fallback-viewer-box hidden" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #030914, #061838); padding: 0.5rem; text-align: center; border-radius: 4px;">
-                                        <svg style="width: 24px; height: 24px; color: rgba(0, 240, 255, 0.35); margin-bottom: 4px; stroke-width: 1px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11.571V9a4 4 0 00-8 0v2.571c0 2.425.69 4.755 2.01 6.734l.054.09m6.417-3.83a9.013 9.013 0 012.753 6.571M12 11a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span style="font-size: 8px; font-weight: 700; color: rgba(0, 240, 255, 0.65); text-transform: uppercase; line-height: 1.2;">${cert.name}</span>
-                                        <span style="font-size: 6px; font-family: monospace; color: rgba(0, 240, 255, 0.3); margin-top: 2px;">BAETECK QUALITY ID</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('');
-
-                    // Compile final template
-                    detailContainer.innerHTML = `
-                        <div>
-                            <div class="border-b border-cyan-500/20 pb-4 mb-6">
-                                <span class="spec-sheet-tag">SPECIFICATION SHEET</span>
-                                <h2 class="blueprint-detail-title">${data.title}</h2>
-                                <p class="blueprint-detail-desc">${data.subtitle}</p>
-                            </div>
-
-                            <div class="blueprint-table-container" style="border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; overflow: hidden; margin: 1.5rem 0;">
-                                <table class="blueprint-table" style="width: 100%; border-collapse: collapse;">
-                                    <tbody>
-                                        ${tableRows}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="mb-6">
-                                <h4 class="blueprint-cert-header">
-                                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:#00F0FF; stroke-width:2.5px;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
-                                    ${data.certTitle}
-                                </h4>
-
-                                <div class="blueprint-cert-grid ${data.certs.length === 1 ? 'single-cert' : ''}">
-                                    ${certCards}
-                                </div>
-
-                                <div class="blueprint-cert-meta">
-                                    ${data.certMeta}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 pt-4 border-t border-cyan-500/20">
-                            <a href="${data.downloadUrl}" download class="blueprint-btn-download">
-                                <span class="blueprint-btn-liquid"></span>
-                                <span class="blueprint-btn-content">
-                                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="stroke-width:2.5px;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                    </svg>
-                                    ${data.downloadLabel}
-                                </span>
-                            </a>
-                        </div>
-                    `;
-
-                    // Remove fade-out class and trigger fade-in slide animation
-                    detailContainer.classList.remove('fade-out');
-                    detailContainer.classList.add('fade-in-active');
-                }, 400);
-
-                // Update SVG Highlight active boundaries
-                if (highlightPump) highlightPump.setAttribute('stroke', partKey === 'PUMP_COMPONENTS' ? 'rgba(0, 240, 255, 0.7)' : 'rgba(0,240,255,0)');
-                if (highlightBooster) highlightBooster.setAttribute('stroke', partKey === 'BOOSTER_SYSTEM' ? 'rgba(0, 240, 255, 0.7)' : 'rgba(0,240,255,0)');
-                if (highlightFactory) highlightFactory.setAttribute('stroke', partKey === 'FACTORY_SYSTEM' ? 'rgba(0, 240, 255, 0.7)' : 'rgba(0,240,255,0)');
-
-                // Update reset button display
-                if (resetBtn) resetBtn.style.display = partKey === 'DEFAULT' ? 'none' : 'block';
-
-                // Update hotspots active class
-                hotspots.forEach(btn => {
-                    if (btn.getAttribute('data-part') === partKey) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
-                });
-            };
-
-            // Bind click events to hotspots
-            hotspots.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const part = btn.getAttribute('data-part');
-                    renderBlueprintDetail(part);
-                });
-            });
-
-            // Bind click to reset button
-            if (resetBtn) {
-                resetBtn.addEventListener('click', () => {
-                    renderBlueprintDetail('DEFAULT');
+                // 브라우저 윈도우 크기 변화에 대응한 ScrollTrigger 강제 리프레시
+                window.addEventListener('resize', () => {
+                    ScrollTrigger.refresh();
                 });
             }
-
-            // Initial render
-            renderBlueprintDetail('DEFAULT');
-
-            // 모든 이미지 및 트리거 등록 완료 후 최종 동기화 리프레시 실행
-            ScrollTrigger.refresh();
         });
     </script>
 </body>
