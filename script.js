@@ -209,17 +209,70 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 로컬 HTML 페이지간 이동 감지 시 AnimatePresence Exit 효과 구동
-        if (href.includes('.html') || href.startsWith('./') || href.startsWith('../')) {
-            e.preventDefault();
-            
-            // exiting 클래스를 부여해 즉각적인 페이드아웃 개시
-            document.body.classList.add('page-exiting');
+            // 로컬 HTML 페이지간 이동 감지 시 AnimatePresence Exit 효과 구동
+            if (href.includes('.html') || href.startsWith('./') || href.startsWith('../')) {
+                e.preventDefault();
+                
+                // exiting 클래스를 부여해 즉각적인 페이드아웃 개시
+                document.body.classList.add('page-exiting');
 
-            // 0.35초 후 자연스러운 교체가 일어나도록 리다이렉트
-            setTimeout(() => {
-                window.location.href = href;
-            }, 350);
-        }
+                // 0.35초 후 자연스러운 교체가 일어나도록 리다이렉트
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 350);
+            }
     }, { passive: false });
+
+    // ----------------------------------------------------
+    // 7. 자바 백엔드 배포 환경용 Context Path 자동 맵핑 및 캐시 버스팅 (Cache Busting)
+    // ----------------------------------------------------
+    function getContextPath() {
+        const host = window.location.host;
+        const path = window.location.pathname;
+        if (path.indexOf('/') === -1 || host === "") return "";
+        const context = path.substring(0, path.indexOf('/', 1));
+        // HTML 파일명이 첫 세그먼트이거나 빈값인 경우 예외처리
+        if (context === "/index.html" || context.endsWith(".html") || context === "/WEB-INF") return "";
+        return context;
+    }
+
+    const cp = getContextPath();
+    const timestamp = new Date().getTime();
+
+    // 모든 이미지 요소의 경로를 Context Path에 맞춰 보정하고 캐시 버스팅 파라미터 추가
+    document.querySelectorAll('img').forEach(img => {
+        let originalSrc = img.getAttribute('src');
+        if (originalSrc && !originalSrc.startsWith('data:') && !originalSrc.startsWith('http') && !originalSrc.startsWith('//')) {
+            let targetSrc = originalSrc;
+            if (targetSrc.startsWith('./')) {
+                targetSrc = targetSrc.substring(2);
+            }
+            
+            // Context Path 접두사 추가
+            if (cp && !targetSrc.startsWith(cp + '/')) {
+                targetSrc = cp + '/' + targetSrc;
+            } else if (!targetSrc.startsWith('/')) {
+                targetSrc = './' + targetSrc;
+            }
+            
+            // 캐시 버스팅 파라미터 추가
+            const separator = targetSrc.includes('?') ? '&' : '?';
+            img.src = `${targetSrc}${separator}v=${timestamp}`;
+        }
+    });
+
+    // 비디오 poster 처리
+    document.querySelectorAll('video').forEach(video => {
+        let poster = video.getAttribute('poster');
+        if (poster && !poster.startsWith('data:') && !poster.startsWith('http') && !poster.startsWith('//')) {
+            let targetPoster = poster.startsWith('./') ? poster.substring(2) : poster;
+            if (cp && !targetPoster.startsWith(cp + '/')) {
+                targetPoster = cp + '/' + targetPoster;
+            } else if (!targetPoster.startsWith('/')) {
+                targetPoster = './' + targetPoster;
+            }
+            const separator = targetPoster.includes('?') ? '&' : '?';
+            video.setAttribute('poster', `${targetPoster}${separator}v=${timestamp}`);
+        }
+    });
 });

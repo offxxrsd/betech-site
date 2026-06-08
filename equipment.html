@@ -142,6 +142,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2.5rem;
+            min-height: 600px; /* 레이아웃 시프트(CLS) 방지를 위한 최소 높이 정의 */
         }
         .equipment-card {
             background-color: var(--color-bg-white);
@@ -151,7 +152,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
             display: flex;
             flex-direction: column;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
             opacity: 0;
             transform: translateY(20px);
         }
@@ -159,6 +160,10 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* 스태거 페이드인 모션 구현을 위한 순차적 딜레이 */
+        .equipment-card:nth-child(1) { transition-delay: 0.05s; }
+        .equipment-card:nth-child(2) { transition-delay: 0.12s; }
+        .equipment-card:nth-child(3) { transition-delay: 0.19s; }
         .equipment-card:hover {
             transform: translateY(-10px);
             box-shadow: var(--shadow-lg), 0 10px 20px -5px rgba(0, 163, 224, 0.1);
@@ -659,30 +664,14 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. GNB 모바일 토글 버튼 처리
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (mobileToggle && mobileMenu) {
-                mobileToggle.addEventListener('click', () => {
-                    const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
-                    mobileToggle.setAttribute('aria-expanded', !expanded);
-                    mobileMenu.classList.toggle('active');
-                });
-            }
-
             // 2. 카테고리 필터링 제어 로직
             const filterButtons = document.querySelectorAll('.filter-btn');
             const cards = document.querySelectorAll('.equipment-card');
 
-            // 초기 모든 카드 렌더링 페이드인
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.display = 'flex';
-                    // 강제 리플로우
-                    card.offsetHeight;
-                    card.classList.add('visible');
-                }, index * 100);
+            // 초기 모든 카드 렌더링 페이드인 (FOUC 및 CLS 방지를 위해 지연 없이 즉시 클래스 주입)
+            cards.forEach(card => {
+                card.style.display = 'flex';
+                card.classList.add('visible');
             });
 
             filterButtons.forEach(btn => {
@@ -752,5 +741,7 @@
             document.querySelector('.modal-backdrop').addEventListener('click', closeModal);
         });
     </script>
+    <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
+    <script src="./script.js"></script>
 </body>
 </html>
