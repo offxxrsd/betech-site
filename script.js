@@ -165,7 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // GNB 보유장비 링크 클릭 시 즉각 감지 (동일 페이지 내부 이동 처리)
         document.querySelectorAll('a[href*="#equipment-spec-section"]').forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // 기본 이동 방지 (튕김/새로고침 원천 차단)
                 equipmentSection.classList.remove('hidden');
                 equipmentSection.classList.add('active');
                 setTimeout(() => {
@@ -181,8 +182,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------------------------------
     // 6. AnimatePresence 시뮬레이션 기반 전역 페이지 트랜지션 엔진
     // ----------------------------------------------------
-    // 브라우저 렌더링 완료 즉시 페이드인(Enter) 주입
-    document.body.classList.add('page-loaded');
+    // 동일 페이지 내 해시 이동(앵커 링크)인지 판별하는 헬퍼 함수
+    const isAnchorToSamePage = (href) => {
+        if (!href.includes('#')) return false;
+        
+        const hashIdx = href.indexOf('#');
+        const pathPart = href.substring(0, hashIdx);
+        
+        // 해시만 있는 경우 (예: '#section')
+        if (pathPart === '') return true;
+        
+        // 현재 페이지 파일명과 비교
+        const currentPath = window.location.pathname;
+        const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1) || 'index.html';
+        const targetFile = pathPart.substring(pathPart.lastIndexOf('/') + 1);
+        
+        // 대상 파일명이 현재 파일명과 같거나, 메인 페이지 루트 기준 예외 분기
+        return targetFile === currentFile || targetFile === '' || (currentFile === 'index.html' && targetFile === '');
+    };
+
+    // 브라우저 렌더링 완료 즉시 페이드인(Enter) 주입 -> FOUC 방지를 위해 DOMContentLoaded가 아닌 window load 시점으로 이동
+    window.addEventListener('load', () => {
+        document.body.classList.add('page-loaded');
+    });
 
     // 페이지 이탈(Exit) 시 페이드아웃 적용을 위한 통합 클릭 위임
     document.addEventListener('click', (e) => {
@@ -202,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             href.startsWith('kakaomap:') ||
             target === '_blank' ||
             href.includes('//') ||
+            isAnchorToSamePage(href) || // 동일 페이지 내 해시 이동인 경우 트랜지션 제외
             e.ctrlKey ||
             e.metaKey ||
             e.shiftKey
