@@ -368,8 +368,8 @@
 
         .csr-book-container {
             position: relative;
-            width: 900px;
-            height: 560px; /* 고정 높이 */
+            width: 600px;
+            height: 375px; /* 고정 높이 비율(1.6:1) */
             perspective: 1500px; /* 원근감 */
             -webkit-perspective: 1500px; /* 원근감 (Safari) */
             background: #091528;
@@ -401,7 +401,7 @@
         /* Physical Book Page structure */
         .csr-page {
             position: absolute;
-            width: 450px;
+            width: 300px;
             height: 100%;
             top: 0;
             left: 50%; /* Positioned on the right side initially */
@@ -482,7 +482,7 @@
         /* Static pages inside the book */
         .csr-static-page {
             position: absolute;
-            width: 450px;
+            width: 300px;
             height: 100%;
             top: 0;
             overflow: hidden;
@@ -506,22 +506,25 @@
 
 
         /* Responsive scaling */
-        @media (max-width: 960px) {
-            .csr-book-viewport {
-                transform: scale(0.8);
-            }
-        }
         @media (max-width: 768px) {
             .csr-book-viewport {
-                transform: scale(0.6);
+                width: 100%;
+                padding: 1rem;
+            }
+            .csr-book-container {
+                width: 100%;
+                max-width: 600px;
+                height: auto;
+                aspect-ratio: 1.6 / 1;
+            }
+            .csr-page {
+                width: 50%;
+            }
+            .csr-static-page {
+                width: 50%;
             }
             .csr-header {
-                top: 3%;
-            }
-        }
-        @media (max-width: 500px) {
-            .csr-book-viewport {
-                transform: scale(0.45);
+                margin-bottom: 1.5rem;
             }
         }
 
