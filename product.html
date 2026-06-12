@@ -1040,6 +1040,72 @@
             border-top: 1px solid rgba(0, 240, 255, 0.15);
         }
 
+        /* 인증서 링크 리스트 스타일 */
+        .bp-archive-cert-list-container {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(0, 240, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .bp-archive-cert-list-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #4f647a;
+            letter-spacing: 0.05em;
+            margin: 0;
+            text-transform: uppercase;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .bp-archive-cert-link-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .bp-archive-cert-link-list li {
+            display: block;
+        }
+
+        .bp-archive-cert-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            padding: 2px 0;
+        }
+
+        .bp-archive-cert-link:hover {
+            color: #00e5ff;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.35);
+        }
+
+        .bp-archive-cert-link:hover span {
+            text-decoration: underline;
+        }
+
+        .bp-archive-cert-icon {
+            color: rgba(0, 229, 255, 0.65);
+            transition: color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .bp-archive-cert-link:hover .bp-archive-cert-icon {
+            color: #00e5ff;
+            filter: drop-shadow(0 0 4px #00e5ff);
+        }
+
         .bp-archive-btn-download {
             position: relative;
             display: inline-flex;
@@ -1949,16 +2015,35 @@
                             </div>
                         </div>
 
-                        <div class="bp-archive-btn-download-container">
-                            <a href="${data.downloadUrl}" download class="bp-archive-btn-download">
-                                <span class="bp-archive-btn-liquid"></span>
-                                <span class="bp-archive-btn-content">
-                                    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="stroke-width:2.5px;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                    </svg>
-                                    ${data.downloadLabel}
-                                </span>
-                            </a>
+                        <!-- 인증서 링크 리스트 영역 -->
+                        <div class="bp-archive-cert-list-container">
+                            <h5 class="bp-archive-cert-list-title">인증서 및 확인서 원본 링크</h5>
+                            <ul class="bp-archive-cert-link-list">
+                                <li>
+                                    <a href="./income1.pdf" target="_blank" rel="noopener noreferrer" class="bp-archive-cert-link">
+                                        <svg class="bp-archive-cert-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <span>ISO 9001 품질인증서</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="./income2.pdf" target="_blank" rel="noopener noreferrer" class="bp-archive-cert-link">
+                                        <svg class="bp-archive-cert-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <span>KC 인증서</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="./income3.pdf" target="_blank" rel="noopener noreferrer" class="bp-archive-cert-link">
+                                        <svg class="bp-archive-cert-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <span>MAIN-BIZ 확인서 스캔본</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     `;
 
