@@ -249,6 +249,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------------------------------
     // 7. 자바 백엔드 배포 환경용 Context Path 자동 맵핑 및 캐시 버스팅 (Cache Busting)
     // ----------------------------------------------------
+    // 로컬 파일 환경(file://)인 경우 경로 보정 및 캐시 버스팅 스킵 (로컬 이미지 깨짐 방지)
+    if (window.location.protocol === 'file:') {
+        return;
+    }
+
     function getContextPath() {
         const host = window.location.host;
         const path = window.location.pathname;
