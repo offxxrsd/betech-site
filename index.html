@@ -550,9 +550,8 @@
             border: 1px solid rgba(0, 240, 255, 0.06);
             border-radius: 16px;
             position: relative;
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-                        border-color 1.2s ease, 
-                        box-shadow 1.2s ease;
+            /* 제거: GSAP 진입 애니메이션 시 덜덜 떨리는 충돌(Conflict)을 막기 위해 base에서 transform 트랜지션 제외 */
+            transition: border-color 1.2s ease, box-shadow 1.2s ease;
             z-index: 1;
         }
 
@@ -574,6 +573,10 @@
             border-color: rgba(0, 229, 255, 0.45);
             box-shadow: 0 0 25px rgba(0, 229, 255, 0.2),
                         inset 0 0 15px rgba(0, 229, 255, 0.08);
+            /* 진입 애니메이션 완료 후 마우스 호버 트랜지션 적용을 위해 여기에 추가 */
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 1.2s ease, 
+                        box-shadow 1.2s ease;
         }
 
         .metric-card.glow-active .glow-bg {
