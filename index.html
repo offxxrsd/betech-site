@@ -355,176 +355,332 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* 3D Book Container and Perspective */
-        .csr-book-viewport {
-            perspective: 2000px;
+        /* 2-Column CSR Content Viewer 스타일시트 */
+        .csr-viewer-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            gap: 4rem;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            will-change: opacity, transform;
+        }
+
+        .csr-viewer-container.transition-out {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        /* 1:1 Aspect ratio box for image column */
+        .csr-image-column {
+            flex: 1;
+            max-width: 500px;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            padding: 2rem 0;
-            z-index: 20;
         }
 
-        .csr-book-container {
+        .csr-image-wrapper {
             position: relative;
-            width: 600px;
-            height: 375px; /* 고정 높이 비율(1.6:1) */
-            perspective: 1500px; /* 원근감 */
-            -webkit-perspective: 1500px; /* 원근감 (Safari) */
-            background: #091528;
-            border-radius: 12px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 
-                        inset 0 0 40px rgba(0, 240, 255, 0.05);
-            border: 1px solid rgba(0, 240, 255, 0.1);
-            transform-style: preserve-3d;
-            -webkit-transform-style: preserve-3d;
-            transition: transform 0.5s ease;
-            -webkit-transition: -webkit-transform 0.5s ease;
-        }
-
-        /* Spine in the center of the book */
-        .csr-book-spine {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0.5) 100%);
-            border-left: 1px solid rgba(255, 255, 255, 0.03);
-            border-right: 1px solid rgba(255, 255, 255, 0.03);
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        /* Physical Book Page structure */
-        .csr-page {
-            position: absolute;
-            width: 300px;
-            height: 100%;
-            top: 0;
-            left: 50%; /* Positioned on the right side initially */
-            transform-origin: left center;
-            -webkit-transform-origin: left center;
-            transform-style: preserve-3d;
-            -webkit-transform-style: preserve-3d;
-            transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-            -webkit-transition: -webkit-transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 1;
-            cursor: pointer;
-        }
-
-        /* Flipped state: page swings to the left side */
-        .csr-page.flipped {
-            transform: rotateY(-180deg);
-        }
-
-        .csr-page-face {
-            position: absolute;
             width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden; /* 배면 숨김 (Safari) */
+            aspect-ratio: 1 / 1; /* 고정 1:1 비율 */
             background-color: #0d1e36;
+            border-radius: 16px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: inset 3px 0 20px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .csr-page-face img {
+        .csr-image-wrapper img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* 이미지가 찌그러지지 않고 꽉 채우도록 설정 */
             display: block;
+            transition: transform 0.5s ease;
         }
 
-        /* Front faces face the reader on the right side */
-        .csr-page-front {
-            z-index: 2;
-            transform: rotateY(0deg);
-            border-radius: 0 8px 8px 0;
+        .csr-image-wrapper:hover img {
+            transform: scale(1.03); /* 은은한 이미지 줌 효과 */
         }
 
-        /* Back faces face the reader on the left side after flipping */
-        .csr-page-back {
-            transform: rotateY(180deg);
-            border-radius: 8px 0 0 8px;
-            box-shadow: inset -3px 0 20px rgba(0, 0, 0, 0.2);
+        /* Text Column styling */
+        .csr-text-column {
+            flex: 1;
+            max-width: 500px;
+            width: 100%;
+            display: flex;
+            align-items: center;
         }
 
-        /* Hover page curl visual cue */
-        .csr-page:not(.flipped):hover {
-            transform: rotateY(-8deg);
+        .csr-text-wrapper {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem 0;
         }
 
-        .csr-page.flipped:hover {
-            transform: rotateY(-172deg);
+        .csr-step-badge {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #00e5ff; /* 아쿠아 블루 */
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+            display: inline-block;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
         }
 
-        /* Active highlight for focused text/page side */
-        .csr-content-active {
+        .csr-step-title {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: 850;
+            margin: 0 0 0.8rem 0;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            word-break: keep-all;
+        }
+
+        .csr-step-subtitle {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1.2rem;
+            color: #00a3e0; /* 서브 타이틀 색상 */
+            font-weight: 600;
+            margin: 0 0 1.5rem 0;
+            line-height: 1.4;
+            word-break: keep-all;
+        }
+
+        .csr-step-desc {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1.05rem;
+            color: #a5b4fc; /* 부드러운 라벤더 블루 */
+            line-height: 1.75;
+            margin: 0;
+            word-break: keep-all;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .csr-viewer-container {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+                padding: 1rem 1.5rem;
+            }
+
+            .csr-image-column {
+                max-width: 400px;
+            }
+
+            .csr-text-column {
+                max-width: 100%;
+            }
+
+            .csr-text-wrapper {
+                text-align: center;
+                padding: 0;
+            }
+
+            .csr-step-title {
+                font-size: 1.75rem;
+            }
+
+            .csr-step-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .csr-step-desc {
+                font-size: 0.95rem;
+                margin: 0 auto;
+                max-width: 550px;
+            }
+        }
+
+        /* ==========================================================================
+           핵심 지표 섹션 (Core Metrics Section) 스타일시트
+           ========================================================================== */
+        .metrics-section {
+            background-color: #050f1e; /* Deep navy background matching the site theme */
+            padding: 80px 0;
             position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
         }
-        .csr-content-active::before {
+
+        .metrics-section::before {
             content: '';
             position: absolute;
-            inset: 0;
-            border: 2px solid rgba(0, 229, 255, 0.5);
-            box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.15);
-            pointer-events: none;
-            border-radius: inherit;
-            z-index: 10;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.3), transparent);
         }
 
-        /* Static pages inside the book */
-        .csr-static-page {
-            position: absolute;
-            width: 300px;
-            height: 100%;
-            top: 0;
-            overflow: hidden;
+        .metrics-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            flex: 1;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
             display: flex;
             flex-direction: column;
-            box-shadow: inset 3px 0 20px rgba(0, 0, 0, 0.2);
+            align-items: center;
+            justify-content: flex-start;
+            opacity: 0;
+            transform: translateY(30px);
+            background: rgba(9, 25, 44, 0.4);
+            border: 1px solid rgba(0, 240, 255, 0.06);
+            border-radius: 16px;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 1.2s ease, 
+                        box-shadow 1.2s ease;
+            z-index: 1;
         }
-        
-        .csr-static-left {
-            left: 0;
-            border-radius: 8px 0 0 8px;
-            background-color: #0b172a;
+
+        /* 하드웨어 가속용 백그라운드 글로우 레이어 */
+        .metric-card .glow-bg {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: radial-gradient(circle at center, rgba(0, 229, 255, 0.12) 0%, transparent 75%);
+            opacity: 0;
+            transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+            z-index: -1;
+            will-change: opacity;
         }
 
-        .csr-static-right {
-            right: 0;
-            border-radius: 0 8px 8px 0;
-            background-color: #0b172a;
+        /* 카운트업 완료 시 클래스 활성화 */
+        .metric-card.glow-active {
+            border-color: rgba(0, 229, 255, 0.45);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.2),
+                        inset 0 0 15px rgba(0, 229, 255, 0.08);
         }
 
+        .metric-card.glow-active .glow-bg {
+            opacity: 1;
+            animation: metric-glow-pulse 4s infinite alternate ease-in-out;
+        }
 
+        /* 호버 마우스 인터랙션 */
+        .metric-card:hover {
+            transform: translateY(-8px) scale(1.03) !important;
+            border-color: rgba(0, 229, 255, 0.7) !important;
+            box-shadow: 0 12px 35px rgba(0, 229, 255, 0.35),
+                        inset 0 0 20px rgba(0, 229, 255, 0.15) !important;
+        }
 
-        /* Responsive scaling */
-        @media (max-width: 768px) {
-            .csr-book-viewport {
-                width: 100%;
-                padding: 1rem;
+        .metric-card:hover .metric-number-wrapper {
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
+            color: #00e5ff;
+        }
+
+        .metric-card:hover .glow-bg {
+            opacity: 1;
+            background: radial-gradient(circle at center, rgba(0, 229, 255, 0.2) 0%, transparent 70%);
+        }
+
+        .metric-number-wrapper {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .metric-value {
+            color: #00e5ff; /* Aqua blue */
+        }
+
+        .metric-suffix {
+            color: #00a3e0; /* Deep blue accent */
+            margin-left: 2px;
+        }
+
+        .metric-label {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 0 0.75rem 0;
+            letter-spacing: -0.01em;
+        }
+
+        .metric-desc {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.88rem;
+            color: #8fa0dd;
+            line-height: 1.6;
+            margin: 0;
+            word-break: keep-all;
+            max-width: 250px;
+        }
+
+        /* Divider 세로 분할선 라인 */
+        .metric-divider {
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(0, 240, 255, 0.25) 50%, transparent);
+            height: 0%; /* Initial state for animation */
+            align-self: center;
+        }
+
+        /* 하드웨어 가속을 위한 테두리 및 섀도우 키프레임 */
+        @keyframes metric-glow-pulse {
+            0% {
+                opacity: 0.8;
+                transform: scale(0.98);
             }
-            .csr-book-container {
-                width: 100%;
-                max-width: 600px;
-                height: auto;
-                aspect-ratio: 1.6 / 1;
+            100% {
+                opacity: 1.2;
+                transform: scale(1.02);
             }
-            .csr-page {
-                width: 50%;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .metrics-grid {
+                flex-wrap: wrap;
+                gap: 2rem;
             }
-            .csr-static-page {
-                width: 50%;
+            .metric-card {
+                flex: calc(50% - 1.5rem);
+                min-width: 200px;
             }
-            .csr-header {
-                margin-bottom: 1.5rem;
+            .metric-divider {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .metrics-section {
+                padding: 60px 0;
+            }
+            .metric-card {
+                flex: 100%;
             }
         }
 
@@ -677,7 +833,61 @@
             </div>
         </section>
 
+        <!-- Core Metrics Section (핵심 지표 섹션) -->
+        <section class="metrics-section" id="metrics" aria-labelledby="metrics-title">
+            <div class="section-container">
+                <div class="metrics-grid">
+                    <!-- 지표 카드 1 -->
+                    <div class="metric-card">
+                        <div class="glow-bg"></div>
+                        <div class="metric-number-wrapper">
+                            <span class="metric-value" data-target="100">0</span><span class="metric-suffix">%</span>
+                        </div>
+                        <h3 class="metric-label">설비 무결점 가동율</h3>
+                        <p class="metric-desc">철저한 유지관리 기준 준수와 예방 점검으로 고장률 제로 지향</p>
+                    </div>
+                    
+                    <!-- 분할선 1 -->
+                    <div class="metric-divider"></div>
 
+                    <!-- 지표 카드 2 -->
+                    <div class="metric-card">
+                        <div class="glow-bg"></div>
+                        <div class="metric-number-wrapper">
+                            <span class="metric-value" data-target="24">0</span><span class="metric-suffix">/7</span>
+                        </div>
+                        <h3 class="metric-label">상시 기술 대응 체계</h3>
+                        <p class="metric-desc">긴급 장애 극복을 위한 24시간 365일 비상 기술 영업 채널 운영</p>
+                    </div>
+
+                    <!-- 분할선 2 -->
+                    <div class="metric-divider"></div>
+
+                    <!-- 지표 카드 3 -->
+                    <div class="metric-card">
+                        <div class="glow-bg"></div>
+                        <div class="metric-number-wrapper">
+                            <span class="metric-value" data-target="0.01" data-start="1.00" data-decimals="2">1.00</span><span class="metric-suffix">%</span>
+                        </div>
+                        <h3 class="metric-label">미세 유량 오차 보장</h3>
+                        <p class="metric-desc">등속도캠 및 다중 헤드 크로스 교차 이송 기술을 활용한 정밀 제어</p>
+                    </div>
+
+                    <!-- 분할선 3 -->
+                    <div class="metric-divider"></div>
+
+                    <!-- 지표 카드 4 -->
+                    <div class="metric-card">
+                        <div class="glow-bg"></div>
+                        <div class="metric-number-wrapper">
+                            <span class="metric-value" data-target="100">0</span><span class="metric-suffix">+</span>
+                        </div>
+                        <h3 class="metric-label">핵심 특허 및 실적</h3>
+                        <p class="metric-desc">국내외 특허 출원 및 대기업·공공기관 납품 및 오버홀 수리 실적</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- ==========================================================================
              사회공헌 (CSR) 캠페인 섹션 (Scroll-driven Horizontal Slider)
@@ -692,53 +902,25 @@
                     <h2 class="csr-title">물이 채우는 온기, <span>비에이텍이 그리는 깨끗한 미래</span></h2>
                 </div>
 
-                <!-- 3D Book Viewport -->
-                <div class="csr-book-viewport select-none my-4">
-                    <div class="csr-book-container" id="book-container">
-                        <!-- Central spine divider -->
-                        <div class="csr-book-spine"></div>
-
-                        <!-- Static Left Page (Cover interior) -->
-                        <div class="csr-static-page csr-static-left"></div>
-
-                        <!-- Static Right Page (Back Cover interior) -->
-                        <div class="csr-static-page csr-static-right"></div>
-
-                        <!-- Physical Pages -->
-                        <!-- Page 1 (Front: Step 01 / Back: Step 02) -->
-                        <div class="csr-page" id="csr-page1">
-                            <!-- FRONT: Step 01. 프롤로그 -->
-                            <div class="csr-page-face csr-page-front" id="content-step1">
-                                <img src="./comic1.png" alt="Step 01" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/450x560/0d1e36/ffffff?text=Step+01+Image+Load+Failed';">
-                            </div>
-                            <!-- BACK: Step 02. 문제제기 -->
-                            <div class="csr-page-face csr-page-back" id="content-step2">
-                                <img src="./comic2.png" alt="Step 02" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/450x560/0d1e36/ffffff?text=Step+02+Image+Load+Failed';">
-                            </div>
+                <!-- 2-Column CSR Content Viewer -->
+                <div class="csr-viewer-container">
+                    <!-- Left Column: Comic Image -->
+                    <div class="csr-image-column">
+                        <div class="csr-image-wrapper">
+                            <img id="csr-comic-img" src="./comic1.png" alt="CSR 캠페인 웹툰" onerror="this.onerror=null; this.src='https://placehold.co/600x600/0d1e36/ffffff?text=Image+Load+Failed';">
                         </div>
+                    </div>
 
-                        <!-- Page 2 (Front: Step 03 / Back: Step 04) -->
-                        <div class="csr-page" id="csr-page2">
-                            <!-- FRONT: Step 03. 행동실천 -->
-                            <div class="csr-page-face csr-page-front" id="content-step3">
-                                <img src="./comic3.png" alt="Step 03" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/450x560/0d1e36/ffffff?text=Step+03+Image+Load+Failed';">
-                            </div>
-                            <!-- BACK: Step 04. 데이터화 -->
-                            <div class="csr-page-face csr-page-back" id="content-step4">
-                                <img src="./comic4.png" alt="Step 04" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/450x560/0d1e36/ffffff?text=Step+04+Image+Load+Failed';">
-                            </div>
+                    <!-- Right Column: Texts -->
+                    <div class="csr-text-column">
+                        <div class="csr-text-wrapper">
+                            <span class="csr-step-badge" id="csr-step-tag">STEP 01. 프롤로그</span>
+                            <h3 class="csr-step-title" id="csr-step-title">매일 걷던 산책로의 하천...</h3>
+                            <h4 class="csr-step-subtitle" id="csr-step-subtitle">일상 속에서 마주한 하천의 변화</h4>
+                            <p class="csr-step-desc" id="csr-step-desc">
+                                평화롭던 산책길, 어두운 물빛과 불쾌한 냄새가 코를 찌릅니다. 우리가 가꾸고 보존해야 할 생명의 터전인 하천이 조금씩 생명력을 잃어가고 있었습니다.
+                            </p>
                         </div>
-
-                        <!-- Page 3 (Front: Step 05 / Back: Closing Page) -->
-                        <div class="csr-page" id="csr-page3">
-                            <!-- FRONT: Step 05. 피날레 -->
-                            <div class="csr-page-face csr-page-front" id="content-step5">
-                                <img src="./comic5.png" alt="Step 05" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/450x560/0d1e36/ffffff?text=Step+05+Image+Load+Failed';">
-                            </div>
-                            <!-- BACK: Ending page -->
-                            <div class="csr-page-face csr-page-back"></div>
-                        </div>
-
                     </div>
                 </div>
 
@@ -1020,6 +1202,10 @@
         </div>
     </footer>
 
+    <!-- GSAP & ScrollTrigger CDN (인터랙티브 모션 제어) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <!-- 인터랙션 제어용 자바스크립트 -->
     <script src="./script.js?v=20260612"></script>
 
@@ -1050,111 +1236,111 @@
     <script>
         // Race Condition 방지: 만화 카드 이미지 등 모든 리소스가 완전히 렌더링된 후 ScrollTrigger 등록
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. 사회공헌(CSR) 3D 플립 북 인터랙션
+            // 1. 사회공헌(CSR) 2컬럼 인터랙티브 뷰어
             let currentStep = 1;
             const totalSteps = 5;
 
-            // Pages mapping (matched with page IDs in markup)
-            const pages = [
-                document.getElementById('csr-page1'),
-                document.getElementById('csr-page2'),
-                document.getElementById('csr-page3')
-            ];
-
-            // Content regions for active highlighting
-            const stepContents = {
-                1: document.getElementById('content-step1'),
-                2: document.getElementById('content-step2'),
-                3: document.getElementById('content-step3'),
-                4: document.getElementById('content-step4'),
-                5: document.getElementById('content-step5')
+            const csrData = {
+                1: {
+                    tag: "STEP 01. 프롤로그",
+                    title: "매일 걷던 산책로의 하천...",
+                    subtitle: "일상 속에서 마주한 하천의 변화",
+                    desc: "평화롭던 산책길, 어두운 물빛과 불쾌한 냄새가 코를 찌릅니다. 우리가 가꾸고 보존해야 할 생명의 터전인 하천이 조금씩 생명력을 잃어가고 있었습니다.",
+                    img: "./comic1.png"
+                },
+                2: {
+                    tag: "STEP 02. 문제 제기",
+                    title: "탁해지는 유속과 환경 오염의 징후",
+                    subtitle: "자정 능력을 잃어가는 생태계",
+                    desc: "유입되는 오염 물질과 정체된 수류 속에서 물고기들은 살 곳을 잃어갑니다. 정밀하고 안정적인 정화 및 주입 장치가 부재한 탓에, 하천의 탁도는 날이 갈수록 높아지고 있었습니다.",
+                    img: "./comic2.png"
+                },
+                3: {
+                    tag: "STEP 03. 해결책 제시",
+                    title: "비에이텍의 정밀 유체 제어 솔루션",
+                    subtitle: "무맥동 기술로 되찾는 하천의 투명함",
+                    desc: "비에이텍의 독자적이고 특허받은 무맥동 다이어프램 정량 펌프 기술이 적용됩니다. 약품의 과소·과다 투입 없이 정확한 농도를 유지하며 수처리 공정이 한층 더 완벽해집니다.",
+                    img: "./comic3.png"
+                },
+                4: {
+                    tag: "STEP 04. 데이터 및 성과",
+                    title: "실시간 수질 정화 데이터 모니터링",
+                    subtitle: "수치로 입증되는 생태 복원 프로젝트",
+                    desc: "정밀 유량 주입을 통해 하천의 BOD(생물학적 산소요구량)가 급격히 개선되고 탁도가 회복됩니다. 비에이텍의 엔지니어링 역량이 하천 생태계를 다시 숨 쉬게 만듭니다.",
+                    img: "./comic4.png"
+                },
+                5: {
+                    tag: "STEP 05. 피날레",
+                    title: "생태 복원 완료, 맑게 흐르는 미래",
+                    subtitle: "비에이텍이 그리는 깨끗한 수생태계",
+                    desc: "다시 맑고 투명한 물이 흐르는 하천, 새들이 찾아오고 아이들이 뛰어노는 친수 공간으로 거듭납니다. 물 공학 기술을 향한 비에이텍의 집념이 우리 이웃과 자연에 따뜻한 활력을 채웁니다.",
+                    img: "./comic5.png"
+                }
             };
 
-            // Navigation elements
+            const imgEl = document.getElementById('csr-comic-img');
+            const tagEl = document.getElementById('csr-step-tag');
+            const titleEl = document.getElementById('csr-step-title');
+            const subtitleEl = document.getElementById('csr-step-subtitle');
+            const descEl = document.getElementById('csr-step-desc');
+            const indicatorEl = document.getElementById('csr-page-indicator');
             const btnPrev = document.getElementById('csr-btn-prev');
             const btnNext = document.getElementById('csr-btn-next');
-            const indicator = document.getElementById('csr-page-indicator');
 
+            function updateCSRState() {
+                const data = csrData[currentStep];
+                if (!data) return;
 
-            function updateBookState() {
-                // 1. Rotation and active flags
-                if (currentStep === 1) {
-                    pages[0].classList.remove('flipped');
-                    pages[1].classList.remove('flipped');
-                    pages[2].classList.remove('flipped');
-                } else if (currentStep === 2 || currentStep === 3) {
-                    pages[0].classList.add('flipped');
-                    pages[1].classList.remove('flipped');
-                    pages[2].classList.remove('flipped');
-                } else if (currentStep === 4 || currentStep === 5) {
-                    pages[0].classList.add('flipped');
-                    pages[1].classList.add('flipped');
-                    pages[2].classList.remove('flipped');
+                const viewer = document.querySelector('.csr-viewer-container');
+                if (viewer) {
+                    viewer.classList.add('transition-out');
                 }
 
-                // 2. Adjust z-indexes for smooth overlapping
-                pages.forEach((page, index) => {
-                    if (page) {
-                        const isFlipped = page.classList.contains('flipped');
-                        if (isFlipped) {
-                            page.style.zIndex = index + 1; // Flipped page index
+                setTimeout(() => {
+                    if (imgEl) imgEl.src = data.img;
+                    if (tagEl) tagEl.textContent = data.tag;
+                    if (titleEl) titleEl.textContent = data.title;
+                    if (subtitleEl) subtitleEl.textContent = data.subtitle;
+                    if (descEl) descEl.textContent = data.desc;
+                    if (indicatorEl) indicatorEl.textContent = `${currentStep} / ${totalSteps}`;
+
+                    // Next button icon morphs when on last step
+                    if (btnNext) {
+                        if (currentStep === totalSteps) {
+                            btnNext.innerHTML = '📥';
+                            btnNext.setAttribute('aria-label', '완료 및 다음 섹션으로 이동');
+                            btnNext.classList.add('border-cyan-400', 'text-cyan-400', 'shadow-[0_0_12px_rgba(0,240,255,0.4)]');
                         } else {
-                            page.style.zIndex = pages.length - index; // Unflipped page index
+                            btnNext.innerHTML = '❯';
+                            btnNext.setAttribute('aria-label', '다음 페이지');
+                            btnNext.classList.remove('border-cyan-400', 'text-cyan-400', 'shadow-[0_0_12px_rgba(0,240,255,0.4)]');
                         }
                     }
-                });
 
-                // 3. Highlight current step content border
-                Object.keys(stepContents).forEach(step => {
-                    const el = stepContents[step];
-                    if (el) {
-                        if (parseInt(step) === currentStep) {
-                            el.classList.add('csr-content-active');
+                    // Disabled state on prev button
+                    if (btnPrev) {
+                        if (currentStep === 1) {
+                            btnPrev.classList.add('opacity-40', 'cursor-not-allowed');
+                            btnPrev.style.pointerEvents = 'none';
                         } else {
-                            el.classList.remove('csr-content-active');
+                            btnPrev.classList.remove('opacity-40', 'cursor-not-allowed');
+                            btnPrev.style.pointerEvents = 'auto';
                         }
                     }
-                });
 
-                // 4. Update Navigation Controls
-                if (indicator) {
-                    indicator.textContent = `${currentStep} / ${totalSteps}`;
-                }
-
-
-
-                // Disabled state on prev button
-                if (btnPrev) {
-                    if (currentStep === 1) {
-                        btnPrev.classList.add('opacity-40', 'cursor-not-allowed');
-                        btnPrev.style.pointerEvents = 'none';
-                    } else {
-                        btnPrev.classList.remove('opacity-40', 'cursor-not-allowed');
-                        btnPrev.style.pointerEvents = 'auto';
+                    if (viewer) {
+                        viewer.classList.remove('transition-out');
                     }
-                }
-
-                // Next button morphs to scroll trigger on last page
-                if (btnNext) {
-                    if (currentStep === totalSteps) {
-                        btnNext.innerHTML = '📥';
-                        btnNext.setAttribute('aria-label', '완료 및 다음 섹션으로 이동');
-                        btnNext.classList.add('border-cyan-400', 'text-cyan-400', 'shadow-[0_0_12px_rgba(0,240,255,0.4)]');
-                    } else {
-                        btnNext.innerHTML = '❯';
-                        btnNext.setAttribute('aria-label', '다음 페이지');
-                        btnNext.classList.remove('border-cyan-400', 'text-cyan-400', 'shadow-[0_0_12px_rgba(0,240,255,0.4)]');
-                    }
-                }
+                }, 200); // 뷰어 전환 속도
             }
 
             function nextStep() {
                 if (currentStep < totalSteps) {
                     currentStep++;
-                    updateBookState();
+                    updateCSRState();
                 } else {
-                    // Step 5 도달 후 클릭 시 다음 섹션으로 부드럽게 이동
-                    const nextSection = document.querySelector('.cta-banner-section');
+                    // 마지막 단계에서 클릭 시 다음 활성 섹션으로 부드럽게 스크롤
+                    const nextSection = document.querySelector('.equipment-spec-section:not(.hidden)') || document.querySelector('.cta-banner-section');
                     if (nextSection) {
                         nextSection.scrollIntoView({ behavior: 'smooth' });
                     }
@@ -1164,76 +1350,8 @@
             function prevStep() {
                 if (currentStep > 1) {
                     currentStep--;
-                    updateBookState();
+                    updateCSRState();
                 }
-            }
-
-            // 책 컨테이너 클릭 시 왼쪽/오른쪽 영역에 따라 페이지 넘김 (양방향 클릭 지원)
-            const bookContainer = document.getElementById('book-container');
-            if (bookContainer) {
-                bookContainer.addEventListener('click', (e) => {
-                    // 내부 링크나 버튼 클릭 시에는 페이지 넘김 방지
-                    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) return;
-                    
-                    const rect = bookContainer.getBoundingClientRect();
-                    const clickX = e.clientX - rect.left; // 클릭한 X 좌표 (컨테이너 기준)
-                    const width = rect.width;
-                    
-                    if (clickX < width / 2) {
-                        // 왼쪽 클릭 -> 이전 페이지로 (오른쪽으로 되넘기기)
-                        prevStep();
-                    } else {
-                        // 오른쪽 클릭 -> 다음 페이지로 (왼쪽으로 넘기기)
-                        nextStep();
-                    }
-                });
-            }
-
-            // 스와이프 및 드래그 제스처 추가 (양방향 터치/드래그 지원)
-            const viewport = document.querySelector('.csr-book-viewport');
-            if (viewport) {
-                let touchStartX = 0;
-                let touchEndX = 0;
-
-                const handleGesture = () => {
-                    const swipeDistance = touchEndX - touchStartX;
-                    if (swipeDistance < -50) {
-                        // 오른쪽에서 왼쪽으로 쓸어 넘기기 -> 다음 페이지
-                        nextStep();
-                    } else if (swipeDistance > 50) {
-                        // 왼쪽에서 오른쪽으로 쓸어 넘기기 -> 이전 페이지
-                        prevStep();
-                    }
-                };
-
-                // 모바일 터치 스와이프
-                viewport.addEventListener('touchstart', (e) => {
-                    touchStartX = e.changedTouches[0].screenX;
-                }, { passive: true });
-
-                viewport.addEventListener('touchend', (e) => {
-                    touchEndX = e.changedTouches[0].screenX;
-                    handleGesture();
-                }, { passive: true });
-
-                // 데스크톱 마우스 드래그 스와이프
-                let isDragging = false;
-                viewport.addEventListener('mousedown', (e) => {
-                    touchStartX = e.screenX;
-                    isDragging = true;
-                });
-
-                viewport.addEventListener('mouseup', (e) => {
-                    if (isDragging) {
-                        touchEndX = e.screenX;
-                        isDragging = false;
-                        handleGesture();
-                    }
-                });
-
-                viewport.addEventListener('mouseleave', () => {
-                    isDragging = false;
-                });
             }
 
             // Bind buttons
@@ -1243,8 +1361,63 @@
             // Initial trigger
             updateBookState();
 
+            // 2. 핵심 지표 섹션 카운트업 및 라인 애니메이션
+            // GSAP ScrollTrigger 플러그인 등록
+            gsap.registerPlugin(ScrollTrigger);
 
+            // 타임라인을 생성하여 카운트업 종료 시점에 전체 글로우(Glow) 효과를 일괄 실행
+            const metricsTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.metrics-section',
+                    start: 'top 80%',
+                    once: true
+                },
+                onComplete: function() {
+                    // 모든 숫자 롤링 및 애니메이션 완료 시 아쿠아 블루 네온 글로우 활성화
+                    document.querySelectorAll('.metric-card').forEach(card => {
+                        card.classList.add('glow-active');
+                    });
+                }
+            });
 
+            // Dividers height expansion
+            metricsTimeline.fromTo('.metric-divider', 
+                { height: '0%' },
+                { 
+                    height: '100%',
+                    duration: 1.2,
+                    ease: 'power2.out'
+                },
+                0
+            );
+
+            // Cards fade-in and slide-up stagger
+            metricsTimeline.to('.metric-card', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'power3.out'
+            }, 0.1);
+
+            // Count-up/down animation
+            const metricValues = document.querySelectorAll('.metric-value');
+            metricValues.forEach(el => {
+                const target = parseFloat(el.getAttribute('data-target'));
+                const start = parseFloat(el.getAttribute('data-start') || '0');
+                const decimals = parseInt(el.getAttribute('data-decimals') || '0');
+                
+                const obj = { val: start };
+                
+                metricsTimeline.to(obj, {
+                    val: target,
+                    duration: 1.5,
+                    ease: 'power1.out',
+                    onUpdate: function() {
+                        el.textContent = obj.val.toFixed(decimals);
+                    }
+                }, 0.2); // 카드가 떠오르기 시작한 이후 순차 진행
+            });
 
         });
     </script>

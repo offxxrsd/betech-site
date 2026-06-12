@@ -935,13 +935,14 @@
             background-color: #040d1a;
             position: relative;
             overflow: hidden;
-            cursor: zoom-in;
+            cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0.15rem;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .bp-archive-cert-card:hover {
@@ -1795,9 +1796,9 @@
                     downloadUrl: "./인증서2.pdf",
                     downloadLabel: "통합 품질 인증 사양서 다운로드",
                     certs: [
-                        { name: "KC 인증서", imagePath: "./images/kc_cert_thumb.png", class: "kc-card" },
-                        { name: "ISO 9001", imagePath: "./images/iso_cert_thumb.png", class: "iso-card" },
-                        { name: "MAIN-BIZ", imagePath: "./images/mainbiz_cert_thumb.png", class: "mainbiz-card" }
+                        { name: "KC 인증서", imagePath: "./images/kc_cert_thumb.png", class: "kc-card", pdfPath: "./인증서2.pdf" },
+                        { name: "ISO 9001", imagePath: "./images/iso_cert_thumb.png", class: "iso-card", pdfPath: "./인증서3.pdf" },
+                        { name: "MAIN-BIZ", imagePath: "./images/mainbiz_cert_thumb.png", class: "mainbiz-card", pdfPath: "./인증서1.pdf" }
                     ]
                 },
                 PUMP_COMPONENTS: {
@@ -1810,10 +1811,10 @@
                     ],
                     certTitle: "수도용 위생안전기준 인증서 (KC인증)",
                     certMeta: "인증번호 : KCW-2025-0163 / 최초인증일 : 2025-09-19 / 정기검사 신청기한 : 2027-09-18 / 인증기관 : 한국물기술인증원",
-                    downloadUrl: "/인증서3.pdf",
+                    downloadUrl: "./인증서2.pdf",
                     downloadLabel: "KC인증서 고화질 PDF 다운로드",
                     certs: [
-                        { name: "KC 위생안전기준 인증서", imagePath: "./images/kc_cert.png", class: "kc-card" }
+                        { name: "KC 위생안전기준 인증서", imagePath: "./images/kc_cert.png", class: "kc-card", pdfPath: "./인증서2.pdf" }
                     ]
                 },
                 BOOSTER_SYSTEM: {
@@ -1826,10 +1827,10 @@
                     ],
                     certTitle: "품질경영시스템 인증서 (ISO 9001:2015)",
                     certMeta: "인증서 번호 : Q1291124 / 최초 인증일 : 2024년 08월 23일 / 유효기간 : 2027년 08월 22일 / 인증기관 : ICR (International Certification Registrar)",
-                    downloadUrl: "/인증서2.pdf",
+                    downloadUrl: "./인증서3.pdf",
                     downloadLabel: "ISO 9001 원본 PDF 다운로드",
                     certs: [
-                        { name: "ISO 9001 품질인증서", imagePath: "./images/iso_cert.png", class: "iso-card" }
+                        { name: "ISO 9001 품질인증서", imagePath: "./images/iso_cert.png", class: "iso-card", pdfPath: "./인증서3.pdf" }
                     ]
                 },
                 FACTORY_SYSTEM: {
@@ -1842,11 +1843,11 @@
                     ],
                     certTitle: "경영혁신형 중소기업(MAIN-BIZ) 확인서 및 조합원증",
                     certMeta: "확인서 번호 : 제 R180801-01794 호 / 유효기간 : 2024. 09. 14 ~ 2027.09.13 / 발급기관 : 중소벤처기업부 장관",
-                    downloadUrl: "/인증서1.pdf",
+                    downloadUrl: "./인증서1.pdf",
                     downloadLabel: "MAIN-BIZ 확인서 PDF 다운로드",
                     certs: [
-                        { name: "MAIN-BIZ 확인서 스캔본", imagePath: "./images/mainbiz_cert.png", class: "mainbiz-card" },
-                        { name: "한국펌프공업협동조합 조합원증", imagePath: "./images/association_cert.png", class: "association-card" }
+                        { name: "MAIN-BIZ 확인서 스캔본", imagePath: "./images/mainbiz_cert.png", class: "mainbiz-card", pdfPath: "./인증서1.pdf" },
+                        { name: "한국펌프공업협동조합 조합원증", imagePath: "./images/association_cert.png", class: "association-card", pdfPath: "./인증서1.pdf" } // Assuming same pdf as mainbiz is fine, or we can map it
                     ]
                 }
             };
@@ -1886,30 +1887,34 @@
                         gridClass = 'double-cert';
                     }
 
-                    const certCards = data.certs.map(cert => `
-                        <div class="bp-archive-cert-card ${cert.class}">
-                            <div class="bp-archive-cert-laser"></div>
-                            <div class="bp-archive-cert-label-overlay">
-                                <span class="bp-archive-cert-name">${cert.name}</span>
-                                <span class="bp-archive-cert-zoom-text">ZOOM IN</span>
-                            </div>
-                            <div class="bp-archive-cert-img-frame">
-                                <img 
-                                    src="${cert.imagePath}" 
-                                    alt="${cert.name} 원본 스캔본"
-                                    class="bp-archive-cert-img"
-                                    onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
-                                />
-                                <!-- Fallback View Box -->
-                                <div class="fallback-viewer-box hidden" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #030914, #061838); padding: 0.5rem; text-align: center; border-radius: 4px;">
-                                    <svg style="width: 20px; height: 20px; color: rgba(0, 240, 255, 0.35); margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11.571V9a4 4 0 00-8 0v2.571c0 2.425.69 4.755 2.01 6.734l.054.09m6.417-3.83a9.013 9.013 0 012.753 6.571M12 11a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span style="font-size: 7px; font-weight: 700; color: rgba(0, 240, 255, 0.65); text-transform: uppercase;">${cert.name}</span>
+                    const certCards = data.certs.map(cert => {
+                        const tag = cert.pdfPath ? 'a' : 'div';
+                        const hrefAttr = cert.pdfPath ? `href="${cert.pdfPath}" target="_blank"` : '';
+                        return `
+                            <${tag} ${hrefAttr} class="bp-archive-cert-card ${cert.class}">
+                                <div class="bp-archive-cert-laser"></div>
+                                <div class="bp-archive-cert-label-overlay">
+                                    <span class="bp-archive-cert-name">${cert.name}</span>
+                                    <span class="bp-archive-cert-zoom-text">ZOOM IN</span>
                                 </div>
-                            </div>
-                        </div>
-                    `).join('');
+                                <div class="bp-archive-cert-img-frame">
+                                    <img 
+                                        src="${cert.imagePath}" 
+                                        alt="${cert.name} 원본 스캔본"
+                                        class="bp-archive-cert-img"
+                                        onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                                    />
+                                    <!-- Fallback View Box -->
+                                    <div class="fallback-viewer-box hidden" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #030914, #061838); padding: 0.5rem; text-align: center; border-radius: 4px;">
+                                        <svg style="width: 20px; height: 20px; color: rgba(0, 240, 255, 0.35); margin-bottom: 4px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11.571V9a4 4 0 00-8 0v2.571c0 2.425.69 4.755 2.01 6.734l.054.09m6.417-3.83a9.013 9.013 0 012.753 6.571M12 11a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span style="font-size: 7px; font-weight: 700; color: rgba(0, 240, 255, 0.65); text-transform: uppercase;">${cert.name}</span>
+                                    </div>
+                                </div>
+                            </${tag}>
+                        `;
+                    }).join('');
 
                     // Compile final template
                     detailContainer.innerHTML = `
