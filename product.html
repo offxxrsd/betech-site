@@ -946,9 +946,10 @@
         }
 
         .bp-archive-cert-card:hover {
-            border-color: rgba(0, 240, 255, 0.5);
-            box-shadow: 0 8px 24px rgba(0, 240, 255, 0.15);
-            transform: translateY(-2px);
+            border-color: #00e5ff;
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.35),
+                        inset 0 0 15px rgba(0, 229, 255, 0.15);
+            transform: translateY(-5px);
         }
 
         /* 이미지 줌인 */
@@ -1859,12 +1860,12 @@
                     ],
                     certTitle: "비에이텍 핵심 품질 보증 시스템",
                     certMeta: "국가 공인 기관 및 시스템에서 검증한 고정밀 수처리 기술 자격",
-                    downloadUrl: "./인증서2.pdf",
+                    downloadUrl: "./income2.pdf",
                     downloadLabel: "통합 품질 인증 사양서 다운로드",
                     certs: [
-                        { name: "KC 인증서", imagePath: "./images/kc_cert_thumb.png", class: "kc-card", pdfPath: "./인증서2.pdf" },
-                        { name: "ISO 9001", imagePath: "./images/iso_cert_thumb.png", class: "iso-card", pdfPath: "./인증서3.pdf" },
-                        { name: "MAIN-BIZ", imagePath: "./images/mainbiz_cert_thumb.png", class: "mainbiz-card", pdfPath: "./인증서1.pdf" }
+                        { name: "KC 인증서", imagePath: "./images/kc_cert_thumb.png", class: "kc-card", pdfPath: "./income2.pdf" },
+                        { name: "ISO 9001", imagePath: "./images/iso_cert_thumb.png", class: "iso-card", pdfPath: "./income1.pdf" },
+                        { name: "MAIN-BIZ", imagePath: "./images/mainbiz_cert_thumb.png", class: "mainbiz-card", pdfPath: "./income3.pdf" }
                     ]
                 },
                 PUMP_COMPONENTS: {
@@ -1877,10 +1878,10 @@
                     ],
                     certTitle: "수도용 위생안전기준 인증서 (KC인증)",
                     certMeta: "인증번호 : KCW-2025-0163 / 최초인증일 : 2025-09-19 / 정기검사 신청기한 : 2027-09-18 / 인증기관 : 한국물기술인증원",
-                    downloadUrl: "./인증서2.pdf",
+                    downloadUrl: "./income2.pdf",
                     downloadLabel: "KC인증서 고화질 PDF 다운로드",
                     certs: [
-                        { name: "KC 위생안전기준 인증서", imagePath: "./images/kc_cert.png", class: "kc-card", pdfPath: "./인증서2.pdf" }
+                        { name: "KC 위생안전기준 인증서", imagePath: "./images/kc_cert.png", class: "kc-card", pdfPath: "./income2.pdf" }
                     ]
                 },
                 BOOSTER_SYSTEM: {
@@ -1893,10 +1894,10 @@
                     ],
                     certTitle: "품질경영시스템 인증서 (ISO 9001:2015)",
                     certMeta: "인증서 번호 : Q1291124 / 최초 인증일 : 2024년 08월 23일 / 유효기간 : 2027년 08월 22일 / 인증기관 : ICR (International Certification Registrar)",
-                    downloadUrl: "./인증서3.pdf",
+                    downloadUrl: "./income1.pdf",
                     downloadLabel: "ISO 9001 원본 PDF 다운로드",
                     certs: [
-                        { name: "ISO 9001 품질인증서", imagePath: "./images/iso_cert.png", class: "iso-card", pdfPath: "./인증서3.pdf" }
+                        { name: "ISO 9001 품질인증서", imagePath: "./images/iso_cert.png", class: "iso-card", pdfPath: "./income1.pdf" }
                     ]
                 },
                 FACTORY_SYSTEM: {
@@ -1909,11 +1910,11 @@
                     ],
                     certTitle: "경영혁신형 중소기업(MAIN-BIZ) 확인서 및 조합원증",
                     certMeta: "확인서 번호 : 제 R180801-01794 호 / 유효기간 : 2024. 09. 14 ~ 2027.09.13 / 발급기관 : 중소벤처기업부 장관",
-                    downloadUrl: "./인증서1.pdf",
+                    downloadUrl: "./income3.pdf",
                     downloadLabel: "MAIN-BIZ 확인서 PDF 다운로드",
                     certs: [
-                        { name: "MAIN-BIZ 확인서 스캔본", imagePath: "./images/mainbiz_cert.png", class: "mainbiz-card", pdfPath: "./인증서1.pdf" },
-                        { name: "한국펌프공업협동조합 조합원증", imagePath: "./images/association_cert.png", class: "association-card", pdfPath: "./인증서1.pdf" } // Assuming same pdf as mainbiz is fine, or we can map it
+                        { name: "MAIN-BIZ 확인서 스캔본", imagePath: "./images/mainbiz_cert.png", class: "mainbiz-card", pdfPath: "./income3.pdf" },
+                        { name: "한국펌프공업협동조합 조합원증", imagePath: "./images/association_cert.png", class: "association-card", pdfPath: "./income4.pdf" }
                     ]
                 }
             };
@@ -1955,7 +1956,7 @@
 
                     const certCards = data.certs.map(cert => {
                         const tag = cert.pdfPath ? 'a' : 'div';
-                        const hrefAttr = cert.pdfPath ? `href="${cert.pdfPath}" target="_blank"` : '';
+                        const hrefAttr = cert.pdfPath ? `href="${cert.pdfPath}" target="_blank" rel="noopener noreferrer"` : '';
                         return `
                             <${tag} ${hrefAttr} class="bp-archive-cert-card ${cert.class}">
                                 <div class="bp-archive-cert-laser"></div>
@@ -2013,45 +2014,6 @@
                             <div class="bp-archive-cert-meta">
                                 ${data.certMeta}
                             </div>
-                        </div>
-
-                        <!-- 인증서 링크 리스트 영역 -->
-                        <div class="bp-archive-cert-list-container">
-                            <h5 class="bp-archive-cert-list-title">인증서 및 확인서 원본 링크</h5>
-                            <ul class="bp-archive-cert-link-list">
-                                <li>
-                                    <a href="./income1.pdf" target="_blank" rel="noopener noreferrer" class="bp-archive-cert-link">
-                                        <svg class="bp-archive-cert-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                        </svg>
-                                        <span>ISO 9001 품질인증서</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./income2.pdf" target="_blank" rel="noopener noreferrer" class="bp-archive-cert-link">
-                                        <svg class="bp-archive-cert-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                        </svg>
-                                        <span>KC 인증서</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./income3.pdf" target="_blank" rel="noopener noreferrer" class="bp-archive-cert-link">
-                                        <svg class="bp-archive-cert-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                        </svg>
-                                        <span>MAIN-BIZ 확인서 스캔본</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./income4.pdf" target="_blank" rel="noopener noreferrer" class="bp-archive-cert-link">
-                                        <svg class="bp-archive-cert-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                        </svg>
-                                        <span>한국펌프공업협동조합 조합원증</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     `;
 
