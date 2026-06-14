@@ -40,23 +40,36 @@
         /* AI 기술 지원 센터 바디 및 레이아웃 */
         .ai-support-section {
             background-color: var(--color-bg-light);
-            padding: 120px 0 60px 0; /* 헤더 고정 높이 고려 상단 여백 확보 */
+            padding: 120px 0 80px 0; /* 헤더 고정 높이 고려 상단 여백 확보 */
             min-height: calc(100vh - 350px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* 1. 최상위 포털 컨테이너 데스크톱 기본 스타일 정의 */
+        /* 1. 최상위 포털 컨테이너 데스크톱 기본 스타일 정의 (Gateway Card) */
         .betech-ai-portal {
             width: 100%;
-            max-width: 1000px; /* 맥북 프로 화면 비율에 맞춘 최적의 가로 폭 */
-            margin: 0 auto; /* 중앙 정렬 */
-            background-color: #ffffff; /* 내부 기본 배경은 화이트 */
-            border: 1px solid #e2e8f0; /* 차분한 시스템 경계선 */
-            border-radius: 16px; /* 프리미엄 카드 느낌을 주는 둥근 모서리 */
-            overflow: hidden; /* 모서리 라운딩 바깥 소멸 방지 */
-            box-shadow: var(--shadow-lg); /* 깊이감 있는 섀도우 효과 */
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px -10px rgba(0, 86, 179, 0.06), 
+                        0 20px 50px -15px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .betech-ai-portal:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px -10px rgba(0, 86, 179, 0.12), 
+                        0 30px 60px -15px rgba(0, 0, 0, 0.08);
         }
 
         /* 2. 대시보드 형태의 헤더 바 스타일 */
@@ -64,249 +77,381 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 24px;
-            background-color: #f8fafc; /* 밝은 그레이 미색 */
-            border-bottom: 1px solid #e2e8f0;
+            padding: 22px 32px;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #edf2f7;
             user-select: none;
         }
 
         .ai-header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+        }
+
+        .live-status-dot-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.08);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.15);
         }
 
         .live-status-dot {
             width: 8px;
             height: 8px;
-            background-color: #10b981; /* 에메랄드 그린 */
+            background-color: #10b981;
             border-radius: 50%;
             display: inline-block;
-            position: relative;
-            animation: live-pulse 1.8s infinite ease-in-out;
+            animation: live-pulse 2s infinite ease-in-out;
+        }
+
+        .live-status-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: #059669;
+            letter-spacing: -0.2px;
         }
 
         .ai-portal-title {
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 800;
             color: #0f172a;
             margin: 0;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            letter-spacing: -0.3px;
         }
 
         .badge-beta {
             font-size: 10px;
             font-weight: 800;
-            background-color: rgba(0, 163, 224, 0.1);
-            color: #00A3E0;
-            padding: 2px 6px;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #00A3E0 0%, #0056b3 100%);
+            color: #ffffff;
+            padding: 2px 8px;
+            border-radius: 6px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(0, 163, 224, 0.2);
         }
 
         .ai-header-right {
             display: flex;
             align-items: center;
-            gap: 12px;
         }
 
-        .header-link {
-            font-size: 13px;
+        .status-msg-badge {
+            font-size: 12px;
             font-weight: 600;
             color: #475569;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .header-link:hover {
-            color: #0056b3;
-        }
-
-        .link-divider {
-            font-size: 11px;
-            color: #cbd5e1;
-        }
-
-        /* 3. 본문 영역 및 임베딩 처리 */
-        .ai-portal-body {
-            position: relative;
-            width: 100%;
             background-color: #ffffff;
-            overflow: hidden;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            letter-spacing: -0.3px;
         }
 
-        /* 3-1. iframe 뒤에 깔리는 플레이스홀더 (z-index: 1) */
-        .ai-fallback-placeholder {
+        /* 3. 중앙 게이트웨이 바디 영역 스타일 */
+        .ai-gateway-body {
+            padding: 56px 48px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .ai-icon-wrapper {
+            width: 88px;
+            height: 88px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.08) 0%, rgba(0, 163, 224, 0.04) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 86, 179, 0.05), 
+                        0 10px 20px -8px rgba(0, 86, 179, 0.15);
+            animation: bounce-slow 4s infinite ease-in-out;
+        }
+
+        .ai-icon-wrapper::after {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-            box-sizing: border-box;
-            background: radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%);
-            z-index: 1;
-            text-align: center;
+            border-radius: 28px;
+            border: 1px solid rgba(0, 86, 179, 0.12);
+            top: 0;
+            left: 0;
+            pointer-events: none;
         }
 
-        .fallback-card {
-            max-width: 480px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 32px 24px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        .ai-icon-wrapper svg {
+            width: 44px;
+            height: 44px;
+            fill: #0056b3;
         }
 
-        .fallback-icon {
-            font-size: 36px;
-            margin-bottom: 16px;
-            animation: bounce 2s infinite;
-        }
-
-        .fallback-card h3 {
-            font-size: 18px;
-            font-weight: 700;
+        .ai-gateway-body h3 {
+            font-size: 24px;
+            font-weight: 800;
             color: #0f172a;
             margin: 0 0 12px 0;
+            letter-spacing: -0.8px;
+            line-height: 1.3;
         }
 
-        .fallback-card p {
-            font-size: 13px;
-            line-height: 1.6;
+        .ai-gateway-body h3 span {
+            color: #0056b3;
+            background: linear-gradient(135deg, #0056b3 0%, #00a3e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-gateway-body .main-desc {
+            font-size: 15px;
+            line-height: 1.7;
             color: #64748b;
-            margin: 0 0 24px 0;
+            margin: 0 0 32px 0;
+            max-width: 540px;
+            word-break: keep-all;
+            letter-spacing: -0.2px;
         }
 
-        .fallback-btn {
+        /* 핵심 가이드 카드 그리드 */
+        .ai-features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 680px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .feature-card {
+            background-color: #ffffff;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .betech-ai-portal:hover .feature-card {
+            border-color: #e2e8f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 86, 179, 0.2) !important;
+            box-shadow: 0 10px 20px -8px rgba(0, 86, 179, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .feature-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0 0 6px 0;
+            letter-spacing: -0.3px;
+        }
+
+        .feature-card p {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #64748b;
+            margin: 0;
+            word-break: keep-all;
+        }
+
+        /* 4. 게이트웨이 실행 버튼 스타일 (CTA) */
+        .ai-gateway-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background-color: #0056b3;
+            gap: 12px;
+            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
             color: #ffffff;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 16px;
             text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 86, 179, 0.2);
-            transition: all 0.2s ease;
-        }
-
-        .fallback-btn:hover {
-            background-color: #004085;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px -1px rgba(0, 86, 179, 0.3);
-        }
-
-        /* 3-2. 실제 로드될 iframe (z-index: 2로 플레이스홀더를 덮음) */
-        .ai-portal-iframe {
+            padding: 20px 48px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0, 86, 179, 0.25);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 78vh; /* 요구사항 반영: height 78vh */
-            min-height: 680px; /* 요구사항 반영: min-height 680px */
-            background-color: #ffffff;
-            border: none;
-            display: block;
-            -webkit-overflow-scrolling: touch; 
+            overflow: hidden;
         }
 
-        /* 3-3. 포털 하단 우회 안내 배너 영역 (z-index: 2) */
-        .ai-portal-footer {
-            position: relative;
-            z-index: 2;
-            background-color: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            padding: 14px 24px;
-            text-align: center;
-            user-select: none;
+        /* 버튼 호버 시 빛의 흐름 효과 (Shine Sweep Effect) */
+        .ai-gateway-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.25) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-25deg);
+            transition: all 0.75s ease;
         }
 
-        .ai-fallback-notice {
-            font-size: 13px;
+        .ai-gateway-btn:hover::before {
+            left: 150%;
+            transition: all 0.75s ease;
+        }
+
+        .ai-gateway-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 32px rgba(0, 86, 179, 0.35);
+        }
+        
+        .ai-gateway-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 86, 179, 0.25);
+        }
+
+        .ai-gateway-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            transition: transform 0.2s ease;
+        }
+
+        .ai-gateway-btn:hover svg {
+            transform: translateX(4px);
+        }
+
+        .ai-gateway-footer {
+            border-top: 1px solid #f1f5f9;
+            padding: 18px 32px;
+            background-color: #fafbfb;
+            font-size: 12px;
             color: #64748b;
-            margin: 0;
-            line-height: 1.5;
+            text-align: center;
+            line-height: 1.6;
         }
 
-        .ai-fallback-notice a {
-            color: #0056b3;
-            font-weight: 700;
-            text-decoration: underline;
-            transition: color 0.2s ease;
-        }
-
-        .ai-fallback-notice a:hover {
-            color: #004085;
-        }
-
-        /* 4. 깜빡이는 그린 펄스 애니메이션 키프레임 */
+        /* 5. 깜빡이는 그린 펄스 및 아이콘 바운스 애니메이션 */
         @keyframes live-pulse {
             0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
             }
             70% {
-                transform: scale(1);
+                transform: scale(1.1);
                 box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
             }
             100% {
-                transform: scale(0.95);
+                transform: scale(0.9);
                 box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
             }
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+        @keyframes bounce-slow {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
         }
 
         /* ==========================================================================
-           5. 완벽한 모바일 최적화 (반응형 미디어 쿼리)
+           6. 완벽한 모바일 최적화 (반응형 미디어 쿼리)
            ========================================================================== */
         @media (max-width: 768px) {
             .ai-support-section {
-                padding: 60px 0 0 0; /* 모바일에서는 헤더 아래에 바로 밀착 */
+                padding: 100px 16px 60px 16px;
             }
 
             .betech-ai-portal {
-                margin: 0;
-                border-radius: 0;
-                border: none;
-                max-width: 100%;
-                box-shadow: none;
+                border-radius: 20px;
             }
 
             .ai-portal-header {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .ai-header-right {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .status-msg-badge {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .ai-gateway-body {
+                padding: 36px 20px;
+            }
+
+            .ai-icon-wrapper {
+                width: 76px;
+                height: 76px;
+                margin-bottom: 20px;
+                border-radius: 22px;
+            }
+
+            .ai-icon-wrapper svg {
+                width: 36px;
+                height: 36px;
+            }
+
+            .ai-gateway-body h3 {
+                font-size: 20px;
+            }
+
+            .ai-gateway-body .main-desc {
+                font-size: 14px;
+                margin-bottom: 24px;
+            }
+
+            .ai-features-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 28px;
+            }
+
+            .feature-card {
                 padding: 14px 16px;
+                border-radius: 12px;
             }
 
-            .ai-portal-title {
-                font-size: 13px;
+            .ai-gateway-btn {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 18px 24px;
+                font-size: 15px;
+                border-radius: 12px;
             }
-
-            .header-link {
-                font-size: 12px;
-            }
-
-            .ai-portal-iframe {
-                height: 78vh; /* 모바일도 동일 적용 */
-                min-height: 680px; /* 모바일도 동일 적용 */
-            }
-
-            .ai-portal-footer {
-                padding: 12px 16px;
-            }
-
-            .ai-fallback-notice {
-                font-size: 12px;
+            
+            .ai-gateway-footer {
+                padding: 14px 20px;
+                font-size: 11px;
             }
         }
     </style>
@@ -362,55 +507,72 @@
         <section class="ai-support-section" aria-labelledby="ai-support-title">
             <div class="section-container" style="max-width: 1000px; padding: 0 1.5rem;">
                 <div class="betech-ai-portal">
+                    <!-- 상단 대시보드 타이틀 헤더 바 -->
                     <header class="ai-portal-header">
                         <div class="ai-header-left">
-                            <span class="live-status-dot"></span>
+                            <div class="live-status-dot-container">
+                                <span class="live-status-dot"></span>
+                                <span class="live-status-text">LIVE</span>
+                            </div>
                             <h2 id="ai-support-title" class="ai-portal-title">
                                 비에이텍 AI 기술지원 엔지니어 
                                 <span class="badge-beta">Beta</span>
                             </h2>
                         </div>
                         <div class="ai-header-right">
-                            <a href="./intro.html" class="header-link" target="_blank" rel="noopener noreferrer">이용 가이드</a>
-                            <span class="link-divider">|</span>
-                            <a href="./inquiry.html" class="header-link" target="_blank" rel="noopener noreferrer">문의하기</a>
+                            <span class="status-msg-badge">
+                                🟢 24시간 실시간 운영 중
+                            </span>
                         </div>
                     </header>
 
-                    <div class="ai-portal-body">
-                        <!-- 1단계: iframe 로드 실패/보안 차단 대비 백업 플레이스홀더 (배경에 깔림) -->
-                        <div class="ai-fallback-placeholder">
-                            <div class="fallback-card">
-                                <div class="fallback-icon">⚠️</div>
-                                <h3>실시간 AI 기술지원 대화창이 보이지 않나요?</h3>
-                                <p>
-                                    구글의 강화된 보안 정책(CSP/X-Frame-Options) 및 개인정보 보호 설정으로 인해 일부 환경에서 화면 임베딩이 차단될 수 있습니다. 아래 버튼을 눌러 정식 대화방을 새 창에서 안전하게 실행해 주세요.
-                                </p>
-                                <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer" class="fallback-btn">
-                                    <span>🚀 새 창에서 AI 기술지원 즉시 시작하기</span>
-                                </a>
+                    <!-- 중앙 게이트웨이 본문 안내 카드 구역 -->
+                    <div class="ai-gateway-body">
+                        <!-- AI 테마 챗 서비스 말풍선 아이콘 (Custom Premium Neural/Chat Design) -->
+                        <div class="ai-icon-wrapper">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12c0 2.02.6 3.9 1.63 5.48L2.05 21.95a1 1 0 0 0 1.22 1.22l4.47-1.58A9.96 9.96 0 0 0 12 22c5.48 0 10-4.48 10-12S17.48 2 12 2zm0 18c-1.72 0-3.32-.53-4.66-1.44a1 1 0 0 0-.75-.15l-2.6.92.92-2.6a1 1 0 0 0-.15-.75A7.957 7.957 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm-3-9h6a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2zm0-4h6a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2z"/>
+                            </svg>
+                        </div>
+                        
+                        <h3>비에이텍 주식회사 <span>AI 기술지원 센터</span></h3>
+                        
+                        <p class="main-desc">
+                            비에이텍의 제품 카탈로그, 설치 매뉴얼, 트러블슈팅 가이드가 모두 학습된 전문 AI 기술지원 서비스입니다. 펌프 설계 규격, 유지보수 절차, 견적 문의 등을 24시간 실시간으로 상담받으실 수 있습니다.
+                        </p>
+
+                        <!-- 핵심 가이드 카드 그리드 -->
+                        <div class="ai-features-grid">
+                            <div class="feature-card">
+                                <span class="feature-icon">📘</span>
+                                <h4>제품 규격 & 도면</h4>
+                                <p>정량 펌프의 기술 사양, 카탈로그 스펙 정보 실시간 조회</p>
+                            </div>
+                            <div class="feature-card">
+                                <span class="feature-icon">🔧</span>
+                                <h4>설치 & 트러블슈팅</h4>
+                                <p>유지보수 매뉴얼 학습을 통한 고장 진단 및 조치 가이드</p>
+                            </div>
+                            <div class="feature-card">
+                                <span class="feature-icon">✉️</span>
+                                <h4>견적 & 설계 지원</h4>
+                                <p>요구 사양에 맞는 맞춤형 펌프 선정 및 견적 상담 안내</p>
                             </div>
                         </div>
 
-                        <!-- 2단계: 우회 옵션이 극대화된 진짜 Google NotebookLM iframe -->
-                        <iframe 
-                            src="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" 
-                            class="ai-portal-iframe"
-                            title="비에이텍 AI 기술 지원 센터"
-                            allow="clipboard-write; microphone; geolocation"
-                            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-popups-to-escape-sandbox"
-                            loading="lazy"
-                        >
-                            이 브라우저는 iframe을 지원하지 않습니다. 
-                            <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer">여기</a>를 눌러 AI 상담을 시작해 주세요.
-                        </iframe>
+                        <!-- 게이트웨이 상담 시작 버튼 (구글 NotebookLM 새 창 이동) -->
+                        <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer" class="ai-gateway-btn">
+                            <span>🚀 AI 기술지원 상담 시작하기</span>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42 5.43 5.43H5v2z"/>
+                            </svg>
+                        </a>
                     </div>
 
-                    <!-- 3단계: 2중 방어용 우회 링크 하단 배너 (Fallback) -->
-                    <footer class="ai-portal-footer">
-                        <p class="ai-fallback-notice">
-                            [안내] 화면이 정상적으로 동작하지 않으시면 <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer">여기를 클릭</a>해 '새 창'에서 상담을 열어보세요.
-                        </p>
+                    <!-- 하단 시스템 푸터 안내 문구 (Fallback) -->
+                    <footer class="ai-gateway-footer">
+                        [안내] 본 서비스는 안전한 구글 AI 인프라 환경(NotebookLM)에서 직접 작동합니다. <br>
+                        화면이 정상적으로 열리지 않는 경우 <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer" style="color: #0056b3; font-weight: 700; text-decoration: underline;">여기를 클릭</a>하여 새 창에서 상담방을 열어주십시오.
                     </footer>
                 </div>
             </div>
