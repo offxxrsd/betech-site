@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)비에이텍 - AI 기술 지원 센터</title>
+    
+    <!-- SEO 및 메타 태그 정의 -->
+    <meta name="description" content="무맥동 다이어프램 정량 펌프 전문 제조 기업 (주)비에이텍의 AI 제품 및 기술지원 엔지니어 서비스입니다. 실시간으로 펌프 사양, 도면, 조작 방법 및 견적 정보를 상담받으실 수 있습니다.">
+    <meta name="keywords" content="비에이텍, AI 기술지원, 펌프 AI 상담, 무맥동 펌프, 기술영업 지원, NotebookLM, 펌프 설계 지원">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="(주)비에이텍 - AI 기술 지원 센터">
+    <meta property="og:description" content="비에이텍의 24/7 AI 기술지원 엔지니어 서비스. 정밀 펌프 제어와 기술 사양 상담을 실시간으로 시작하세요.">
+    <meta property="og:image" content="./water_hero_bg.png">
+    
+    <!-- 웹 폰트 (Pretendard & Noto Sans KR) 연동 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 외부 공통 스타일시트 연동 -->
+    <link rel="stylesheet" href="./style.css?v=20260612">
+
+    <!-- AI 기술 지원 센터 전용 특화 프리미엄 스타일 -->
+    <style>
+        .desktop-nav ul li a.active {
+            color: var(--color-accent) !important;
+        }
+        .desktop-nav ul li a.active::after {
+            transform: scaleX(1) !important;
+            transform-origin: left !important;
+        }
+        .main-header.scrolled .desktop-nav ul li a.active {
+            color: var(--color-secondary) !important;
+        }
+        .mobile-nav ul li a.active {
+            color: var(--color-accent) !important;
+            border-bottom-color: rgba(0, 229, 255, 0.3);
+        }
+
+        /* AI 기술 지원 센터 바디 및 레이아웃 */
+        .ai-support-section {
+            background-color: var(--color-bg-light);
+            padding: 120px 0 60px 0; /* 헤더 고정 높이 고려 상단 여백 확보 */
+            min-height: calc(100vh - 350px);
+        }
+
+        /* 1. 최상위 포털 컨테이너 데스크톱 기본 스타일 정의 */
+        .betech-ai-portal {
+            width: 100%;
+            max-width: 1000px; /* 맥북 프로 화면 비율에 맞춘 최적의 가로 폭 */
+            margin: 0 auto; /* 중앙 정렬 */
+            background-color: #ffffff; /* 내부 기본 배경은 화이트 */
+            border: 1px solid #e2e8f0; /* 차분한 시스템 경계선 */
+            border-radius: 16px; /* 프리미엄 카드 느낌을 주는 둥근 모서리 */
+            overflow: hidden; /* 모서리 라운딩 바깥 소멸 방지 */
+            box-shadow: var(--shadow-lg); /* 깊이감 있는 섀도우 효과 */
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        /* 2. 대시보드 형태의 헤더 바 스타일 */
+        .ai-portal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            background-color: #f8fafc; /* 밝은 그레이 미색 */
+            border-bottom: 1px solid #e2e8f0;
+            user-select: none;
+        }
+
+        .ai-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .live-status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981; /* 에메랄드 그린 */
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+            animation: live-pulse 1.8s infinite ease-in-out;
+        }
+
+        .ai-portal-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-beta {
+            font-size: 10px;
+            font-weight: 800;
+            background-color: rgba(0, 163, 224, 0.1);
+            color: #00A3E0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .ai-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .header-link:hover {
+            color: #0056b3;
+        }
+
+        .link-divider {
+            font-size: 11px;
+            color: #cbd5e1;
+        }
+
+        /* 3. 본문 영역 및 임베딩 처리 */
+        .ai-portal-body {
+            position: relative;
+            width: 100%;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        .ai-portal-iframe {
+            width: 100%;
+            height: 75vh;
+            min-height: 550px;
+            border: none;
+            display: block;
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* 4. 깜빡이는 그린 펄스 애니메이션 키프레임 */
+        @keyframes live-pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        /* ==========================================================================
+           5. 완벽한 모바일 최적화 (반응형 미디어 쿼리)
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .ai-support-section {
+                padding: 60px 0 0 0; /* 모바일에서는 헤더 아래에 바로 밀착 */
+            }
+
+            .betech-ai-portal {
+                margin: 0;
+                border-radius: 0;
+                border: none;
+                height: calc(100vh - 60px); /* 모바일 헤더 높이를 제외한 나머지 가득 채움 */
+                max-width: 100%;
+                box-shadow: none;
+            }
+
+            .ai-portal-header {
+                padding: 14px 16px;
+            }
+
+            .ai-portal-title {
+                font-size: 13px;
+            }
+
+            .header-link {
+                font-size: 12px;
+            }
+
+            .ai-portal-iframe {
+                height: calc(100vh - 109px); /* 100vh - 모바일 헤더(60px) - 포털 헤더(49px) */
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GNB (Global Navigation Bar) 헤더 영역 -->
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <!-- 로고 및 상호명 -->
+            <a href="./index.html" class="logo" id="header-logo">
+                <span class="brand-en">BAETECK</span>
+                <span class="brand-ko">(주)비에이텍</span>
+            </a>
+            
+            <!-- 데스크톱 네비게이션 메뉴 -->
+            <nav class="desktop-nav" aria-label="메인 네비게이션">
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="./achievements.html">주요업력</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./ai_support.html" class="active">AI 기술지원</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html" class="highlight-link">고객문의</a></li>
+                </ul>
+            </nav>
+            
+            <!-- 모바일 햄버거 메뉴 버튼 -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+        
+        <!-- 모바일 드롭다운 메뉴 -->
+        <nav class="mobile-nav" id="mobile-menu" aria-label="모바일 네비게이션">
+            <ul>
+                <li><a href="./intro.html">기업소개</a></li>
+                <li><a href="./achievements.html">주요업력</a></li>
+                <li><a href="product.html">제품소개</a></li>
+                <li><a href="./equipment.html">보유장비</a></li>
+                <li><a href="./ai_support.html" class="active">AI 기술지원</a></li>
+                <li><a href="./map.html">찾아오시는 길</a></li>
+                <li><a href="./inquiry.html">고객문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- AI 기술 지원 센터 메인 프레임 섹션 -->
+        <section class="ai-support-section" aria-labelledby="ai-support-title">
+            <div class="section-container" style="max-width: 1000px; padding: 0 1.5rem;">
+                <div class="betech-ai-portal">
+                    <header class="ai-portal-header">
+                        <div class="ai-header-left">
+                            <span class="live-status-dot"></span>
+                            <h2 id="ai-support-title" class="ai-portal-title">
+                                비에이텍 AI 기술지원 엔지니어 
+                                <span class="badge-beta">Beta</span>
+                            </h2>
+                        </div>
+                        <div class="ai-header-right">
+                            <a href="./intro.html" class="header-link" target="_blank" rel="noopener noreferrer">이용 가이드</a>
+                            <span class="link-divider">|</span>
+                            <a href="./inquiry.html" class="header-link" target="_blank" rel="noopener noreferrer">문의하기</a>
+                        </div>
+                    </header>
+
+                    <div class="ai-portal-body">
+                        <iframe 
+                            src="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" 
+                            class="ai-portal-iframe"
+                            title="비에이텍 AI 기술 지원 센터"
+                            allow="clipboard-write"
+                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                            loading="lazy"
+                        >
+                            이 브라우저는 iframe을 지원하지 않습니다. 
+                            <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer">여기</a>를 눌러 AI 상담을 시작해 주세요.
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer 영역 (상세 연락처 및 기업 정보) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">BAETECK</div>
+                <div class="footer-company-name">(주)비에이텍</div>
+                <p class="footer-slogan">수처리 공정의 안정성과 정밀함을 극대화하는 물 공학 엔지니어링 파트너</p>
+            </div>
+            
+            <div class="footer-info">
+                <h4>CONTACT INFO</h4>
+                <address>
+                     <p><strong>주소 :</strong> 춘천시 퇴계로 1번지</p>
+                     <p><strong>대표전화 :</strong> <a href="tel:033-248-1111">033-248-1111</a> &nbsp;|&nbsp; <strong>FAX :</strong> 033-248-1234</p>
+                     <p><strong>기술영업 담당자 :</strong> <a href="mailto:aaa@naver.com">aaa@naver.com</a></p>
+                </address>
+            </div>
+            
+            <div class="footer-links">
+                <h4>QUICK LINK</h4>
+                <ul>
+                    <li><a href="./intro.html">기업소개</a></li>
+                    <li><a href="./achievements.html">주요업력</a></li>
+                    <li><a href="product.html">제품소개</a></li>
+                    <li><a href="./equipment.html">보유장비</a></li>
+                    <li><a href="./ai_support.html" class="active">AI 기술지원</a></li>
+                    <li><a href="./map.html">찾아오시는 길</a></li>
+                    <li><a href="./inquiry.html">고객문의</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">Copyright &copy; 2026 BAETECK CO., LTD. All Rights Reserved.</p>
+                <div class="footer-meta">
+                    <span>정량펌프 제작 · 설치 · 오버홀 수리 전문기업</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 인터랙션 제어용 자바스크립트 -->
+    <script src="./script.js?v=20260612"></script>
+</body>
+</html>

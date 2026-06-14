@@ -247,29 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 
     // ----------------------------------------------------
-    // 6-2. AI 제품·기술 상담 플로팅 버튼 동적 생성 및 body 삽입
-    // ----------------------------------------------------
-    const createAIFloatingButton = () => {
-        // 이미 버튼이 존재하면 중복 생성을 막음
-        if (document.querySelector('.ai-floating-btn')) return;
-        
-        const btn = document.createElement('a');
-        btn.href = 'https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13';
-        btn.target = '_blank';
-        btn.rel = 'noopener noreferrer';
-        btn.className = 'ai-floating-btn';
-        btn.title = '구글 NotebookLM AI 제품 및 기술 상담으로 이동 (새 탭)';
-        
-        btn.innerHTML = `
-            <span class="ai-floating-icon">💬</span>
-            <span class="ai-floating-text">AI 제품·기술 상담</span>
-        `;
-        
-        document.body.appendChild(btn);
-    };
-    createAIFloatingButton();
-
-    // ----------------------------------------------------
     // 7. 자바 백엔드 배포 환경용 Context Path 자동 맵핑 및 캐시 버스팅 (Cache Busting)
     // ----------------------------------------------------
     // 로컬 파일 환경(file://)인 경우 경로 보정 및 캐시 버스팅 스킵 (로컬 이미지 깨짐 방지)
