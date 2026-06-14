@@ -657,10 +657,13 @@
                             <span>1:1 채팅문의</span>
                         </h3>
                         
-                        <form id="inquiryForm" onsubmit="sendEmail(event)">
+                        <form id="inquiryForm" name="contact" method="POST" data-netlify="true" onsubmit="sendEmail(event)">
+                            <!-- Netlify Forms 필수 폼 이름 인식용 히든 필드 -->
+                            <input type="hidden" name="form-name" value="contact" />
+                            
                             <div class="inquiry-form-group">
                                 <label for="inquiryMessage" class="inquiry-label-sub">문의 내용 (상담을 원하시는 기술 제원 및 수리 접수 내용을 상세히 적어주세요)</label>
-                                <textarea id="inquiryMessage" class="inquiry-textarea" placeholder="이곳에 문의 내용을 작성해 주세요..." required></textarea>
+                                <textarea id="inquiryMessage" name="message" class="inquiry-textarea" placeholder="이곳에 문의 내용을 작성해 주세요..." required></textarea>
                             </div>
                             
                             <!-- 보내기 버튼 -->
@@ -836,40 +839,9 @@
     <!-- 인터랙션 제어용 공통 자바스크립트 연동 -->
     <script src="./script.js?v=20260612"></script>
 
-    <!-- EmailJS SDK 연동 및 비동기 전송 스크립트 -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Netlify Forms 연동 비동기 전송 스크립트 -->
     <script>
-        // ==========================================================================
-        // [EmailJS 연동 개발자 가이드 주석]
-        // 관리자분께서 본인의 EmailJS 계정으로 직접 이메일 전송을 연동하기 위해 수정해야 할 변수 리스트입니다.
-        //
-        // 1. serviceID (서비스 ID):
-        //    - 발급 경로: EmailJS 대시보드 -> "Email Services" 메뉴 클릭 -> "Add Service"를 눌러 메일 계정 연동 후 생성되는 서비스 ID (예: 'service_xxxx')
-        //
-        // 2. templateID (템플릿 ID):
-        //    - 발급 경로: EmailJS 대시보드 -> "Email Templates" 메뉴 클릭 -> "Create Template"을 눌러 이메일 템플릿 생성 후 나타나는 템플릿 ID (예: 'template_xxxx')
-        //    - 템플릿 내용 설정 가이드:
-        //      * 템플릿의 "To Email" 수신 주소 칸에 수신 전용 이메일인 [ aaa@naver.com ]을 입력하셔야 문의가 해당 주소로 수신됩니다.
-        //      * 템플릿 내부 텍스트에는 {{message}} 매개변수를 삽입하여 이 창에서 작성한 문의 내용이 본문에 바인딩되도록 작성해주시기 바랍니다.
-        //
-        // 3. publicKey (공개 키 / API Key):
-        //    - 발급 경로: EmailJS 대시보드 -> "Account" -> "API Keys" 메뉴 탭 진입 -> "Public Key" 영역에서 복사할 수 있는 키값 (예: 'your_public_key')
-        // ==========================================================================
-        
-        const EMAILJS_CONFIG = {
-            serviceID: "YOUR_SERVICE_ID",   // <-- [수정 필요] 여기에 발급받은 서비스 ID를 넣어주세요.
-            templateID: "YOUR_TEMPLATE_ID", // <-- [수정 필요] 여기에 발급받은 템플릿 ID를 넣어주세요.
-            publicKey: "YOUR_PUBLIC_KEY"    // <-- [수정 필요] 여기에 발급받은 공개 키(Public Key)를 넣어주세요.
-        };
-
-        // EmailJS 모듈 초기화 (키값이 수정되었을 때만 초기화 진행)
-        if (EMAILJS_CONFIG.publicKey && EMAILJS_CONFIG.publicKey !== "YOUR_PUBLIC_KEY") {
-            emailjs.init({
-                publicKey: EMAILJS_CONFIG.publicKey
-            });
-        }
-
-        // 이메일 전송 비동기 함수
+        // Netlify Forms 비동기 전송 함수 (AJAX 방식)
         function sendEmail(e) {
             e.preventDefault();
             
@@ -886,16 +858,6 @@
                 return;
             }
 
-            // 초기 가이드 플레이스홀더를 변경하지 않은 경우 친절하게 안내 후 진행 중단
-            if (EMAILJS_CONFIG.serviceID === "YOUR_SERVICE_ID" || EMAILJS_CONFIG.templateID === "YOUR_TEMPLATE_ID" || EMAILJS_CONFIG.publicKey === "YOUR_PUBLIC_KEY") {
-                alert("[안내] 현재 EmailJS API 키 설정이 개발 가이드 플레이스홀더 상태입니다.\n\ninquiry.html 파일 하단의 자바스크립트 주석을 읽고, 본인의 EmailJS Service ID, Template ID, Public Key를 기재하시면 메일 발송이 정상 가동됩니다.\n\n(작성하신 내용은 데모 시뮬레이션용 성공으로 가상 처리됩니다.)");
-                
-                // 개발 가이드용 가상 전송 성공 시뮬레이션
-                simulateDemoSuccess(btnSubmit, btnText, spinner, statusBanner, statusText, messageInput, content);
-                return;
-            }
-
-            // 실제 EmailJS 전송 프로세스 개시
             // UI 제어: 버튼 비활성화 및 로딩 스피너 활성화
             btnSubmit.disabled = true;
             spinner.style.display = "inline-block";
@@ -905,54 +867,41 @@
             statusBanner.style.display = "none";
             statusBanner.className = "inquiry-status-banner";
 
-            // 전송 파라미터 매핑
-            const templateParams = {
-                message: content,
-                to_email: "aaa@naver.com"
-            };
+            // Netlify Forms 전송용 URL-encoded 데이터 객체 생성
+            const form = document.getElementById("inquiryForm");
+            const formData = new FormData(form);
 
-            emailjs.send(EMAILJS_CONFIG.serviceID, EMAILJS_CONFIG.templateID, templateParams)
-                .then((response) => {
-                    // 전송 성공 처리
-                    statusBanner.className = "inquiry-status-banner status-success";
-                    statusText.innerText = "문의 메일이 성공적으로 전송되었습니다! 기재된 이메일 주소로 신속하게 안내해 드리겠습니다.";
-                    statusBanner.style.display = "flex";
-                    
-                    // 폼 초기화
-                    messageInput.value = "";
-                })
-                .catch((error) => {
-                    // 전송 실패 처리
-                    statusBanner.className = "inquiry-status-banner status-error";
-                    statusText.innerText = "전송에 실패했습니다. 네트워크 상태를 확인하시거나 대표번호로 직접 문의해 주시기 바랍니다.";
-                    statusBanner.style.display = "flex";
-                    console.error("EmailJS Error:", error);
-                })
-                .finally(() => {
-                    // UI 복구
-                    btnSubmit.disabled = false;
-                    spinner.style.display = "none";
-                    btnText.innerText = "문의 내용 보내기";
-                });
-        }
-
-        // 키값 미입력 시의 가상 성공 데모 함수
-        function simulateDemoSuccess(btnSubmit, btnText, spinner, statusBanner, statusText, messageInput, content) {
-            btnSubmit.disabled = true;
-            spinner.style.display = "inline-block";
-            btnText.innerText = "가상 문의 내용 전송 중...";
-            
-            setTimeout(() => {
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Netlify Forms 전송 실패");
+                }
+                
+                // 전송 성공 시 UI 알림 처리
+                statusBanner.className = "inquiry-status-banner status-success";
+                statusText.innerText = "문의 내용이 성공적으로 전송되었습니다! 신속하게 답변해 드리겠습니다.";
+                statusBanner.style.display = "flex";
+                
+                // 입력 필드 초기화
+                messageInput.value = "";
+            })
+            .catch((error) => {
+                // 전송 실패 시 UI 에러 알림 처리
+                statusBanner.className = "inquiry-status-banner status-error";
+                statusText.innerText = "전송에 실패했습니다. 네트워크 상태를 확인하시거나 대표번호로 직접 문의해 주시기 바랍니다.";
+                statusBanner.style.display = "flex";
+                console.error("Netlify Forms Submission Error:", error);
+            })
+            .finally(() => {
+                // UI 복구: 버튼 활성화 및 스피너 비활성화
                 btnSubmit.disabled = false;
                 spinner.style.display = "none";
                 btnText.innerText = "문의 내용 보내기";
-                
-                statusBanner.className = "inquiry-status-banner status-success";
-                statusText.innerHTML = "<strong>[데모 성공 시뮬레이션]</strong> 문의 내용이 무사히 접수되었습니다! (EmailJS 키값이 정식 입력되면 aaa@naver.com으로 메일이 즉시 자동 전송됩니다.)<br><br><strong>작성한 내용:</strong><br>" + content.replace(/\n/g, "<br>");
-                statusBanner.style.display = "flex";
-                
-                messageInput.value = "";
-            }, 1000);
+            });
         }
 
         // ==========================================================================
