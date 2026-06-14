@@ -441,8 +441,13 @@
                                 <p>
                                     구글의 강화된 보안 정책(CSP/X-Frame-Options) 및 개인정보 보호 설정으로 인해 일부 환경에서 화면 임베딩이 차단될 수 있습니다. 아래 버튼을 눌러 정식 대화방을 새 창에서 안전하게 실행해 주세요.
                                 </p>
-                                <!-- [URL 설정 가이드] href 속성에 진짜 구글 NotebookLM 공유 URL 주소를 입력하세요. (기존 주소: https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13) -->
-                                <a href="여기에_진짜_주소를_넣으세요" target="_blank" rel="noopener noreferrer" class="fallback-btn">
+                                <!-- 
+                                  ★ [URL 중요 가이드 - Netlify 404 차단 방지] ★
+                                  Netlify와 같은 호스팅 플랫폼에서는 프로토콜(https://)을 누락하고 'notebooklm.google.com/...'처럼 입력하면,
+                                  이를 사이트 내부의 상대 경로로 오인하여 "Page Not Found (404)" 오류 페이지를 프레임 안에 띄우게 됩니다.
+                                  반드시 'https://'가 포함된 완벽한 절대 주소 형태로 입력해 주세요.
+                                -->
+                                <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer" class="fallback-btn">
                                     <span>🚀 새 창에서 AI 기술지원 즉시 시작하기</span>
                                 </a>
                             </div>
@@ -452,14 +457,18 @@
                           [2단계: 우회 옵션이 극대화된 Google NotebookLM iframe]
                           * sandbox 속성 상세:
                             - allow-popups-to-escape-sandbox: 구글 계정 로그인(OAuth) 시 발생하는 팝업창 규제 해제 필수 속성
-                            - allow-modals / allow-forms / allow-scripts: UI 렌더링 및 폼 전송을 위한 자바스크립트 전면 허용
+                            - allow-modals / allow-forms / allow-scripts: UI 렌더링 및 폼 전송을 위한 자바스크립전면 허용
                           * allow 속성 상세:
                             - clipboard-write: 챗봇 답변을 복사할 수 있는 클립보드 쓰기 권한
                             - microphone / camera: 향후 음성 기술 지원을 위한 하드웨어 위임 권한
                         -->
-                        <!-- [URL 설정 가이드] src 속성에 진짜 구글 NotebookLM 공유 URL 주소를 입력하세요. (기존 주소: https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13) -->
+                        <!-- 
+                          ★ [URL 중요 가이드 - Netlify 404 차단 방지] ★
+                          반드시 'https://' 가 포함된 형태여야 합니다. 
+                          예: src="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13"
+                        -->
                         <iframe 
-                            src="여기에_진짜_주소를_넣으세요" 
+                            src="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" 
                             class="ai-portal-iframe"
                             title="비에이텍 AI 기술 지원 센터"
                             allow="clipboard-write; microphone; camera;"
@@ -467,8 +476,8 @@
                             loading="lazy"
                         >
                             이 브라우저는 iframe을 지원하지 않습니다. 
-                            <!-- [URL 설정 가이드] href 속성에 진짜 구글 NotebookLM 공유 URL 주소를 입력하세요. (기존 주소: https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13) -->
-                            <a href="여기에_진짜_주소를_넣으세요" target="_blank" rel="noopener noreferrer">여기</a>를 눌러 AI 상담을 시작해 주세요.
+                            <!-- ★ URL 중요 가이드: href 속성에 'https://'로 시작하는 절대 주소를 입력하세요. -->
+                            <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer">여기</a>를 눌러 AI 상담을 시작해 주세요.
                         </iframe>
 
                         <!-- 
@@ -480,7 +489,7 @@
                             <div class="helper-content">
                                 <span class="helper-badge">안내</span>
                                 <span class="helper-text">화면이 빈 칸으로 보이거나 동작하지 않으시면</span>
-                                <!-- [URL 설정 가이드] href 속성에 진짜 구글 NotebookLM 공유 URL 주소를 입력하세요. (기존 주소: https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13) -->
+                                <!-- ★ URL 중요 가이드: href 속성에 'https://'로 시작하는 절대 주소를 입력하세요. -->
                                 <a href="https://notebooklm.google.com/notebook/e363e423-7357-4954-ae94-163e253c1a13" target="_blank" rel="noopener noreferrer" class="helper-link-btn">새 창에서 상담 열기 ↗</a>
                             </div>
                             <button class="helper-close-btn" onclick="dismissHelperBanner()" aria-label="안내 닫기">&times;</button>
