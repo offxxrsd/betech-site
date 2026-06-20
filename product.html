@@ -1578,6 +1578,19 @@
         </div>
     </div>
 
+    <!-- 3. 인증서 PDF 보기 모달 -->
+    <div class="modal-overlay" id="modal-pdf" aria-hidden="true" role="dialog">
+        <div class="modal-container" style="max-width: 800px; height: 85vh; display: flex; flex-direction: column; overflow: hidden;">
+            <button type="button" class="modal-close" id="modal-pdf-close" aria-label="창 닫기" style="background: rgba(10, 28, 58, 0.1); border-color: rgba(10, 28, 58, 0.2); color: #0a1c3a; top: 1rem; right: 1rem; width: 36px; height: 36px; font-size: 1.25rem;">&times;</button>
+            <div class="modal-header-section" style="padding: 1.5rem 2rem; flex-shrink: 0; background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #0a1c3a;">
+                <h2 style="font-size: 1.2rem; font-weight: 800; color: #0a1c3a;" id="pdf-modal-title">인증서 원본 보기</h2>
+            </div>
+            <div class="modal-body" style="padding: 0; flex-grow: 1; overflow: hidden; height: 100%;">
+                <iframe id="pdf-viewer-iframe" src="" style="width: 100%; height: 100%; border: none;" title="인증서 PDF 원본 보기"></iframe>
+            </div>
+        </div>
+    </div>
+
     <!-- ==========================================================================
          디지털 도면 아카이브 (Blueprint Slide UI) - 신규 프리미엄 인증서 쇼케이스
          ========================================================================== -->
@@ -1798,6 +1811,12 @@
                 activeModal.classList.remove('active');
                 activeModal.setAttribute('aria-hidden', 'true');
                 
+                // PDF 모달 종료 시 iframe 리소스 리셋
+                if (activeModal.id === 'modal-pdf') {
+                    const iframe = document.getElementById('pdf-viewer-iframe');
+                    if (iframe) iframe.src = '';
+                }
+                
                 // 트랜지션 완료 후 스크롤 복원
                 setTimeout(() => {
                     document.body.style.overflow = '';
@@ -1807,6 +1826,25 @@
                         header.style.paddingRight = '';
                     }
                 }, 300);
+            };
+
+            // PDF 모달 오픈 인터페이스 추가 (window 전역 노출)
+            window.openPDFModal = (event, pdfPath, pdfName) => {
+                if (event) event.preventDefault();
+                
+                const modalTitle = document.getElementById('pdf-modal-title');
+                if (modalTitle && pdfName) {
+                    modalTitle.innerText = `${pdfName} - 원본 보기`;
+                } else if (modalTitle) {
+                    modalTitle.innerText = '인증서 원본 보기';
+                }
+                
+                const iframe = document.getElementById('pdf-viewer-iframe');
+                if (iframe) {
+                    iframe.src = pdfPath;
+                }
+                
+                openModal('modal-pdf');
             };
 
             // 트리거 이벤트 연결
@@ -1959,7 +1997,7 @@
 
                     const certCards = data.certs.map(cert => {
                         const tag = cert.pdfPath ? 'a' : 'div';
-                        const hrefAttr = cert.pdfPath ? `href="${cert.pdfPath}" target="_blank" rel="noopener noreferrer"` : '';
+                        const hrefAttr = cert.pdfPath ? `href="#" onclick="window.openPDFModal(event, '${cert.pdfPath}', '${cert.name}')"` : '';
                         return `
                             <${tag} ${hrefAttr} class="bp-archive-cert-card ${cert.class}">
                                 <div class="bp-archive-cert-laser"></div>
