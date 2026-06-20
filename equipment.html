@@ -38,57 +38,7 @@
             border-bottom-color: rgba(0, 229, 255, 0.3);
         }
 
-        /* 1. 히어로 섹션 스타일 */
-        .equipment-hero {
-            background-color: #F8F9FA;
-            padding: 10rem 0 6rem 0;
-            text-align: center;
-            border-bottom: 1px solid var(--color-border);
-            position: relative;
-            overflow: hidden;
-        }
-        /* 은은한 메쉬 그라데이션 장식 */
-        .equipment-hero::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 163, 224, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
-            z-index: 1;
-            pointer-events: none;
-        }
-        .equipment-hero-content {
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-        .equipment-hero-tag {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.25em;
-            color: var(--color-secondary);
-            margin-bottom: 1.25rem;
-            text-transform: uppercase;
-        }
-        .equipment-hero-title {
-            font-size: 2.6rem;
-            font-weight: 800;
-            color: var(--color-primary);
-            line-height: 1.35;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.025em;
-        }
-        .equipment-hero-desc {
-            font-size: 1.15rem;
-            color: var(--color-text-muted);
-            line-height: 1.75;
-            font-weight: 400;
-        }
+
 
         /* 2. 필터 탭 스타일 */
         .filter-section {
@@ -463,11 +413,11 @@
     </header>
 
     <main>
-        <!-- 상단 히어로 섹션 -->
-        <section class="equipment-hero" aria-labelledby="hero-title">
-            <div class="equipment-hero-content">
-                <div class="equipment-hero-tag">Equipment Portfolio</div>
-                <h1 id="hero-title" class="equipment-hero-title">최상의 공정 효율을 보장하는<br>고성능 펌프 및 설비 라인업</h1>
+        <!-- 상단 히어로 섹션 (어두운 테마로 통일) -->
+        <section class="subpage-hero" style="background-image: url('./water_hero_bg.png');" aria-labelledby="sub-hero-title">
+            <div class="subpage-hero-content">
+                <div class="subpage-hero-tag">Equipment Portfolio</div>
+                <h1 id="sub-hero-title" class="equipment-hero-title">최상의 공정 효율을 보장하는<br>고성능 펌프 및 설비 라인업</h1>
                 <p class="equipment-hero-desc">당사가 보유한 첨단 산업용 설비와 엄격한 유지보수 시스템을 통해 신뢰할 수 있는 기술력을 증명합니다.</p>
             </div>
         </section>

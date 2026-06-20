@@ -40,7 +40,7 @@
         /* AI 기술 지원 센터 바디 및 레이아웃 */
         .ai-support-section {
             background-color: var(--color-bg-light);
-            padding: 120px 0 80px 0; /* 헤더 고정 높이 고려 상단 여백 확보 */
+            padding: 5rem 0; /* 히어로 배너 배치를 고려하여 상단 여백 재조정 */
             min-height: calc(100vh - 350px);
             display: flex;
             align-items: center;
@@ -493,6 +493,15 @@
     </header>
 
     <main>
+        <!-- 서브페이지 전용 히어로 배너 (어두운 테마 통일) -->
+        <section class="subpage-hero" style="background-image: url('./water_hero_bg.png');" aria-labelledby="sub-hero-title">
+            <div class="subpage-hero-content">
+                <div class="subpage-hero-tag">AI TECHNOLOGY SUPPORT</div>
+                <h1 id="sub-hero-title">AI 기술지원 센터</h1>
+                <p>비에이텍의 고정밀 펌프 제어 및 도면 사양을 AI 기술지원 엔지니어와 실시간으로 상담받으실 수 있습니다.</p>
+            </div>
+        </section>
+
         <!-- AI 기술 지원 센터 메인 프레임 섹션 -->
         <section class="ai-support-section" aria-labelledby="ai-support-title">
             <div class="section-container" style="max-width: 1000px; padding: 0 1.5rem;">

@@ -1681,3 +1681,80 @@ a.equipment-block-link:focus-visible {
         padding-bottom: 60px !important;
     }
 }
+
+/* ==========================================================================
+   16. 서브페이지 공통 히어로 배너 (Subpage Hero Banner)
+   ========================================================================== */
+.subpage-hero {
+    position: relative;
+    width: 100%;
+    height: 45vh;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    padding-top: 80px;
+    overflow: hidden;
+}
+.subpage-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(10, 25, 44, 0.9) 0%, rgba(11, 40, 80, 0.75) 100%);
+    z-index: 1;
+}
+.subpage-hero-content {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 10;
+}
+.subpage-hero-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+    opacity: 0.9;
+}
+.subpage-hero h1 {
+    font-size: 2.75rem;
+    font-weight: 850;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+.subpage-hero p {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 650px;
+    line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+    .subpage-hero h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .subpage-hero {
+        height: 35vh;
+        min-height: 260px;
+    }
+    .subpage-hero h1 {
+        font-size: 2rem;
+    }
+    .subpage-hero p {
+        font-size: 1rem;
+    }
+}
