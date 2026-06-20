@@ -580,11 +580,14 @@ input, button, select, textarea {
     margin-bottom: 2.5rem;
 }
 
-.cta-btns {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
+.cta-btns,
+.button-group-container {
+    display: flex !important;
+    justify-content: center !important; /* 가로축 기준 무조건 정중앙 */
+    align-items: center !important;     /* 세로축 기준 정중앙 */
+    width: 100% !important;             /* 가로 너비 전체 차지 */
+    margin: 20px auto 0 auto !important; /* 상단 여백 부여 및 자동 중앙 배치 */
+    gap: 12px !important;                          /* 두 버튼 사이의 간격 */
 }
 
 .btn-icon {
